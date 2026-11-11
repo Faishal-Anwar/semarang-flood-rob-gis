@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Form input observasi lapangan untuk monitoring muka air laut, muka air sungai, dan curah hujan Semarang Utara.">
+  <title>Input Observasi Lapangan — Semarang Flood &amp; Rob GIS</title>
+  <link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css?v=26">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg site-nav sticky-top" id="siteNav">
+    <div class="container-fluid site-container">
+      <a class="navbar-brand brand-lockup" href="index.html">
+        <span class="brand-mark"><i class="fa-solid fa-water"></i></span>
+        <span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span>
+      </a>
+      <div class="d-flex align-items-center gap-2 order-lg-3">
+        <button class="nav-icon-btn" type="button" id="quickNavBtn" aria-label="Pencarian cepat (Ctrl+K)" title="Pencarian cepat (Ctrl+K)"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <a href="map.html" class="btn btn-warning nav-cta d-none d-lg-inline-flex"><i class="fa-solid fa-map-location-dot me-1"></i> Buka Peta</a>
+        <button class="navbar-toggler nav-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavMenu" aria-controls="siteNavMenu" aria-expanded="false" aria-label="Buka navigasi"><span></span><span></span><span></span></button>
+      </div>
+      <div class="collapse navbar-collapse" id="siteNavMenu">
+        <ul class="navbar-nav site-nav-links ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta WebGIS</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li>
+          <li class="nav-item"><a class="nav-link active" href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li>
+        </ul>
+        <a href="map.html" class="btn btn-warning nav-cta d-lg-none mt-3 w-100">Buka Peta WebGIS</a>
+      </div>
+    </div>
+  </nav>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="page-hero">
+    <div class="container-fluid site-container">
+      <div class="page-hero-grid">
+        <div class="page-hero-copy">
+          <div class="breadcrumb-modern"><a href="index.html">Beranda</a><i class="fa-solid fa-chevron-right"></i><a href="methodology.html">Metodologi</a><i class="fa-solid fa-chevron-right"></i><span>Input observasi</span></div>
+          <h1>Input observasi lapangan.</h1>
+          <p>Masukkan hasil pengukuran manual ke basis data monitoring. Data disimpan di <code>backend/monitoring.db</code> dan muncul pada dashboard setelah polling berikutnya.</p>
+          <div class="page-hero-actions">
+            <a href="dashboard.html" class="btn btn-warning"><i class="fa-solid fa-chart-pie me-1"></i> Lihat dashboard</a>
+            <a href="methodology.html#ambang" class="btn btn-outline-light" style="border-color:rgba(255,255,255,.26);color:#fff;"><i class="fa-solid fa-sliders me-1"></i> Lihat ambang</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-tight" role="main">
+    <div class="container-fluid site-container">
+      <div class="row g-4">
+        <div class="col-lg-7 reveal">
+          <div class="surface-card p-4 p-lg-5">
+            <span class="section-eyebrow"><i class="fa-solid fa-clipboard-list"></i> Form observasi</span>
+            <h2 class="section-title h3 mt-2 mb-2">Catat satu pembacaan</h2>
+            <p class="text-muted small mb-4">Semua field bertanda <span class="text-danger">*</span> wajib diisi. Gunakan satuan sesuai parameter: m untuk pasang laut, cm untuk TMA sungai, dan mm/jam untuk hujan.</p>
+
+            <form id="observationForm" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="station_id">Stasiun / lokasi <span class="text-danger">*</span></label>
+                  <input class="form-control" id="station_id" name="station_id" required maxlength="120" placeholder="Contoh: Tide Gauge Tambak Lorok">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="parameter">Parameter <span class="text-danger">*</span></label>
+                  <select class="form-select" id="parameter" name="parameter" required>
+                    <option value="tide_level">Muka air laut (m)</option>
+                    <option value="water_level">Muka air sungai (cm)</option>
+                    <option value="rainfall">Curah hujan (mm/jam)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="value">Nilai <span class="text-danger">*</span></label>
+                  <input class="form-control" id="value" name="value" type="number" step="0.01" required placeholder="Contoh: 1.82">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="unit">Satuan</label>
+                  <input class="form-control" id="unit" name="unit" readonly value="m">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="recorded_at">Waktu pengukuran <span class="text-danger">*</span></label>
+                  <input class="form-control" id="recorded_at" name="recorded_at" type="datetime-local" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="source">Sumber</label>
+                  <select class="form-select" id="source" name="source">
+                    <option value="field">Observasi lapangan</option>
+                    <option value="manual">Input manual</option>
+                    <option value="sensor">Sensor</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="lat">Latitude (opsional)</label>
+                  <input class="form-control" id="lat" name="lat" type="number" step="0.000001" placeholder="-6.958000">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="lon">Longitude (opsional)</label>
+                  <input class="form-control" id="lon" name="lon" type="number" step="0.000001" placeholder="110.422000">
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-semibold" for="api_key">Kunci API (opsional)</label>
+                  <input class="form-control" id="api_key" name="api_key" type="password" autocomplete="off" placeholder="Diperlukan jika MONITORING_API_KEY diaktifkan">
+                  <div class="form-text">Jangan simpan kunci API di perangkat publik. Untuk demo lokal, biarkan kosong jika backend tidak memakai kunci.</div>
+                </div>
+              </div>
+              <div class="d-flex flex-wrap gap-2 mt-4">
+                <button class="btn btn-warning" type="submit" id="submitBtn"><i class="fa-solid fa-paper-plane me-1"></i> Kirim observasi</button>
+                <button class="btn btn-outline-secondary" type="reset"><i class="fa-solid fa-rotate-left me-1"></i> Reset</button>
+              </div>
+            </form>
+
+            <div id="formResult" class="mt-4" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="surface-card p-4 mb-4 reveal reveal-delay-1">
+            <h3 class="chart-title mb-2"><i class="fa-solid fa-circle-info text-primary me-2"></i>Sebelum mengirim</h3>
+            <ul class="small text-muted mb-0" style="line-height:1.8;">
+              <li>Gunakan datum dan satuan yang konsisten.</li>
+              <li>Muka air laut dalam meter, TMA sungai dalam sentimeter, hujan dalam mm/jam.</li>
+              <li>Observasi lapangan meningkatkan kualitas data menjadi <b>Tinggi</b>; model eksternal berlabel <b>Sedang</b>; simulasi <b>Rendah</b>.</li>
+              <li>Data ini bukan peringatan resmi. Untuk keadaan darurat, hubungi BPBD/BMKG.</li>
+            </ul>
+          </div>
+          <div class="surface-card p-4 reveal reveal-delay-2">
+            <h3 class="chart-title mb-2"><i class="fa-solid fa-terminal text-primary me-2"></i>Alternatif CLI</h3>
+            <p class="small text-muted">Jika backend berjalan di port 8000:</p>
+            <pre class="small bg-light p-3 rounded mb-0" style="white-space:pre-wrap;">curl -X POST http://localhost:8000/api/monitoring/observations \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: kunci-jika-ada" \
+  -d '{"station_id":"Tide Gauge Tambak Lorok","parameter":"tide_level","value":1.82,"unit":"m","source":"field"}'</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-fluid site-container">
+      <div class="footer-bottom" style="border-top:0;margin-top:0;padding-top:0;">
+        <span>© <span data-year>2026</span> Semarang Flood &amp; Rob GIS.</span>
+        <span><a href="methodology.html">Metodologi</a> · <a href="dashboard.html">Dashboard</a> · <a href="map.html">Peta</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js?v=4"></script>
+  <script>
+    (function () {
+      'use strict';
+      const form = document.getElementById('observationForm');
+      const result = document.getElementById('formResult');
+      const parameter = document.getElementById('parameter');
+      const unit = document.getElementById('unit');
+      const recordedAt = document.getElementById('recorded_at');
+      const submitBtn = document.getElementById('submitBtn');
+
+      const units = { tide_level: 'm', water_level: 'cm', rainfall: 'mm/jam' };
+      function syncUnit() { unit.value = units[parameter.value] || ''; }
+      parameter.addEventListener('change', syncUnit);
+      syncUnit();
+
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      recordedAt.value = now.toISOString().slice(0, 16);
+
+      function showResult(kind, title, detail) {
+        const cls = kind === 'ok' ? 'alert-success' : kind === 'warn' ? 'alert-warning' : 'alert-danger';
+        const icon = kind === 'ok' ? 'fa-circle-check' : kind === 'warn' ? 'fa-triangle-exclamation' : 'fa-circle-xmark';
+        result.innerHTML = `<div class="alert ${cls} mb-0"><div class="fw-bold mb-1"><i class="fa-solid ${icon} me-1"></i>${title}</div><div class="small">${detail}</div></div>`;
+      }
+
+      async function postObservation(payload, apiKey) {
+        const bases = ['', 'http://127.0.0.1:8000'];
+        let lastError = null;
+        for (const base of bases) {
+          try {
+            const response = await fetch(base + '/api/monitoring/observations', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                ...(apiKey ? { 'X-API-Key': apiKey } : {})
+              },
+              body: JSON.stringify(payload)
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+              const httpError = new Error(data.detail || ('HTTP ' + response.status));
+              httpError.http = true;
+              throw httpError;
+            }
+            return data;
+          } catch (error) {
+            lastError = error;
+            if (error.http) break;
+          }
+        }
+        throw lastError || new Error('Backend tidak terhubung.');
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          showResult('error', 'Form belum lengkap', 'Periksa field wajib dan format angka.');
+          return;
+        }
+        const fd = new FormData(form);
+        const payload = {
+          station_id: String(fd.get('station_id')).trim(),
+          parameter: String(fd.get('parameter')),
+          value: Number(fd.get('value')),
+          unit: String(fd.get('unit')),
+          source: String(fd.get('source') || 'field')
+        };
+        const recorded = fd.get('recorded_at');
+        if (recorded) payload.recorded_at = new Date(recorded).toISOString();
+        const lat = fd.get('lat');
+        const lon = fd.get('lon');
+        if (lat !== '') payload.lat = Number(lat);
+        if (lon !== '') payload.lon = Number(lon);
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Mengirim...';
+        try {
+          const data = await postObservation(payload, String(fd.get('api_key') || '').trim());
+          showResult('ok', 'Observasi diterima', `ID ${data.id} · ${data.parameter} = ${data.value} ${data.unit}. Buka <a href="dashboard.html">dashboard</a> untuk melihat pembaruan.`);
+          form.reset();
+          syncUnit();
+          const resetNow = new Date();
+          resetNow.setMinutes(resetNow.getMinutes() - resetNow.getTimezoneOffset());
+          recordedAt.value = resetNow.toISOString().slice(0, 16);
+        } catch (error) {
+          showResult('warn', 'Backend belum menerima data', `${error.message}. Pastikan FastAPI berjalan di <code>http://127.0.0.1:8000</code>. Form ini tidak menyimpan data ke server statis.`);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-1"></i> Kirim observasi';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

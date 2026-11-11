@@ -1,0 +1,26 @@
+id_titik,kode_survei,nama_lokasi,kelurahan,lat,lon,x_utm,y_utm,jenis_genangan,tinggi_genangan_cm,durasi_genangan_jam,kondisi_drainase,tanggal_survei,surveyor,foto_ref
+1,SRV-01,Dermaga Tambak Lorok RW 15,Tanjung Mas,-6.93952,110.436483,437750,9232900,Rob Pasang Laut,65.0,7.0,Rusak - Terendam Pasang,18/03/2026,Faishal Anwar,FOTO_SRV_01.JPG
+2,SRV-02,Pintu Masuk Kawasan Lamicitra,Tanjung Mas,-6.943131,110.430595,437100,9232500,Rob Pasang Laut,50.0,6.0,Tersumbat Sedimen,18/03/2026,Budi Santoso,FOTO_SRV_02.JPG
+3,SRV-03,Kampung Tambak Mulyo RW 13,Tanjung Mas,-6.945849,110.434212,437500,9232200,Rob Pasang Laut,55.0,6.5,Rusak - Erosi Pasang,18/03/2026,Faishal Anwar,FOTO_SRV_03.JPG
+4,SRV-04,Jl. Coaster Pelabuhan,Tanjung Mas,-6.950365,110.428323,436850,9231700,Rob Rembesan Tanggul,35.0,4.0,Terawat - Ada Pompa,18/03/2026,Rina Marlina,FOTO_SRV_04.JPG
+5,SRV-05,Jl. Ronggowarsito Depan Stasiun,Tanjung Mas,-6.95851,110.431481,437200,9230800,Banjir Genangan & Rob,40.0,4.5,Sedimentasi Cukup Parah,18/03/2026,Budi Santoso,FOTO_SRV_05.JPG
+6,SRV-06,Jl. Lodan Raya Depan Kelurahan,Bandarharjo,-6.94945,110.419724,435900,9231800,Rob & Limpasan Kali Baru,45.0,5.0,Tersumbat Sampah & Lumpur,19/03/2026,Dimas Prasetyo,FOTO_SRV_06.JPG
+7,SRV-07,Kampung Baru RW 02,Bandarharjo,-6.945828,110.417013,435600,9232200,Rob Pasang Laut,50.0,5.5,Rusak Parah,19/03/2026,Faishal Anwar,FOTO_SRV_07.JPG
+8,SRV-08,Jl. Layur Lor Dekat Tanggul,Bandarharjo,-6.953072,110.423341,436300,9231400,Rob & Genangan Hujan,35.0,4.0,Terawat dengan Pompa Kelurahan,19/03/2026,Dimas Prasetyo,FOTO_SRV_08.JPG
+9,SRV-09,Bantaran Kali Baru RW 07,Bandarharjo,-6.946742,110.424706,436450,9232100,Limpasan Pasang Kali Baru,40.0,4.5,Tanggul Rendah,19/03/2026,Siti Aisyah,FOTO_SRV_09.JPG
+10,SRV-10,Simpang Jl. Tambak Mas Raya,Panggung Lor,-6.953051,110.406141,434400,9231400,Genangan Cekungan Hujan,30.0,4.0,Berfungsi - Pompa RT Aktif,20/03/2026,Rina Marlina,FOTO_SRV_10.JPG
+11,SRV-11,Jl. Pasir Mas Dekat Tanggul BKB,Panggung Lor,-6.954852,110.399802,433700,9231200,Rembesan Tanggul & Hujan,25.0,3.5,Terawat,20/03/2026,Rina Marlina,FOTO_SRV_11.JPG
+12,SRV-12,Jembatan Kali Asin Jl. Pondok Mas,Panggung Lor,-6.960284,110.403416,434100,9230600,Limpasan Kali Asin,35.0,4.0,Sedimentasi Tinggi,20/03/2026,Dimas Prasetyo,FOTO_SRV_12.JPG
+13,SRV-13,Jl. Hasanudin Pertigaan Brotojoyo,Panggung Kidul,-6.966618,110.405219,434300,9229900,Genangan Air Hujan / Saluran,30.0,3.5,Sedimen Cukup Padat,21/03/2026,Faishal Anwar,FOTO_SRV_13.JPG
+14,SRV-14,Jl. Kakap Depan Pasar Tradisional,Panggung Kidul,-6.968431,110.407932,434600,9229700,Genangan Antrean Saluran,25.0,3.0,Tersumbat Sampah Pasar,21/03/2026,Budi Santoso,FOTO_SRV_14.JPG
+15,SRV-15,Jl. Layur Depan Masjid Menara,Kuningan,-6.967538,110.416986,435600,9229800,Limpasan Kali Semarang,35.0,4.0,Dinding Sungai Rawan Meluap,21/03/2026,Siti Aisyah,FOTO_SRV_15.JPG
+16,SRV-16,Jl. Petek Depan Gang Cilik,Kuningan,-6.970255,110.419699,435900,9229500,Genangan Air Hujan,20.0,2.5,Saluran Sempit & Tertutup,21/03/2026,Siti Aisyah,FOTO_SRV_16.JPG
+17,SRV-17,Jl. Raden Patah Pertigaan Johar,Dadapsari,-6.973878,110.424221,436400,9229100,Limpasan Kali Semarang & Hujan,35.0,3.5,Sedimentasi Berat,22/03/2026,Faishal Anwar,FOTO_SRV_17.JPG
+18,SRV-18,Kampung Dadapsari RW 03,Dadapsari,-6.971163,110.422866,436250,9229400,Limpasan Kali Semarang,30.0,3.0,Saluran Terbuka Kotor,22/03/2026,Dimas Prasetyo,FOTO_SRV_18.JPG
+19,SRV-19,Jl. Kokrosono Jembatan BKB,Bulu Lor,-6.972941,110.397969,433500,9229200,Bebas Genangan (Elevasi Aman),0.0,0.0,Baik - Tanggul Beton Tinggi,22/03/2026,Rina Marlina,FOTO_SRV_19.JPG
+20,SRV-20,Jl. Banowati Selatan Poncol,Bulu Lor,-6.973852,110.403399,434100,9229100,Genangan Cekungan Rel Kereta,20.0,2.5,Terawat - Ada Pompa PJKA,22/03/2026,Budi Santoso,FOTO_SRV_20.JPG
+21,SRV-21,Jl. Plombokan Raya Belakang PLN,Plombokan,-6.974766,110.41064,434900,9229000,Bebas Genangan,0.0,0.0,Saluran Baik Bersih,23/03/2026,Siti Aisyah,FOTO_SRV_21.JPG
+22,SRV-22,Jl. Tanjung Dekat Kali Semarang,Plombokan,-6.973415,110.415168,435400,9229150,Genangan Ringan Saat Puncak Hujan,15.0,1.5,Terawat,23/03/2026,Faishal Anwar,FOTO_SRV_22.JPG
+23,SRV-23,Jl. Imam Bonjol Dekat Sayangan,Purwosari,-6.977489,110.418332,435750,9228700,Genangan Limpasan Jalan Raya,20.0,2.0,Saluran Tertutup Gorong-gorong,23/03/2026,Dimas Prasetyo,FOTO_SRV_23.JPG
+24,SRV-24,Jl. Pemuda Dekat Jembatan Berok,Purwosari,-6.978848,110.420141,435950,9228550,Bebas Genangan Pasca Revitalisasi,0.0,0.0,Sangat Baik - Pompa Berok,23/03/2026,Budi Santoso,FOTO_SRV_24.JPG
+25,SRV-25,Pintu Air Polder Banger Timur,Tanjung Mas,-6.961232,110.439173,438050,9230500,Genangan Terkendali Rumah Pompa,20.0,2.0,Sangat Baik - 3 Unit Pompa Aktif,23/03/2026,Faishal Anwar,FOTO_SRV_25.JPG

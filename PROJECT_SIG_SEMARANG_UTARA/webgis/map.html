@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Peta WebGIS interaktif sebaran genangan rob, sempadan sungai, permukiman di zona rawan, dan titik survei GPS Semarang Utara.">
+  <title>Peta WebGIS Interaktif — Semarang Flood &amp; Rob GIS</title>
+
+  <link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/style.css?v=26">
+</head>
+<body class="map-page">
+
+  <nav class="navbar navbar-expand-lg site-nav sticky-top" id="siteNav">
+    <div class="container-fluid site-container">
+      <a class="navbar-brand brand-lockup" href="index.html">
+        <span class="brand-mark"><i class="fa-solid fa-water"></i></span>
+        <span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span>
+      </a>
+      <div class="d-flex align-items-center gap-2 order-lg-3">
+        <button class="nav-icon-btn" type="button" id="quickNavBtn" aria-label="Pencarian cepat (Ctrl+K)" title="Pencarian cepat (Ctrl+K)"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <a href="dashboard.html" class="btn btn-warning nav-cta d-none d-lg-inline-flex"><i class="fa-solid fa-chart-pie me-1"></i> Dashboard</a>
+        <button class="navbar-toggler nav-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavMenu" aria-controls="siteNavMenu" aria-expanded="false" aria-label="Buka navigasi"><span></span><span></span><span></span></button>
+      </div>
+      <div class="collapse navbar-collapse" id="siteNavMenu">
+        <ul class="navbar-nav site-nav-links ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link active" href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta WebGIS</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li>
+          <li class="nav-item"><a class="nav-link" href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li>
+        </ul>
+        <a href="dashboard.html" class="btn btn-warning nav-cta d-lg-none mt-3 w-100">Buka Dashboard</a>
+      </div>
+    </div>
+  </nav>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <main class="map-shell" id="map-wrapper" role="main">
+    <div id="loadingOverlay" class="map-loading-overlay">
+      <div class="spinner-border" style="width:2.6rem;height:2.6rem;" role="status"></div>
+      <h2 class="fw-bold">Memuat lapisan geospasial...</h2>
+      <span class="small text-muted">Mengintegrasikan 7 layer vektor EPSG:4326</span>
+    </div>
+
+    <div id="map"></div>
+
+    <!-- TOP HUD -->
+    <div class="map-top-hud">
+      <div class="map-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Cari kelurahan..." aria-label="Cari kelurahan" onkeyup="searchLocation(event)">
+      </div>
+      <div class="map-filter">
+        <select id="kelurahanFilter" class="form-select" aria-label="Filter kelurahan" onchange="applyFilters()">
+          <option value="">Semua kelurahan</option>
+          <option value="Bandarharjo">Bandarharjo</option>
+          <option value="Bulu Lor">Bulu Lor</option>
+          <option value="Dadapsari">Dadapsari</option>
+          <option value="Kuningan">Kuningan</option>
+          <option value="Panggung Kidul">Panggung Kidul</option>
+          <option value="Panggung Lor">Panggung Lor</option>
+          <option value="Plombokan">Plombokan</option>
+          <option value="Purwosari">Purwosari</option>
+          <option value="Tanjung Mas">Tanjung Mas</option>
+        </select>
+        <select id="hazardFilter" class="form-select" aria-label="Filter tingkat bahaya" onchange="applyFilters()">
+          <option value="">Semua bahaya</option>
+          <option value="Sangat Tinggi">Sangat tinggi</option>
+          <option value="Tinggi">Tinggi</option>
+          <option value="Sedang">Sedang</option>
+        </select>
+      </div>
+      <div class="map-counter" id="filterCounter"><i class="fa-solid fa-filter me-1"></i> Menyiapkan data...</div>
+      <button class="map-mobile-toggle" type="button" onclick="toggleMapPanel()"><i class="fa-solid fa-sliders"></i> Layer</button>
+    </div>
+
+    <!-- FAB STACK -->
+    <div class="map-fab-stack">
+      <button class="map-fab" id="btnMeasure" type="button" onclick="toggleMeasure()" title="Ukur jarak" aria-label="Ukur jarak"><i class="fa-solid fa-ruler-combined"></i></button>
+      <button class="map-fab" type="button" onclick="toggleFullscreen()" title="Layar penuh" aria-label="Layar penuh"><i class="fa-solid fa-expand"></i></button>
+      <button class="map-fab" type="button" onclick="locateUser()" title="Lokasi saya" aria-label="Lokasi saya"><i class="fa-solid fa-location-crosshairs"></i></button>
+      <button class="map-fab" type="button" onclick="fitStudyArea()" title="Fokus wilayah kajian" aria-label="Fokus wilayah kajian"><i class="fa-solid fa-compress"></i></button>
+      <button class="map-fab" type="button" onclick="toggleLegend()" title="Tampilkan legenda" aria-label="Tampilkan legenda"><i class="fa-solid fa-list"></i></button>
+      <button class="map-fab" type="button" onclick="resetAllFilters()" title="Reset tampilan" aria-label="Reset tampilan"><i class="fa-solid fa-rotate-left"></i></button>
+    </div>
+
+    <!-- PANEL -->
+    <aside class="map-panel" id="mapPanel" aria-label="Kontrol lapisan spasial">
+      <div class="map-panel-head">
+        <div>
+          <h2><i class="fa-solid fa-sliders text-warning me-1"></i> Kontrol lapisan</h2>
+          <p>7 layer tematik · WGS 84</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge badge-soft-teal" id="layerLoadedBadge">Memuat...</span>
+          <button class="map-fab map-panel-close" type="button" onclick="toggleMapPanel(false)" aria-label="Tutup panel" style="width:32px;height:32px;border-radius:9px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+
+      <div class="map-panel-body">
+        <div class="map-summary">
+          <span class="icon-tile icon-tile--coral"><i class="fa-solid fa-house-crack"></i></span>
+          <div>
+            <strong>70,08%</strong>
+            <span>permukiman di zona rawan</span>
+            <small class="text-muted" style="font-size:.6rem;">120,31 dari 171,68 Ha permukiman</small>
+          </div>
+        </div>
+        <div class="map-panel-label" style="margin-top:-6px;">Snapshot QGIS April 2026 · BPBD/InaRISK · eksposur statis, bukan genangan saat ini</div>
+
+        <div class="condition-banner condition-banner--compact" data-condition-banner>
+          <span class="condition-icon"><i class="fa-solid fa-shield-heart" data-condition-icon></i></span>
+          <div class="condition-copy">
+            <span class="condition-kicker">Kondisi saat ini</span>
+            <strong data-condition-headline>Memeriksa kondisi...</strong>
+            <p data-condition-detail>Menunggu data monitoring.</p>
+          </div>
+        </div>
+        <div class="data-health data-health--compact" data-data-health>
+          <span class="health-title"><i class="fa-solid fa-heart-pulse me-1"></i>Kesehatan data</span>
+          <span class="health-chip is-missing">Memeriksa...</span>
+        </div>
+
+        <div class="map-live">
+          <div class="map-live-head">
+            <span class="live-dot" data-live-dot aria-hidden="true"></span>
+            <span>Monitoring near-realtime</span>
+            <span class="live-mode-badge" data-live-mode>SIMULASI</span>
+          </div>
+          <div class="map-live-row"><span>Muka air laut</span><strong><span data-live-value="tide_level">–</span> <small data-live-unit="tide_level">m</small></strong></div>
+          <div class="map-live-row"><span>Muka air sungai</span><strong><span data-live-value="water_level">–</span> <small data-live-unit="water_level">cm</small></strong></div>
+          <div class="map-live-row"><span>Curah hujan</span><strong><span data-live-value="rainfall">–</span> <small data-live-unit="rainfall">mm/jam</small></strong></div>
+          <div class="map-live-meta">
+            <span><i class="fa-solid fa-clock me-1"></i><span data-live-updated>–</span> · <span data-live-source>menghubungkan...</span></span>
+            <button class="sim-toggle" type="button" data-toggle-simulation aria-pressed="false"><i class="fa-solid fa-eye me-1"></i>Simulasi</button>
+            <button class="live-refresh" type="button" data-live-refresh aria-label="Perbarui data monitoring"><i class="fa-solid fa-arrows-rotate"></i></button>
+          </div>
+          <div class="map-live-extra">
+            <span>Debit <strong data-live-extra="river_discharge">–</strong> m³/s</span>
+            <span>Gelombang <strong data-live-extra="wave_height">–</strong> m</span>
+            <span>Laporan warga <strong data-live-extra="citizen_reports">–</strong></span>
+          </div>
+        </div>
+
+        <div class="map-panel-section" style="padding-top:0;border-top:0;margin-top:0;">
+          <div class="map-panel-label">Peta dasar</div>
+          <div class="basemap-switch">
+            <div class="basemap-option"><input type="radio" name="basemap" id="bmOSM" value="osm" checked onchange="setBasemap('osm')"><label for="bmOSM">OSM</label></div>
+            <div class="basemap-option"><input type="radio" name="basemap" id="bmSatellite" value="satellite" onchange="setBasemap('satellite')"><label for="bmSatellite">Satelit</label></div>
+            <div class="basemap-option"><input type="radio" name="basemap" id="bmTopo" value="topo" onchange="setBasemap('topo')"><label for="bmTopo">Topografi</label></div>
+          </div>
+        </div>
+
+        <div class="map-panel-section">
+          <div class="map-panel-label">Lapisan tematik</div>
+          <div class="layer-list">
+            <div class="layer-switch"><label class="layer-switch-label" for="chkKelurahan"><span class="layer-swatch" style="background:#0c2444;"></span>Batas kelurahan <span class="layer-count">9</span></label><input class="form-check-input" type="checkbox" role="switch" id="chkKelurahan" checked onchange="toggleLayer('kelurahan')"></div>
+            <div class="layer-switch"><label class="layer-switch-label" for="chkSungai"><span class="layer-swatch" style="background:#0288d1;"></span>Sungai &amp; drainase <span class="layer-count">12</span></label><input class="form-check-input" type="checkbox" role="switch" id="chkSungai" checked onchange="toggleLayer('sungai')"></div>
+            <div class="layer-switch"><label class="layer-switch-label" for="chkGenangan"><span class="layer-swatch" style="background:#e53935;"></span>Zona rawan rob BPBD <span class="layer-count">5</span></label><input class="form-check-input" type="checkbox" role="switch" id="chkGenangan" checked onchange="toggleLayer('genangan')"></div>
+            <div class="layer-switch"><label class="layer-switch-label" for="chkBuffer"><span class="layer-swatch" style="background:#0e7490;"></span>Buffer sempadan <span class="layer-count">2</span></label><input class="form-check-input" type="checkbox" role="switch" id="chkBuffer" checked onchange="toggleLayer('buffer')"></div>
+            <div class="layer-switch"><label class="layer-switch-label" for="chkTerdampak"><span class="layer-swatch" style="background:#d32f2f;"></span>Permukiman di zona rawan <span class="layer-count">10</span></label><input class="form-check-input" type="checkbox" role="switch" id="chkTerdampak" checked onchange="toggleLayer('terdampak')"></div>
+            <div class="layer-switch"><label class="layer-switch-label" for="chkPermukiman"><span class="layer-swatch" style="background:#ffa000;"></span>Kawasan permukiman <span class="layer-count">15</span></label><input class="form-check-input" type="checkbox" role="switch" id="chkPermukiman" checked onchange="toggleLayer('permukiman')"></div>
+            <div class="layer-switch"><label class="layer-switch-label" for="chkSurvei"><span class="layer-swatch" style="background:#16a34a;"></span>Titik survei GPS <span class="layer-count">25</span></label><input class="form-check-input" type="checkbox" role="switch" id="chkSurvei" checked onchange="toggleLayer('survei')"></div>
+            <div class="layer-switch"><label class="layer-switch-label" for="chkLaporan"><span class="layer-swatch" style="background:#2563eb;"></span>Laporan warga PetaBencana <span class="layer-count" id="laporanCount">–</span></label><input class="form-check-input" type="checkbox" role="switch" id="chkLaporan" checked onchange="toggleLayer('laporan')"></div>
+          </div>
+        </div>
+
+        <div class="map-panel-section">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="map-panel-label mb-0">Transparansi poligon</div>
+            <span class="map-opacity-value" id="opacityVal">60%</span>
+          </div>
+          <div class="map-opacity">
+            <input type="range" class="form-range" id="opacitySlider" min="10" max="100" value="60" oninput="changeGlobalOpacity(this.value)" aria-label="Transparansi poligon">
+          </div>
+        </div>
+
+        <div class="map-panel-section">
+          <div class="map-panel-label">Unduh dataset</div>
+          <div class="d-flex flex-wrap gap-1">
+            <a href="data/permukiman_terdampak.geojson" download="permukiman_zona_rawan.geojson" class="btn btn-outline-danger btn-sm" data-download-toast="Dataset permukiman di zona rawan diunduh."><i class="fa-solid fa-download me-1"></i>Zona rawan</a>
+            <a href="data/titik_survei.geojson" download class="btn btn-outline-success btn-sm" data-download-toast="Dataset 25 titik GPS diunduh."><i class="fa-solid fa-download me-1"></i>25 GPS</a>
+            <a href="data/sungai.geojson" download class="btn btn-outline-primary btn-sm" data-download-toast="Dataset sungai diunduh."><i class="fa-solid fa-download me-1"></i>Sungai</a>
+            <a href="data/buffer_sungai.geojson" download class="btn btn-outline-info btn-sm" data-download-toast="Dataset buffer diunduh."><i class="fa-solid fa-download me-1"></i>Buffer</a>
+          </div>
+        </div>
+
+        <div class="map-panel-section">
+          <div class="alert alert-light border mb-0 small text-muted" style="font-size:.68rem;">
+            <i class="fa-solid fa-circle-info text-primary me-1"></i> Klik layer untuk menyalakan/mematikan. Gunakan alat ukur untuk menghitung jarak pada peta.
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- LEGEND -->
+    <div class="map-legend" id="mapLegend">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h3 class="mb-0"><i class="fa-solid fa-layer-group text-warning me-1"></i> Legenda</h3>
+        <button class="map-legend-close" type="button" onclick="toggleLegend()" aria-label="Tutup legenda"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="legend-item"><span class="legend-color" style="border:1.5px dashed #0c2444;background:rgba(12,36,68,.08);"></span><span>Batas kelurahan</span></div>
+      <div class="legend-item"><span class="legend-color" style="background:linear-gradient(90deg,#ef4444,#f59e0b,#eab308,#64748b);"></span><span>Warna dasar: rasio eksposur zona rawan</span></div>
+      <div class="legend-item"><span class="legend-color" style="background:#0288d1;"></span><span>Sungai utama</span></div>
+      <div class="legend-item"><span class="legend-color" style="background:#22d3ee;"></span><span>Drainase kota</span></div>
+      <div class="legend-item"><span class="legend-color" style="background:#ffa000;opacity:.75;"></span><span>Kawasan permukiman</span></div>
+      <div class="legend-item"><span class="legend-color" style="background:#e53935;opacity:.55;"></span><span>Zona rawan rob BPBD</span></div>
+      <div class="legend-item"><span class="legend-color" style="border:1.5px dashed #0e7490;background:rgba(34,211,238,.16);"></span><span>Buffer sempadan (perhatian)</span></div>
+      <div class="legend-item"><span class="legend-color" style="background:#d32f2f;"></span><span>Permukiman di zona rawan</span></div>
+      <div class="legend-item"><span class="legend-color" style="border-radius:50%;background:#16a34a;width:10px;height:10px;"></span><span>Titik survei GPS</span></div>
+      <div class="legend-item"><span class="legend-color" style="border-radius:50%;background:#2563eb;width:10px;height:10px;"></span><span>Laporan warga PetaBencana</span></div>
+    </div>
+
+    <div class="north-arrow-badge" aria-hidden="true"><i class="fa-solid fa-location-arrow fa-lg text-danger" style="transform:rotate(-45deg);display:block;margin:0 auto 2px;"></i><span>U</span></div>
+
+    <div class="map-status">
+      <div class="map-coords" id="coordsBadge">Lat: -6.95800 | Lng: 110.42200 | UTM: 436.120 m E, 9.230.850 m N (Zone 49S)</div>
+    </div>
+  </main>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Kembali ke atas"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- Bootstrap JS -->
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
+  <script src="js/app.js?v=4"></script>
+  <script src="js/live-monitor.js?v=6"></script>
+
+  <!-- JAVASCRIPT LOGIC CORE: ROBUST INDEPENDENT LOADING & ACCURATE PROPERTIES -->
+  <script>
+    // 1. Inisialisasi Map
+    const initialCenter = [-6.9580, 110.4220];
+    const initialZoom = 13;
+    const map = L.map('map', {
+      zoomControl: true,
+      center: initialCenter,
+      zoom: initialZoom,
+      minZoom: 11,
+      maxZoom: 18
+    });
+
+    // 2. Setup Dedicated Panes (Points & Lines Selalu Berada di Atas Poligon)
+    map.createPane('kelurahanPane');   map.getPane('kelurahanPane').style.zIndex = 400;
+    map.createPane('bufferPane');      map.getPane('bufferPane').style.zIndex = 410;
+    map.createPane('genanganPane');    map.getPane('genanganPane').style.zIndex = 420;
+    map.createPane('permukimanPane');  map.getPane('permukimanPane').style.zIndex = 430;
+    map.createPane('terdampakPane');   map.getPane('terdampakPane').style.zIndex = 440;
+    map.createPane('sungaiPane');      map.getPane('sungaiPane').style.zIndex = 500;
+    map.createPane('surveiPane');      map.getPane('surveiPane').style.zIndex = 650;
+    map.createPane('laporanPane');     map.getPane('laporanPane').style.zIndex = 640;
+
+    // 3. Basemaps Resmi (OpenStreetMap Utama Tanpa API Key & Tanpa Watermark)
+    const basemaps = {
+      osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+      }),
+      satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS'
+      }),
+      topo: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: 'Map data: &copy; OSM, SRTM | Map style: &copy; OpenTopoMap'
+      })
+    };
+    basemaps.osm.addTo(map);
+
+    function setBasemap(type) {
+      Object.values(basemaps).forEach(bm => map.removeLayer(bm));
+      if (basemaps[type]) basemaps[type].addTo(map);
+    }
+
+    // 4. Data Layer Store & Properties
+    const rawData = {};
+    const geoJsonLayers = {};
+    const kelurahanBounds = {};
+    let globalOpacity = 0.6;
+    let kelurahanRisk = {};
+
+    // Konfigurasi 7 Lapisan Spasial
+    const layerConfigs = [
+      { key: 'kelurahan', name: 'Batas Kelurahan', url: 'data/batas_kelurahan.geojson', defaultVisible: true },
+      { key: 'sungai', name: 'Sungai & Drainase', url: 'data/sungai.geojson', defaultVisible: true },
+      { key: 'genangan', name: 'Zona Rawan Rob BPBD', url: 'data/area_genangan.geojson', defaultVisible: true },
+      { key: 'buffer', name: 'Buffer Sungai', url: 'data/buffer_sungai.geojson', defaultVisible: true },
+      { key: 'permukiman', name: 'Kawasan Permukiman', url: 'data/permukiman.geojson', defaultVisible: true },
+      { key: 'terdampak', name: 'Permukiman di Zona Rawan', url: 'data/permukiman_terdampak.geojson', defaultVisible: true },
+      { key: 'survei', name: 'Titik Survei GPS', url: 'data/titik_survei.geojson', defaultVisible: true }
+    ];
+
+    // 5. Risk ratio per kelurahan for the base choropleth
+    async function loadRiskStats() {
+      try {
+        const response = await fetch('data/statistik.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const stats = await response.json();
+        (stats.kelurahan_rankings || []).forEach(item => {
+          kelurahanRisk[item.nama_kel] = {
+            ratio: Number(item.rasio_persen) || 0,
+            settlement: Number(item.luas_permukiman_ha) || 0
+          };
+        });
+      } catch (error) {
+        console.warn('Statistik risiko kelurahan belum termuat:', error);
+      }
+    }
+
+    function riskData(name) {
+      return kelurahanRisk[name] || { ratio: 0, settlement: 0 };
+    }
+
+    function riskColor(name) {
+      const data = riskData(name);
+      if (!data.settlement) return '#64748b';
+      if (data.ratio >= 70) return '#ef4444';
+      if (data.ratio >= 40) return '#f59e0b';
+      if (data.ratio > 0) return '#eab308';
+      return '#22c55e';
+    }
+
+    function ratioOpacity(name) {
+      const data = riskData(name);
+      if (!data.settlement) return 0.05;
+      if (data.ratio >= 70) return 0.18;
+      if (data.ratio >= 40) return 0.12;
+      if (data.ratio > 0) return 0.07;
+      return 0.06;
+    }
+
+    async function loadLayerIndependently(cfg) {
+      try {
+        const res = await fetch(cfg.url, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        rawData[cfg.key] = data;
+        return { success: true, key: cfg.key };
+      } catch (err) {
+        console.warn(`Peringatan: Gagal memuat layer ${cfg.name} (${cfg.url}):`, err);
+        return { success: false, key: cfg.key, error: err.message };
+      }
+    }
+
+    async function initAllLayers() {
+      await loadRiskStats();
+      let loadedCount = 0;
+      let failedLayers = [];
+
+      for (const cfg of layerConfigs) {
+        const result = await loadLayerIndependently(cfg);
+        if (result.success) {
+          loadedCount++;
+        } else {
+          failedLayers.push(cfg.name);
+        }
+      }
+
+      // Inisialisasi masing-masing layer secara mandiri jika data tersedia
+      if (rawData.kelurahan) initKelurahanLayer();
+      if (rawData.sungai) initSungaiLayer();
+      if (rawData.genangan) initGenanganLayer();
+      if (rawData.buffer) initBufferLayer();
+      if (rawData.permukiman) initPermukimanLayer();
+      if (rawData.terdampak) initTerdampakLayer();
+      if (rawData.survei) initSurveiLayer();
+
+      updateCounter();
+
+      // Sembunyikan loading overlay
+      const loader = document.getElementById('loadingOverlay');
+      loader.style.opacity = '0';
+      setTimeout(() => loader.style.display = 'none', 300);
+
+      document.getElementById('layerLoadedBadge').innerText = `${loadedCount} Layer Siap`;
+
+      // Jika ada layer yang gagal, tampilkan peringatan non-blocking
+      if (failedLayers.length > 0) {
+        console.warn('Lapisan yang belum termuat:', failedLayers.join(', '));
+      }
+
+      // Validasi map size dan fokus ke wilayah kajian
+      setTimeout(() => {
+        map.invalidateSize();
+        if (geoJsonLayers.kelurahan && geoJsonLayers.kelurahan.getBounds().isValid()) {
+          map.fitBounds(geoJsonLayers.kelurahan.getBounds(), { padding: [30, 30], maxZoom: 14 });
+        }
+      }, 350);
+    }
+
+    // A. Batas Kelurahan (Simbol: Garis Biru Navy Putus-putus)
+    function initKelurahanLayer() {
+      geoJsonLayers.kelurahan = L.geoJSON(rawData.kelurahan, {
+        pane: 'kelurahanPane',
+        style: f => {
+          const name = f.properties.nama_kel || '';
+          return {
+            color: '#0c2444',
+            weight: 1.6,
+            dashArray: '5, 5',
+            fillColor: riskColor(name),
+            fillOpacity: ratioOpacity(name)
+          };
+        },
+        onEachFeature: (f, l) => {
+          const p = f.properties;
+          if (p.nama_kel) kelurahanBounds[p.nama_kel.toLowerCase()] = l.getBounds();
+          l.bindPopup(`
+            <div class="p-2" style="min-width: 220px;">
+              <div class="popup-title"><i class="fa-solid fa-landmark text-primary me-1"></i> Kelurahan ${p.nama_kel || '-'}</div>
+              <div class="popup-row"><span>Kecamatan:</span> <b>${p.kecamatan || 'Semarang Utara'}</b></div>
+              <div class="popup-row"><span>Luas Wilayah:</span> <b>${p.luas_ha || '-'} Ha</b></div>
+              <div class="popup-row"><span>Populasi Penduduk:</span> <b>${p.populasi ? p.populasi.toLocaleString('id-ID') : '-'} Jiwa</b></div>
+              <div class="popup-row"><span>Kepadatan:</span> <b>${p.kepadatan || '-'} Jiwa/Ha</b></div>
+              <div class="popup-row border-top pt-1 mt-1 small text-muted">Sumber: ${p.sumber || 'Ina-Geoportal / OSM'}</div>
+            </div>
+          `);
+        }
+      });
+      if (document.getElementById('chkKelurahan').checked) {
+        geoJsonLayers.kelurahan.addTo(map);
+      }
+    }
+
+    // B. Sungai & Drainase (Simbol: Garis Biru Sungai / Garis Cyan Drainase)
+    function initSungaiLayer() {
+      geoJsonLayers.sungai = L.geoJSON(rawData.sungai, {
+        pane: 'sungaiPane',
+        style: f => {
+          const isDrainase = f.properties.tipe && f.properties.tipe.toLowerCase().includes('drainase');
+          return {
+            color: isDrainase ? '#00bcd4' : '#0288d1',
+            weight: isDrainase ? 2.5 : 3.5,
+            opacity: 0.95
+          };
+        },
+        onEachFeature: (f, l) => {
+          const p = f.properties;
+          l.bindPopup(`
+            <div class="p-2" style="min-width: 210px;">
+              <div class="popup-title text-info"><i class="fa-solid fa-water me-1"></i> ${p.nama || 'Saluran Air'}</div>
+              <div class="popup-row"><span>Tipe Saluran:</span> <b>${p.tipe || '-'}</b></div>
+              <div class="popup-row"><span>Orde Saluran:</span> <b>Orde ${p.orde || '-'}</b></div>
+              <div class="popup-row"><span>Lebar Penampang:</span> <b>${p.lebar_m || '-'} meter</b></div>
+              <div class="popup-row"><span>Panjang Saluran:</span> <b>${p.panjang_m ? p.panjang_m.toFixed(1) : '-'} m</b></div>
+              <div class="popup-row"><span>Kondisi Fisik:</span> <b>${p.kondisi || 'Baik'}</b></div>
+              <div class="popup-row border-top pt-1 mt-1 small text-muted">Sumber: ${p.sumber || 'BBWS Pemali-Juana'}</div>
+            </div>
+          `);
+        }
+      });
+      if (document.getElementById('chkSungai').checked) {
+        geoJsonLayers.sungai.addTo(map);
+      }
+    }
+
+    // C. Area Rob BPBD (Simbol: Polygon Merah Transparan)
+    function initGenanganLayer() {
+      geoJsonLayers.genangan = L.geoJSON(rawData.genangan, {
+        pane: 'genanganPane',
+        style: {
+          color: '#b91c1c',
+          weight: 1.8,
+          fillColor: '#ef4444',
+          fillOpacity: 0.42
+        },
+        onEachFeature: (f, l) => {
+          const p = f.properties;
+          l.bindPopup(`
+            <div class="p-2" style="min-width: 230px;">
+              <div class="popup-title text-danger"><i class="fa-solid fa-cloud-showers-water me-1"></i> ${p.nama_zona || 'Zona Rob'}</div>
+              <div class="popup-row"><span>Jenis Bencana:</span> <b>${p.jenis_bencana || 'Rob Pasang Laut'}</b></div>
+              <div class="popup-row"><span>Tingkat Bahaya:</span> <span class="badge bg-danger">${p.tingkat_bahaya || 'Tinggi'}</span></div>
+              <div class="popup-row"><span>Rata-rata Genangan:</span> <b>${p.tinggi_rata_cm || '-'} cm</b></div>
+              <div class="popup-row"><span>Durasi Genangan:</span> <b>${p.durasi_jam || '-'} Jam</b></div>
+              <div class="popup-row"><span>Frekuensi Kejadian:</span> <b>${p.frekuensi || '-'}</b></div>
+              <div class="popup-row"><span>Luas Area:</span> <b>${p.luas_ha || '-'} Ha</b></div>
+              <div class="popup-row border-top pt-1 mt-1 small text-muted">Sumber: ${p.sumber || 'BPBD Kota Semarang'}</div>
+            </div>
+          `);
+        }
+      });
+      if (document.getElementById('chkGenangan').checked) {
+        geoJsonLayers.genangan.addTo(map);
+      }
+    }
+
+    // D. Buffer Sungai (Simbol: Polygon Hijau Transparan)
+    function initBufferLayer() {
+      geoJsonLayers.buffer = L.geoJSON(rawData.buffer, {
+        pane: 'bufferPane',
+        style: f => {
+          const is100 = f.properties.radius_m === 100 || (f.properties.zona_buffer && f.properties.zona_buffer.includes('100'));
+          return {
+            color: '#0e7490',
+            weight: 1.5,
+            dashArray: '4, 4',
+            fillColor: '#22d3ee',
+            fillOpacity: is100 ? 0.12 : 0.07
+          };
+        },
+        onEachFeature: (f, l) => {
+          const p = f.properties;
+          l.bindPopup(`
+            <div class="p-2" style="min-width: 230px;">
+              <div class="popup-title text-success"><i class="fa-solid fa-ruler-horizontal me-1"></i> ${p.zona_buffer || 'Buffer Sempadan'}</div>
+              <div class="popup-row"><span>Radius Sempadan:</span> <b>${p.radius_m || '-'} meter</b></div>
+              <div class="popup-row"><span>Tingkat Risiko:</span> <b>${p.tingkat_risiko || '-'}</b></div>
+              <div class="popup-row"><span>Luas Koridor:</span> <b>${p.luas_ha || '-'} Ha</b></div>
+              <div class="popup-row"><span>Keterangan:</span> <span class="small">${p.deskripsi || '-'}</span></div>
+              <div class="popup-row border-top pt-1 mt-1 small text-muted">Regulasi: Permen PUPR No. 28/2015</div>
+            </div>
+          `);
+        }
+      });
+      if (document.getElementById('chkBuffer').checked) {
+        geoJsonLayers.buffer.addTo(map);
+      }
+    }
+
+    // E. Seluruh Kawasan Permukiman (Simbol: Polygon Kuning / Oranye)
+    function initPermukimanLayer() {
+      geoJsonLayers.permukiman = L.geoJSON(rawData.permukiman, {
+        pane: 'permukimanPane',
+        style: {
+          color: '#f57c00',
+          weight: 1.2,
+          fillColor: '#ffa000',
+          fillOpacity: 0.18
+        },
+        onEachFeature: (f, l) => {
+          const p = f.properties;
+          l.bindPopup(`
+            <div class="p-2" style="min-width: 220px;">
+              <div class="popup-title text-warning"><i class="fa-solid fa-house-chimney me-1"></i> ${p.nama_kaw || 'Kawasan Permukiman'}</div>
+              <div class="popup-row"><span>Kelurahan:</span> <b>${p.kelurahan || '-'}</b></div>
+              <div class="popup-row"><span>Tipe Hunian:</span> <b>${p.tipe_huni || '-'}</b></div>
+              <div class="popup-row"><span>Luas Kawasan:</span> <b>${p.luas_ha || '-'} Ha</b></div>
+              <div class="popup-row"><span>Jarak ke Sungai:</span> <b>${p.jarak_sungai_m ? p.jarak_sungai_m.toFixed(1) : '-'} m</b></div>
+              <div class="popup-row"><span>Zona Risiko:</span> <span class="badge bg-warning text-dark">${p.zona_risiko || '-'}</span></div>
+            </div>
+          `);
+        }
+      });
+      if (document.getElementById('chkPermukiman').checked) {
+        geoJsonLayers.permukiman.addTo(map);
+      }
+    }
+
+    // F. Permukiman Terdampak (Simbol: Polygon Merah Solid)
+    function initTerdampakLayer(filteredFeatures = null) {
+      if (geoJsonLayers.terdampak) {
+        map.removeLayer(geoJsonLayers.terdampak);
+      }
+      const dataToRender = filteredFeatures || rawData.terdampak;
+      if (!dataToRender) return;
+
+      geoJsonLayers.terdampak = L.geoJSON(dataToRender, {
+        pane: 'terdampakPane',
+        style: f => {
+          const isVeryHigh = f.properties.tingkat_risiko && f.properties.tingkat_risiko.includes('Sangat Tinggi');
+          return {
+            color: isVeryHigh ? '#b71c1c' : '#d32f2f',
+            weight: 2,
+            fillColor: '#d32f2f',
+            fillOpacity: globalOpacity
+          };
+        },
+        onEachFeature: (f, l) => {
+          const p = f.properties;
+          l.bindPopup(`
+            <div class="p-2" style="min-width: 240px;">
+              <div class="popup-title text-danger"><i class="fa-solid fa-house-crack me-1"></i> ${p.nama_kaw || 'Permukiman di zona rawan'}</div>
+              <div class="popup-row"><span>Kelurahan:</span> <b>${p.kelurahan || '-'}</b></div>
+              <div class="popup-row"><span>Tingkat Risiko:</span> <span class="badge bg-danger">${p.tingkat_risiko || 'Sangat Tinggi'}</span></div>
+              <div class="popup-row"><span>Jenis Bahaya:</span> <b>${p.jenis_bahaya || 'Rob Pasang Laut'}</b></div>
+              <div class="popup-row"><span>Luas zona rawan:</span> <b>${p.luas_terpapar_ha || '-'} Ha (${p.pct_terpapar || '-'}%)</b></div>
+              <div class="popup-row border-top pt-1 mt-1"><span>Rekomendasi:</span> <span class="small text-muted">${p.rekomendasi || '-'}</span></div>
+            </div>
+          `);
+        }
+      });
+
+      if (document.getElementById('chkTerdampak').checked) {
+        geoJsonLayers.terdampak.addTo(map);
+      }
+    }
+
+    // G. 25 Titik Survei Lapangan GPS (Simbol: Marker Hijau)
+    function initSurveiLayer(filteredFeatures = null) {
+      if (geoJsonLayers.survei) {
+        map.removeLayer(geoJsonLayers.survei);
+      }
+      const dataToRender = filteredFeatures || rawData.survei;
+      if (!dataToRender) return;
+
+      geoJsonLayers.survei = L.geoJSON(dataToRender, {
+        pane: 'surveiPane',
+        pointToLayer: (f, latlng) => {
+          const depth = f.properties.tinggi_genangan_cm || 0;
+          // Marker hijau ground truth (merah jika >40 cm, oranye jika 1-40 cm, hijau jika 0 cm)
+          const col = depth > 40 ? '#d32f2f' : (depth > 0 ? '#f57c00' : '#2e7d32');
+          return L.circleMarker(latlng, {
+            radius: 7,
+            fillColor: col,
+            color: '#ffffff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.95
+          });
+        },
+        onEachFeature: (f, l) => {
+          const p = f.properties;
+          l.bindPopup(`
+            <div class="p-2" style="min-width: 250px;">
+              <div class="d-flex justify-content-between align-items-center border-bottom pb-1 mb-1">
+                <span class="fw-bold text-success"><i class="fa-solid fa-location-crosshairs me-1"></i>${p.kode_survei || p.id_titik}</span>
+                <span class="badge bg-secondary">${p.kelurahan || '-'}</span>
+              </div>
+              <div class="popup-row"><span>Nama Lokasi:</span> <b>${p.nama_lokasi || '-'}</b></div>
+              <div class="popup-row"><span>Koordinat Lat/Lon:</span> <code>${p.lat}, ${p.lon}</code></div>
+              <div class="popup-row"><span>Koordinat UTM 49S:</span> <code>${p.x_utm} m E, ${p.y_utm} m N</code></div>
+              <div class="popup-row"><span>Jenis Genangan:</span> <b>${p.jenis_genangan || '-'}</b></div>
+              <div class="popup-row"><span>Tinggi Genangan:</span> <span class="badge bg-danger fs-6">${p.tinggi_genangan_cm || 0} cm</span></div>
+              <div class="popup-row"><span>Durasi Surut:</span> <b>${p.durasi_genangan_jam || '-'} Jam</b></div>
+              <div class="popup-row"><span>Kondisi Drainase:</span> <b>${p.kondisi_drainase || '-'}</b></div>
+              <div class="popup-row"><span>Tanggal Survei:</span> <b>${p.tanggal_survei || '-'}</b></div>
+              <div class="popup-row"><span>Surveyor:</span> <b>${p.surveyor || '-'}</b></div>
+            </div>
+          `);
+        }
+      });
+
+      if (document.getElementById('chkSurvei').checked) {
+        geoJsonLayers.survei.addTo(map);
+      }
+    }
+
+    // 6. Toggle Layer Visibility
+    function toggleLayer(name) {
+      if (!geoJsonLayers[name]) return;
+      if (map.hasLayer(geoJsonLayers[name])) {
+        map.removeLayer(geoJsonLayers[name]);
+      } else {
+        map.addLayer(geoJsonLayers[name]);
+      }
+    }
+
+    // 7. Global Opacity Slider
+    function changeGlobalOpacity(val) {
+      globalOpacity = val / 100;
+      document.getElementById('opacityVal').innerText = val + '%';
+      if (geoJsonLayers.terdampak) {
+        geoJsonLayers.terdampak.setStyle({ fillOpacity: globalOpacity });
+      }
+      if (geoJsonLayers.genangan) {
+        geoJsonLayers.genangan.setStyle({ fillOpacity: globalOpacity * 0.5 });
+      }
+      if (geoJsonLayers.buffer) {
+        geoJsonLayers.buffer.setStyle({ fillOpacity: globalOpacity * 0.35 });
+      }
+      if (geoJsonLayers.permukiman) {
+        geoJsonLayers.permukiman.setStyle({ fillOpacity: globalOpacity * 0.5 });
+      }
+    }
+
+    // 8. Interactive Combined Filtering (Kelurahan & Tingkat Bahaya)
+    function applyFilters() {
+      const kel = document.getElementById('kelurahanFilter').value.trim().toLowerCase();
+      const haz = document.getElementById('hazardFilter').value.trim().toLowerCase();
+
+      // Filter Permukiman Terdampak
+      let filteredTerdampak = null;
+      if (rawData.terdampak && rawData.terdampak.features) {
+        const features = rawData.terdampak.features.filter(f => {
+          const matchKel = !kel || (f.properties.kelurahan && f.properties.kelurahan.toLowerCase() === kel);
+          const matchHaz = !haz || (f.properties.tingkat_risiko && f.properties.tingkat_risiko.toLowerCase().includes(haz));
+          return matchKel && matchHaz;
+        });
+        filteredTerdampak = { type: 'FeatureCollection', features: features };
+        initTerdampakLayer(filteredTerdampak);
+      }
+
+      // Filter Titik Survei Lapangan
+      let filteredSurvei = null;
+      if (rawData.survei && rawData.survei.features) {
+        const features = rawData.survei.features.filter(f => {
+          const matchKel = !kel || (f.properties.kelurahan && f.properties.kelurahan.toLowerCase() === kel);
+          let matchHaz = true;
+          const depth = f.properties.tinggi_genangan_cm || 0;
+          if (haz === 'sangat tinggi') matchHaz = depth > 40;
+          else if (haz === 'tinggi') matchHaz = depth > 20 && depth <= 40;
+          else if (haz === 'sedang') matchHaz = depth > 0 && depth <= 20;
+          return matchKel && matchHaz;
+        });
+        filteredSurvei = { type: 'FeatureCollection', features: features };
+        initSurveiLayer(filteredSurvei);
+      }
+
+      // Zoom ke kelurahan jika dipilih
+      if (kel && kelurahanBounds[kel]) {
+        map.fitBounds(kelurahanBounds[kel], { padding: [40, 40], maxZoom: 16 });
+      }
+
+      updateCounter(
+        filteredTerdampak ? filteredTerdampak.features.length : null,
+        filteredSurvei ? filteredSurvei.features.length : null
+      );
+    }
+
+    // 9. Search Lokasi / Kelurahan
+    function searchLocation(e) {
+      if (e.key === 'Enter' || e.type === 'change' || e.type === 'keyup') {
+        const q = document.getElementById('searchInput').value.trim().toLowerCase();
+        if (!q) return;
+
+        // Cari kelurahan yang cocok
+        const matchedKel = Object.keys(kelurahanBounds).find(k => k.includes(q));
+        if (matchedKel) {
+          map.fitBounds(kelurahanBounds[matchedKel], { padding: [40, 40], maxZoom: 16 });
+          document.getElementById('kelurahanFilter').value = matchedKel.charAt(0).toUpperCase() + matchedKel.slice(1);
+          applyFilters();
+        }
+      }
+    }
+
+    function resetAllFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('kelurahanFilter').value = '';
+      document.getElementById('hazardFilter').value = '';
+      initTerdampakLayer();
+      initSurveiLayer();
+      map.setView(initialCenter, initialZoom);
+      updateCounter();
+    }
+
+    function updateCounter(countTerdampak = null, countSurvei = null) {
+      const cT = countTerdampak !== null ? countTerdampak : (rawData.terdampak ? rawData.terdampak.features.length : 10);
+      const cS = countSurvei !== null ? countSurvei : (rawData.survei ? rawData.survei.features.length : 25);
+      document.getElementById('filterCounter').innerHTML = `
+        <i class="fa-solid fa-filter me-1"></i> ${cT} Klaster | ${cS} Titik GPS
+      `;
+    }
+
+    // 9b. PetaBencana citizen reports layer (real crowdsourced points)
+    function escapeHtml(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    }
+
+    function initLaporanLayer(payload) {
+      if (geoJsonLayers.laporan) {
+        map.removeLayer(geoJsonLayers.laporan);
+        delete geoJsonLayers.laporan;
+      }
+      const features = payload && payload.features ? payload.features.features : [];
+      document.getElementById('laporanCount').textContent = payload && payload.status === 'connected' ? String(payload.count != null ? payload.count : features.length) : '—';
+      if (!features.length) return;
+      geoJsonLayers.laporan = L.geoJSON(payload.features, {
+        pane: 'laporanPane',
+        pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+          radius: 7,
+          color: '#ffffff',
+          weight: 2,
+          fillColor: '#2563eb',
+          fillOpacity: 0.95
+        }),
+        onEachFeature: (feature, layer) => {
+          const p = feature.properties || {};
+          const text = escapeHtml(p.text || 'Laporan banjir warga');
+          const time = p.created_at ? new Date(p.created_at).toLocaleString('id-ID') : '-';
+          const image = p.image_url ? `<div class="mt-2"><img src="${escapeHtml(p.image_url)}" alt="Foto laporan warga" style="max-width:100%;border-radius:8px;" loading="lazy"></div>` : '';
+          layer.bindPopup(`<div class="popup-title" style="color:#1d4ed8;"><i class="fa-solid fa-bullhorn me-1"></i>Laporan warga</div>
+            <div class="popup-row"><span>Waktu</span><b>${escapeHtml(time)}</b></div>
+            <div class="popup-row"><span>Status</span><b>${escapeHtml(p.status || '-')}</b></div>
+            <div class="popup-row"><span>Sumber</span><b>PetaBencana.id</b></div>
+            <p class="small text-muted mt-2 mb-0">${text}</p>${image}`);
+        }
+      });
+      if (document.getElementById('chkLaporan').checked) geoJsonLayers.laporan.addTo(map);
+    }
+
+    async function loadCitizenReports() {
+      try {
+        const response = await fetch('/api/monitoring/reports?days=7', { cache: 'no-store' });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const payload = await response.json();
+        initLaporanLayer(payload);
+        if (window.appToast && payload.count > 0) {
+          appToast(`${payload.count} laporan warga PetaBencana dalam 7 hari.`, 'fa-bullhorn');
+        }
+      } catch (error) {
+        const badge = document.getElementById('laporanCount');
+        if (badge) badge.textContent = '—';
+        console.warn('Laporan warga PetaBencana belum tersedia:', error);
+      }
+    }
+
+    // 10. Distance Measurement Tool
+    let isMeasuring = false;
+    let measurePts = [];
+    let measurePolyline = null;
+    let measureMarkers = [];
+
+    function toggleMeasure() {
+      isMeasuring = !isMeasuring;
+      const btn = document.getElementById('btnMeasure');
+      btn.classList.toggle('is-active', isMeasuring);
+      btn.innerHTML = isMeasuring ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-ruler-combined"></i>';
+      if (isMeasuring) {
+        measurePts = [];
+        clearMeasureGraphics();
+        map.getContainer().style.cursor = 'crosshair';
+        if (window.appToast) appToast('Mode ukur jarak aktif. Klik dua titik atau lebih pada peta.', 'fa-ruler-combined');
+      } else {
+        clearMeasureGraphics();
+        map.getContainer().style.cursor = '';
+      }
+    }
+
+    function clearMeasureGraphics() {
+      if (measurePolyline) map.removeLayer(measurePolyline);
+      measureMarkers.forEach(m => map.removeLayer(m));
+      measureMarkers = [];
+    }
+
+    map.on('click', function(e) {
+      if (!isMeasuring) return;
+      measurePts.push(e.latlng);
+
+      const marker = L.circleMarker(e.latlng, { radius: 5, color: '#d32f2f', fillColor: '#ffffff', fillOpacity: 1 }).addTo(map);
+      measureMarkers.push(marker);
+
+      if (measurePts.length === 1) {
+        measurePolyline = L.polyline(measurePts, { color: '#d32f2f', weight: 3, dashArray: '6, 6' }).addTo(map);
+      } else {
+        measurePolyline.setLatLngs(measurePts);
+        let dist = 0;
+        for (let i = 0; i < measurePts.length - 1; i++) {
+          dist += measurePts[i].distanceTo(measurePts[i+1]);
+        }
+        L.popup({ autoClose: false })
+          .setLatLng(e.latlng)
+          .setContent(`<b>Jarak Akumulasi:</b> ${dist.toFixed(1)} meter (${(dist/1000).toFixed(2)} km)`)
+          .openOn(map);
+      }
+    });
+
+    // 11. Fullscreen Toggle
+    function toggleFullscreen() {
+      const elem = document.getElementById('map-wrapper');
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) elem.requestFullscreen();
+        else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      setTimeout(() => { map.invalidateSize(); }, 300);
+    });
+
+    // 12. Dynamic Coordinate Tracking (WGS 84 & UTM Zone 49S)
+    map.on('mousemove', function(e) {
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+      // Formula Konversi Pendekatan UTM Zone 49S (Central Meridian 111° BT)
+      const utmEasting = Math.round(500000 + (lng - 111.0) * 111319 * Math.cos(lat * Math.PI / 180));
+      const utmNorthing = Math.round(10000000 + lat * 110574);
+      document.getElementById('coordsBadge').innerText = 
+        `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)} | UTM: ${utmEasting.toLocaleString('id-ID')} m E, ${utmNorthing.toLocaleString('id-ID')} m N (Zone 49S)`;
+    });
+
+
+    // 13. Panel, legenda, lokasi & fokus wilayah
+    function toggleMapPanel(force) {
+      const panel = document.getElementById('mapPanel');
+      if (!panel) return;
+      if (force === false) panel.classList.remove('is-open');
+      else panel.classList.toggle('is-open');
+    }
+
+    function toggleLegend() {
+      const legend = document.getElementById('mapLegend');
+      if (!legend) return;
+      legend.classList.toggle('is-open');
+    }
+
+    function locateUser() {
+      if (!navigator.geolocation) {
+        if (window.appToast) appToast('Browser tidak mendukung geolokasi.', 'fa-triangle-exclamation');
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const latlng = [pos.coords.latitude, pos.coords.longitude];
+          map.setView(latlng, 16);
+          L.circleMarker(latlng, {
+            radius: 8, color: '#ffffff', weight: 3, fillColor: '#0ea5a4', fillOpacity: 1
+          }).addTo(map).bindPopup('<b>Lokasi Anda</b><br>Akurasi ±' + Math.round(pos.coords.accuracy) + ' m').openPopup();
+          if (window.appToast) appToast('Lokasi berhasil ditemukan.', 'fa-location-crosshairs');
+        },
+        () => {
+          if (window.appToast) appToast('Izin lokasi ditolak atau lokasi tidak tersedia.', 'fa-triangle-exclamation');
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    }
+
+    function fitStudyArea() {
+      if (geoJsonLayers.kelurahan && geoJsonLayers.kelurahan.getBounds().isValid()) {
+        map.fitBounds(geoJsonLayers.kelurahan.getBounds(), { padding: [30, 30] });
+        if (window.appToast) appToast('Fokus kembali ke wilayah kajian Semarang Utara.', 'fa-compress');
+      }
+    }
+
+    // Jalankan inisialisasi layer saat halaman siap
+    initAllLayers().then(() => loadCitizenReports());
+  </script>
+</body>
+</html>

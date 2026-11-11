@@ -1,0 +1,10 @@
+id_kel,nama_kel,jumlah_rw,jumlah_rt,populasi_jiwa,luas_kelurahan_ha,luas_permukiman_ha,luas_terpapar_ha,persentase_terpapar_pct,jumlah_titik_survei,status_kerentanan
+KEL-02,Bandarharjo,12,98,23410,226.34,30.48,21.28,69.81,1,Waspada
+KEL-05,Bulu Lor,11,85,14850,65.89,15.57,0.0,0.0,1,Di Luar Zona Rawan
+KEL-07,Dadapsari,10,72,11200,39.74,0.0,0.0,0.0,1,Data Belum Tersedia
+KEL-06,Kuningan,9,68,12900,85.35,5.56,1.4,25.16,0,Terkendali
+KEL-04,Panggung Kidul,8,64,10450,48.44,19.4,18.89,97.37,1,Sangat Kritis
+KEL-03,Panggung Lor,14,112,15600,247.46,63.26,60.58,95.76,3,Sangat Kritis
+KEL-08,Plombokan,7,56,9800,54.32,2.59,0.0,0.0,2,Di Luar Zona Rawan
+KEL-09,Purwosari,6,48,8350,48.33,0.0,0.0,0.0,1,Data Belum Tersedia
+KEL-01,Tanjung Mas,16,124,31250,378.8,34.82,18.18,52.2,4,Waspada

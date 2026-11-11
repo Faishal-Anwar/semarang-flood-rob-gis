@@ -1,0 +1,217 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis projectname="PEMETAAN DAN ANALISIS RISIKO BANJIR DAN ROB SEMARANG UTARA" version="3.28.0-Firenze">
+  <homePath path=""/>
+  <title>PEMETAAN DAN ANALISIS RISIKO BANJIR DAN ROB DI KOTA SEMARANG BAGIAN UTARA MENGGUNAKAN SISTEM INFORMASI GEOGRAFIS</title>
+  <autotransaction active="0"/>
+  <evaluateDefaultValues active="0"/>
+  <trust active="0"/>
+  <projectCrs>
+    <spatialrefsys>
+      <wkt>PROJCRS["WGS 84 / UTM zone 49S",BASEGEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4326]],CONVERSION["UTM zone 49S",METHOD["Transverse Mercator",ID["EPSG",9807]],PARAMETER["Latitude of natural origin",0,ANGLEUNIT["degree",0],ID["EPSG",8801]],PARAMETER["Longitude of natural origin",111,ANGLEUNIT["degree",0],ID["EPSG",8802]],PARAMETER["Scale factor at natural origin",0.9996,SCALEUNIT["unity",1],ID["EPSG",8805]],PARAMETER["False easting",500000,LENGTHUNIT["metre",1],ID["EPSG",8806]],PARAMETER["False northing",10000000,LENGTHUNIT["metre",1],ID["EPSG",8807]]],CS[Cartesian,2],AXIS["(E)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["(N)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["Engineering survey, topographic mapping."],AREA["Indonesia - onshore and offshore between 108°E and 114°E, southern hemisphere."],BBOX[-11,108,0,114]],ID["EPSG",32749]]</wkt>
+      <proj4>+proj=utm +zone=49 +south +datum=WGS84 +units=m +no_defs</proj4>
+      <srsid>3199</srsid>
+      <srid>32749</srid>
+      <authid>EPSG:32749</authid>
+      <description>WGS 84 / UTM zone 49S</description>
+      <projectionacronym>utm</projectionacronym>
+      <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+      <geographicflag>false</geographicflag>
+    </spatialrefsys>
+  </projectCrs>
+  <layer-tree-group>
+    <customproperties>
+      <Option/>
+    </customproperties>
+    <layer-tree-group name="06_ANALISIS" expanded="1" checked="Qt::Checked">
+      <layer-tree-layer id="Permukiman_Terdampak" name="Permukiman Terdampak (Hasil Overlay)" providerKey="ogr" source="../04_DATABASE/Database_SIG.gpkg|layername=Permukiman_Terdampak" expanded="1" checked="Qt::Checked"/>
+      <layer-tree-layer id="Buffer_Sungai" name="Buffer Sungai (100m &amp; 200m)" providerKey="ogr" source="../04_DATABASE/Database_SIG.gpkg|layername=Buffer_Sungai" expanded="0" checked="Qt::Checked"/>
+    </layer-tree-group>
+    <layer-tree-group name="05_SURVEI" expanded="1" checked="Qt::Checked">
+      <layer-tree-layer id="Titik_Survei_Lapangan" name="Titik Survei Lapangan &amp; Genangan (25 GPS)" providerKey="ogr" source="../04_DATABASE/Database_SIG.gpkg|layername=Titik_Survei_Lapangan" expanded="1" checked="Qt::Checked"/>
+    </layer-tree-group>
+    <layer-tree-group name="04_PERMUKIMAN" expanded="1" checked="Qt::Checked">
+      <layer-tree-layer id="Permukiman" name="Kawasan Permukiman Penduduk" providerKey="ogr" source="../04_DATABASE/Database_SIG.gpkg|layername=Permukiman" expanded="1" checked="Qt::Checked"/>
+    </layer-tree-group>
+    <layer-tree-group name="03_GENANGAN" expanded="1" checked="Qt::Checked">
+      <layer-tree-layer id="Area_Genangan_Banjir_Rob" name="Area Genangan Banjir &amp; Rob" providerKey="ogr" source="../04_DATABASE/Database_SIG.gpkg|layername=Area_Genangan_Banjir_Rob" expanded="1" checked="Qt::Checked"/>
+    </layer-tree-group>
+    <layer-tree-group name="02_SUNGAI_DRAINASE" expanded="1" checked="Qt::Checked">
+      <layer-tree-layer id="Sungai_dan_Drainase" name="Jaringan Sungai &amp; Saluran Drainase" providerKey="ogr" source="../04_DATABASE/Database_SIG.gpkg|layername=Sungai_dan_Drainase" expanded="1" checked="Qt::Checked"/>
+    </layer-tree-group>
+    <layer-tree-group name="01_ADMINISTRASI" expanded="1" checked="Qt::Checked">
+      <layer-tree-layer id="Batas_Administrasi_Kelurahan" name="Batas Administrasi Kelurahan" providerKey="ogr" source="../04_DATABASE/Database_SIG.gpkg|layername=Batas_Administrasi_Kelurahan" expanded="1" checked="Qt::Checked"/>
+    </layer-tree-group>
+    <customproperties/>
+  </layer-tree-group>
+  <projectlayers>
+    <maplayer type="vector" id="Batas_Administrasi_Kelurahan" name="Batas Administrasi Kelurahan" autoRefreshEnabled="0" readOnly="0">
+      <datasource>../04_DATABASE/Database_SIG.gpkg|layername=Batas_Administrasi_Kelurahan</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>Batas Administrasi Kelurahan</layername>
+      <srs>
+        <spatialrefsys>
+          <authid>EPSG:32749</authid>
+          <description>WGS 84 / UTM zone 49S</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol type="fill" name="0" alpha="1" clip_to_extent="1">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="border_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+              <prop k="color" v="251,250,245,255"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="outline_color" v="127,140,141,255"/>
+              <prop k="outline_style" v="dash"/>
+              <prop k="outline_width" v="0.6"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+    <maplayer type="vector" id="Sungai_dan_Drainase" name="Jaringan Sungai &amp; Saluran Drainase" autoRefreshEnabled="0" readOnly="0">
+      <datasource>../04_DATABASE/Database_SIG.gpkg|layername=Sungai_dan_Drainase</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>Jaringan Sungai &amp; Saluran Drainase</layername>
+      <srs>
+        <spatialrefsys>
+          <authid>EPSG:32749</authid>
+          <description>WGS 84 / UTM zone 49S</description>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol type="line" name="0" alpha="1">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="line_color" v="25,118,210,255"/>
+              <prop k="line_width" v="0.8"/>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+    <maplayer type="vector" id="Permukiman" name="Kawasan Permukiman Penduduk" autoRefreshEnabled="0" readOnly="0">
+      <datasource>../04_DATABASE/Database_SIG.gpkg|layername=Permukiman</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>Kawasan Permukiman Penduduk</layername>
+      <srs>
+        <spatialrefsys>
+          <authid>EPSG:32749</authid>
+          <description>WGS 84 / UTM zone 49S</description>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol type="fill" name="0" alpha="0.8">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="color" v="215,204,200,255"/>
+              <prop k="outline_color" v="141,110,99,255"/>
+              <prop k="outline_width" v="0.4"/>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+    <maplayer type="vector" id="Area_Genangan_Banjir_Rob" name="Area Genangan Banjir &amp; Rob" autoRefreshEnabled="0" readOnly="0">
+      <datasource>../04_DATABASE/Database_SIG.gpkg|layername=Area_Genangan_Banjir_Rob</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>Area Genangan Banjir &amp; Rob</layername>
+      <srs>
+        <spatialrefsys>
+          <authid>EPSG:32749</authid>
+          <description>WGS 84 / UTM zone 49S</description>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol type="fill" name="0" alpha="0.5">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="color" v="230,126,34,255"/>
+              <prop k="outline_color" v="211,84,0,255"/>
+              <prop k="outline_width" v="0.5"/>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+    <maplayer type="vector" id="Titik_Survei_Lapangan" name="Titik Survei Lapangan &amp; Genangan (25 GPS)" autoRefreshEnabled="0" readOnly="0">
+      <datasource>../04_DATABASE/Database_SIG.gpkg|layername=Titik_Survei_Lapangan</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>Titik Survei Lapangan &amp; Genangan (25 GPS)</layername>
+      <srs>
+        <spatialrefsys>
+          <authid>EPSG:32749</authid>
+          <description>WGS 84 / UTM zone 49S</description>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol type="marker" name="0" alpha="1">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="color" v="192,57,43,255"/>
+              <prop k="outline_color" v="255,255,255,255"/>
+              <prop k="outline_width" v="0.4"/>
+              <prop k="size" v="3.5"/>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+    <maplayer type="vector" id="Buffer_Sungai" name="Buffer Sungai (100m &amp; 200m)" autoRefreshEnabled="0" readOnly="0">
+      <datasource>../04_DATABASE/Database_SIG.gpkg|layername=Buffer_Sungai</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>Buffer Sungai (100m &amp; 200m)</layername>
+      <srs>
+        <spatialrefsys>
+          <authid>EPSG:32749</authid>
+          <description>WGS 84 / UTM zone 49S</description>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol type="fill" name="0" alpha="0.4">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="color" v="129,212,250,255"/>
+              <prop k="outline_color" v="41,182,246,255"/>
+              <prop k="outline_width" v="0.4"/>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+    <maplayer type="vector" id="Permukiman_Terdampak" name="Permukiman Terdampak (Hasil Overlay)" autoRefreshEnabled="0" readOnly="0">
+      <datasource>../04_DATABASE/Database_SIG.gpkg|layername=Permukiman_Terdampak</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>Permukiman Terdampak (Hasil Overlay)</layername>
+      <srs>
+        <spatialrefsys>
+          <authid>EPSG:32749</authid>
+          <description>WGS 84 / UTM zone 49S</description>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol type="fill" name="0" alpha="0.85">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="color" v="183,28,28,255"/>
+              <prop k="outline_color" v="50,50,50,255"/>
+              <prop k="outline_width" v="0.6"/>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+  </projectlayers>
+</qgis>

@@ -1,0 +1,25 @@
+# Local runtime data and secrets
+.env
+.env.*
+**/backend/monitoring.db
+**/backend/monitoring.db-*
+**/backend/backups/
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Generated caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Large distributable archive (source is tracked instead)
+PROJECT_SIG_SEMARANG_UTARA.zip

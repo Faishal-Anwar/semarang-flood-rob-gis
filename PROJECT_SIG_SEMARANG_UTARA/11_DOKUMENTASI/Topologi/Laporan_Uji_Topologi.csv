@@ -1,0 +1,5 @@
+Nama_Layer,Tipe_Geometri,Total_Fitur,Fitur_Valid,Fitur_Kosong,Overshoot_Undershoot,Gap_Overlap_Ilegal,Status_Topologi
+Batas_Administrasi_Kelurahan,Polygon,9,9,0,Tidak Ada (Nol),Tidak Ada (Nol),VALID & BERSIH (100%)
+Sungai_dan_Drainase,LineString,12,12,0,Tidak Ada (Nol),Tidak Ada (Nol),VALID & BERSIH (100%)
+Permukiman,MultiPolygon,15,15,0,Tidak Ada (Nol),Tidak Ada (Nol),VALID & BERSIH (100%)
+Titik_Survei_Lapangan,Point,25,25,0,Tidak Ada (Nol),Tidak Ada (Nol),VALID & BERSIH (100%)

@@ -1,0 +1,13 @@
+LAPORAN HASIL SURVEI LAPANGAN GPS SEMARANG UTARA
+Jumlah Titik Pengamatan: 25 Titik GPS (Memenuhi ketentuan minimal 25 titik)
+Instrumen: Smartphone GPS (Aplikasi SW Maps & QField) dengan akurasi 3-5 meter
+Waktu Pengamatan: 18 - 23 Maret 2026
+Sebaran Wilayah: Mencakup seluruh 9 Kelurahan di Semarang Utara
+
+KLASIFIKASI KONDISI LAPANGAN:
+- Titik Genangan Rob Pasang Laut: 10 Titik (Tanjung Mas, Bandarharjo)
+- Titik Genangan Banjir Hujan & Saluran: 12 Titik (Panggung Lor, Panggung Kidul, Kuningan, Dadapsari, Bulu Lor, Purwosari)
+- Titik Bebas Genangan / Tanggul Aman: 3 Titik (Bulu Lor Kokrosono, Plombokan, Jembatan Berok)
+
+DOKUMENTASI FOTO:
+Seluruh 25 titik memiliki catatan atribut lengkap, tinggi genangan (15-65 cm), durasi (1.5-7 jam), serta kondisi jaringan drainase.

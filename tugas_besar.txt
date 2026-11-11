@@ -1,0 +1,500 @@
+Tugas Besar Sistem Informasi Geografis – Proyek Kelompok
+Ghufron, M.Kom
+Gambaran Umum
+Setiap kelompok membangun satu SIG mini yang utuh untuk satu masalah nyata di sekitar
+kampus atau Kota Semarang: dari peta mentah sampai peta tematik yang menjawab pertanyaan
+spasial. Tugas ini bernilai 25% (Tugas Besar) dan dikerjakan oleh 4–5 mahasiswa per
+kelompok.
+Proyek mengikuti alur subsistem SIG: Input Data → Manajemen Data → Analisis Data →
+Keluaran. Setiap tahap menghasilkan luaran yang dinilai.
+Capaian pembelajaran yang diuji:
+1. Menjelaskan konsep, definisi, dan lima komponen SIG (orang, prosedur, data, perangkat
+keras, perangkat lunak) dalam konteks proyek sendiri.
+2. Melakukan input data: georeferencing citra/peta hasil scan dan digitasi on-screen titik,
+garis, dan poligon.
+3. Membangun basis data SIG: data grafis + data atribut, topologi yang bersih, dan relasi
+tabel.
+4. Membedakan dan memilih model data raster vs vektor sesuai kebutuhan.
+5. Menjalankan analisis spasial (query, buffer, overlay, pengukuran) untuk menjawab
+pertanyaan yang tidak tertulis eksplisit di data.
+6. Menyajikan keluaran berupa peta tematik yang memenuhi kaidah kartografi.
+Pilihan Tema
+Setiap kelompok memilih satu tema; satu tema hanya boleh diambil maksimal dua kelompok.
+Kelompok boleh mengusulkan tema sendiri asal memuat ketiga tipe vektor (titik, garis, poligon)
+dan minimal satu analisis spasial.
+No
+
+Tema
+
+Titik
+
+Garis
+
+Poligon
+
+Pertanyaan spasial
+(contoh)
+
+1
+
+Aksesibilitas
+masjid &
+musala di
+sekitar kampus
+
+Masjid/musala
+
+Jalan
+
+Batas
+RW/keluraha
+n
+
+Permukiman mana yang
+berjarak > 500 m dari
+masjid?
+
+2
+
+Fasilitas
+kesehatan Kec.
+Genuk
+
+Puskesmas,
+klinik, apotek
+
+Jalan
+
+Kelurahan
+
+Kelurahan mana yang
+tidak terlayani faskes
+dalam radius 1 km?
+
+3
+
+Rawan banjir
+& rob
+
+Titik genangan
+
+Sungai Kelurahan,
+,
+area
+
+Berapa luas permukiman
+yang berada < 200 m
+
+No
+
+Tema
+
+Titik
+
+Semarang
+Utara
+Kos/kontrakan
+
+Garis
+
+Poligon
+
+Pertanyaan spasial
+(contoh)
+
+salura
+n
+
+genangan
+
+dari sungai di zona
+genangan?
+
+Jalan,
+rute
+BRT
+
+Kelurahan
+
+Kos mana yang berjarak
+≤ 300 m dari halte BRT?
+
+4
+
+Kos & hunian
+mahasiswa
+UNISSULA
+
+5
+
+Sebaran
+UMKM
+UMKM kuliner
+sekitar
+Kaligawe
+
+Jalan
+
+Kelurahan
+
+Di mana zona dengan
+kepadatan UMKM
+tertinggi?
+
+6
+
+Sekolah &
+zonasi PPDB
+
+SD/SMP
+
+Jalan
+
+Kelurahan
+
+Kelurahan mana yang
+berada di luar radius
+zonasi sekolah negeri?
+
+7
+
+Penggunaan
+lahan kampus
+UNISSULA
+
+Gedung/titik
+layanan
+
+Jalan
+kampu
+s,
+salura
+n
+
+Gedung,
+RTH, parkir
+
+Berapa persen lahan
+kampus berupa RTH?
+
+Integrasi nilai: sertakan satu paragraf di laporan yang mengaitkan tema dengan nilai Islam
+(misalnya amanah dalam mengelola data, kemaslahatan publik, atau menjaga lingkungan), sesuai
+buku acuan mata kuliah.
+Peran Anggota
+Peran disusun mengikuti komponen SIG (orang & prosedur). Setiap anggota memegang satu
+peran utama, tetapi semua anggota wajib ikut digitasi minimal satu layer.
+Peran
+
+Tanggung jawab utama
+
+Komponen SIG yang
+dipegang
+
+Koordinator /
+Manajer Proyek
+
+Jadwal, pembagian kerja, SOP proyek, logbook
+
+Prosedur / manajemen
+
+Surveyor Data
+
+Survei lapangan (koordinat GPS dari HP), foto,
+kuesioner atribut
+
+Data, perangkat keras
+
+Operator Digitasi
+
+Georeferencing, digitasi on-screen, editing &
+snapping
+
+Perangkat lunak, data
+
+Database Analyst
+
+Desain tabel atribut, relasi, cek topologi,
+metadata
+
+Data (basis data)
+
+Peran
+
+Tanggung jawab utama
+
+Komponen SIG yang
+dipegang
+
+Analis &
+Kartografer
+
+Query, buffer, overlay, pengukuran, layout peta
+akhir
+
+Analisis & keluaran
+
+Kelompok berisi 4 orang menggabungkan peran Database Analyst dengan Analis & Kartografer.
+Tahapan Pengerjaan
+Lima tahap, masing-masing dengan luaran yang dikumpulkan.
+1. Perancangan (proposal)
+o Rumuskan tujuan proyek dan 2–3 pertanyaan spasial yang ingin dijawab.
+o Uraikan kelima komponen SIG versi proyek kalian: siapa penggunanya, prosedur
+kerja, data apa, perangkat keras dan lunak apa.
+o Tentukan data spasial (citra/peta/GPS) dan data nir-spasial (atribut) yang
+dibutuhkan beserta sumbernya.
+o Pilih model data tiap layer (raster/vektor) dan beri alasannya.
+o Luaran: proposal 3–5 halaman.
+2. Input data
+o Kumpulkan peta dasar: citra Google Earth/basemap, atau peta analog yang discan.
+o Lakukan georeferencing (koreksi geometrik) dengan minimal 4 titik kontrol;
+laporkan nilai RMSE.
+o Survei lapangan minimal 25 titik dengan koordinat GPS dan foto.
+o Digitasi on-screen per layer: minimal 1 layer titik, 1 layer garis, 1 layer poligon.
+Gunakan snapping (vertex, boundary, endpoint) dan jumlah vertex yang wajar.
+o Luaran: file shapefile/GeoPackage + tangkapan layar proses.
+3. Manajemen data (basis data SIG)
+o Rancang tabel atribut setiap layer (nama field, tipe, keterangan) — minimal 5
+field bermakna per layer.
+o Bangun minimal satu relasi tabel (one-to-many atau many-to-one), misalnya tabel
+kelurahan ↔ tabel fasilitas.
+o Periksa topologi: tidak ada overshoot/undershoot pada garis, celah atau tumpang
+tindih pada poligon.
+o Tulis metadata tiap layer: sumber, tanggal, sistem koordinat/proyeksi, skala,
+penyusun.
+o Luaran: kamus data + laporan pemeriksaan topologi.
+4. Analisis data
+o Jawab setiap pertanyaan spasial dengan minimal tiga jenis analisis: query atribut,
+query spasial, buffer, overlay (intersect/union/dissolve), pengukuran (jarak,
+panjang, luas).
+o Sajikan hasil dalam tabel dan interpretasikan: apa artinya bagi pengambil
+keputusan?
+
+o Luaran: bab analisis di laporan.
+5. Keluaran
+o Buat minimal 2 peta tematik dengan elemen kartografi lengkap: judul, legenda,
+skala, arah utara, grid/koordinat, sumber data, inset.
+o Opsional (nilai tambah): peta web interaktif sederhana (qgis2web/Leaflet) seperti
+contoh WebGIS KLHK.
+o Luaran: peta PDF/JPG resolusi ≥ 300 dpi, laporan akhir, presentasi.
+Jadwal & Milestone
+Proyek berjalan 2 minggu setelah tema ditetapkan;
+Minggu Kegiatan
+
+Milestone yang dikumpulkan
+
+Bobot
+
+1
+
+Pembentukan kelompok, pemilihan
+tema
+
+Daftar kelompok + tema
+
+–
+
+2
+
+Perancangan
+
+Proposal
+
+10%
+
+3–4
+
+Survei lapangan, georeferencing,
+digitasi
+
+Progres 1: layer hasil digitasi
+
+20%
+
+5
+
+Desain atribut, relasi, cek topologi,
+metadata
+
+Progres 2: kamus data + laporan
+topologi
+
+20%
+
+6–7
+
+Analisis spasial, layout peta
+
+Draf peta tematik
+
+–
+
+8
+
+Finalisasi & presentasi
+
+Laporan akhir, peta, file proyek,
+presentasi
+
+50%
+
+Luaran Akhir
+•
+
+•
+•
+•
+•
+•
+
+☐ Laporan akhir (maks. 25 halaman): Pendahuluan; Konsep & komponen SIG proyek;
+Data & metode (input data); Basis data (kamus data, relasi, topologi, metadata); Analisis
+& pembahasan; Kesimpulan; Integrasi nilai; Lampiran logbook.
+☐ Minimal 2 peta tematik (PDF/JPG ≥ 300 dpi) dengan elemen kartografi lengkap.
+☐ File proyek (.qgz/.mxd) + seluruh layer (.shp/.gpkg) dalam satu folder ZIP, dengan
+sistem koordinat seragam (WGS 84 / UTM 49S). (opsional)
+☐ Slide presentasi 10–15 menit + tanya jawab; semua anggota berbicara.
+☐ Logbook kontribusi per anggota (tanggal, kegiatan, jam kerja).
+☐ Opsional: tautan peta web interaktif.
+
+Rubrik Penilaian
+Nilai kelompok (100) dikalikan faktor kontribusi individu (0,8–1,1) dari logbook dan penilaian
+sejawat.
+
+Aspek
+
+Bobot
+
+Sangat baik (85–100)
+
+Cukup (70–84)
+
+Kurang (< 70)
+
+Proposal & 10%
+konsep
+SIG
+
+Tujuan & pertanyaan spasial
+tajam; 5 komponen SIG dan
+pilihan raster/vektor dijelaskan
+dengan alasan
+
+Komponen
+lengkap tetapi
+alasan dangkal
+
+Tujuan kabur,
+komponen tidak
+lengkap
+
+Input data
+& digitasi
+
+20%
+
+RMSE georeferencing kecil dan
+dilaporkan; ≥ 25 titik survei;
+vertex proporsional; snapping
+benar
+
+Digitasi lengkap,
+ada sedikit
+kesalahan posisi
+
+Layer kurang,
+posisi banyak
+meleset
+
+Basis data
+& topologi
+
+20%
+
+Atribut bermakna, relasi berjalan,
+topologi bersih, metadata lengkap
+
+Atribut lengkap,
+relasi/topologi
+ada kesalahan
+kecil
+
+Atribut minim,
+tanpa relasi
+atau metadata
+
+Analisis
+spasial
+
+20%
+
+≥ 3 jenis analisis tepat;
+interpretasi menjawab pertanyaan
+& memberi rekomendasi
+
+Analisis benar,
+interpretasi
+kurang
+
+Analisis tidak
+sesuai
+pertanyaan
+
+Peta &
+kartografi
+
+15%
+
+Elemen peta lengkap, simbol &
+warna jelas, mudah dibaca
+
+Elemen lengkap,
+tampilan kurang
+rapi
+
+Elemen peta
+tidak lengkap
+
+Laporan &
+presentasi
+
+15%
+
+Runtut, integrasi nilai bermakna,
+semua anggota menguasai materi
+
+Cukup runtut,
+sebagian anggota
+pasif
+
+Tidak runtut,
+banyak anggota
+tidak
+menguasai
+
+Ketentuan & Tools
+•
+•
+•
+
+•
+•
+•
+
+Perangkat lunak: QGIS (gratis, disarankan) atau ArcGIS/ArcView/MapInfo bila
+tersedia di lab. Raster opsional dengan QGIS atau Erdas/Idrisi.
+Pengumpulan titik GPS: aplikasi HP seperti QField, SW Maps, atau Google Maps
+(catat lintang–bujur).
+Sumber data yang boleh dipakai: basemap Google/OpenStreetMap, data BPS (atribut
+penduduk), Ina-Geoportal/tanahair.indonesia.go.id (batas administrasi), SIGAP KLHK.
+Semua sumber wajib disebut di peta dan metadata.
+Etika data: tidak memuat data pribadi (nama penghuni, nomor HP) di peta yang
+dipublikasikan; minta izin bila memotret properti pribadi.
+Orisinalitas: data hasil digitasi dan survei harus dibuat sendiri; menyalin shapefile jadi
+tanpa diolah dianggap plagiasi.
+Konsultasi: tiap kelompok wajib bimbingan minimal 2 kali (setelah proposal dan
+sebelum finalisasi).
+
+Referensi: Sulistiyanto, Sistem Informasi Geografis; materi kuliah Pengantar SIG, Komponen
+SIG, Sistem & Subsistem SIG, dan Basis Data SIG.
+
+

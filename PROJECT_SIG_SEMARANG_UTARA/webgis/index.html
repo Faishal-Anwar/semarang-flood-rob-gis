@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistem Monitoring dan Analisis Spasial Risiko Banjir &amp; Rob Kecamatan Semarang Utara berbasis WebGIS, QGIS, dan GeoPackage.">
+  <title>Semarang Flood &amp; Rob GIS — Coastal Risk Intelligence</title>
+
+  <link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/style.css?v=26">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg site-nav sticky-top" id="siteNav">
+    <div class="container-fluid site-container">
+      <a class="navbar-brand brand-lockup" href="index.html">
+        <span class="brand-mark"><i class="fa-solid fa-water"></i></span>
+        <span class="brand-copy">
+          <strong>SEMARANG</strong>
+          <small>Flood &amp; Rob GIS</small>
+        </span>
+      </a>
+
+      <div class="d-flex align-items-center gap-2 order-lg-3">
+        <button class="nav-icon-btn" type="button" id="quickNavBtn" aria-label="Pencarian cepat (Ctrl+K)" title="Pencarian cepat (Ctrl+K)">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <a href="map.html" class="btn btn-warning nav-cta d-none d-lg-inline-flex">
+          <i class="fa-solid fa-map-location-dot me-1"></i> Buka Peta
+        </a>
+        <button class="navbar-toggler nav-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavMenu" aria-controls="siteNavMenu" aria-expanded="false" aria-label="Buka navigasi">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="siteNavMenu">
+        <ul class="navbar-nav site-nav-links ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta WebGIS</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li>
+          <li class="nav-item"><a class="nav-link" href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li>
+        </ul>
+        <a href="map.html" class="btn btn-warning nav-cta nav-cta-mobile d-lg-none mt-3 w-100">Buka Peta WebGIS</a>
+      </div>
+    </div>
+  </nav>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container-fluid site-container">
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow section-eyebrow--light">
+            <span class="spinner-grow spinner-grow-sm text-warning" role="status" aria-hidden="true"></span>
+            SIG · Tugas Besar Teknik Informatika
+          </span>
+          <h1 class="hero-title">
+            Membaca risiko <span class="text-gradient">banjir rob</span> Semarang Utara, dari data spasial ke keputusan.
+          </h1>
+          <p class="hero-lead">
+            Platform WebGIS terintegrasi untuk memetakan genangan rob, sempadan sungai, eksposur permukiman di zona rawan,
+            dan 25 titik survei GPS ground truth — dibangun dengan QGIS, GeoPackage, dan Leaflet.
+          </p>
+          <div class="hero-actions">
+            <a href="map.html" class="btn btn-warning btn-lg">
+              <i class="fa-solid fa-map-location-dot me-2"></i>Jelajahi Peta WebGIS
+            </a>
+            <a href="dashboard.html" class="btn btn-outline-light btn-lg" style="border-color:rgba(255,255,255,.28);color:#fff;">
+              <i class="fa-solid fa-chart-pie me-2"></i>Lihat Dashboard
+            </a>
+          </div>
+          <div class="hero-trust">
+            <span><i class="fa-solid fa-database"></i> OGC GeoPackage</span>
+            <span><i class="fa-solid fa-globe"></i> EPSG:32749 / 4326</span>
+            <span><i class="fa-solid fa-location-crosshairs"></i> 25 Titik Ground Truth</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal reveal-delay-1">
+          <div class="hero-map-card">
+            <div class="hero-map-head">
+              <span><i class="fa-solid fa-map text-warning me-2"></i>Peta analisis risiko</span>
+              <span class="badge badge-soft-teal">QGIS · 300 DPI</span>
+            </div>
+            <img src="assets/img/Peta_2.jpg" class="hero-map-img" alt="Peta analisis spasial risiko banjir dan rob Semarang Utara">
+            <div class="hero-map-footer">
+              <span><i class="fa-solid fa-circle-nodes text-warning me-1"></i>Overlay genangan × permukiman</span>
+              <a href="downloads/Peta_2.pdf" download class="badge bg-danger text-decoration-none" data-download-toast="Peta analisis sedang diunduh.">
+                <i class="fa-solid fa-download me-1"></i>PDF
+              </a>
+            </div>
+          </div>
+          <div class="floating-stat floating-stat-a">
+            <i class="fa-solid fa-house-crack"></i>
+            <span><strong>70,08%</strong><span>permukiman di zona rawan</span></span>
+          </div>
+          <div class="floating-stat floating-stat-b">
+            <i class="fa-solid fa-location-crosshairs"></i>
+            <span><strong>25 titik</strong><span>validasi lapangan</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-ribbon reveal reveal-delay-2">
+        <div class="ribbon-item">
+          <span class="ribbon-icon"><i class="fa-solid fa-layer-group"></i></span>
+          <span><strong class="ribbon-value"><span data-count="1194.65" data-decimals="2">1.194,65</span> Ha</strong><span class="ribbon-label">Luas wilayah kajian</span></span>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-icon ribbon-icon--coral"><i class="fa-solid fa-house-crack"></i></span>
+          <span><strong class="ribbon-value"><span data-count="120.31" data-decimals="2">120,31</span> Ha</strong><span class="ribbon-label">Permukiman di zona rawan</span></span>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-icon ribbon-icon--amber"><i class="fa-solid fa-ruler-horizontal"></i></span>
+          <span><strong class="ribbon-value"><span data-count="656.19" data-decimals="2">656,19</span> Ha</strong><span class="ribbon-label">Sempadan sungai 200 m</span></span>
+        </div>
+        <div class="ribbon-item">
+          <span class="ribbon-icon ribbon-icon--green"><i class="fa-solid fa-location-crosshairs"></i></span>
+          <span><strong class="ribbon-value"><span data-count="25">25</span> titik</strong><span class="ribbon-label">Survei GPS primer</span></span>
+        </div>
+      </div>
+
+      <div class="live-strip reveal reveal-delay-2" aria-label="Status monitoring near-realtime">
+        <div class="live-strip-main">
+          <span class="live-dot" data-live-dot aria-hidden="true"></span>
+          <div>
+            <strong>MONITORING NEAR-REALTIME</strong>
+            <span><span class="live-mode-badge" data-live-mode>SIMULASI</span> · <span data-live-source>Menghubungkan...</span></span>
+          </div>
+        </div>
+        <div class="live-strip-item"><span>Muka air laut</span><strong><span data-live-value="tide_level">–</span> <small data-live-unit="tide_level">m</small></strong></div>
+        <div class="live-strip-item"><span>Muka air sungai</span><strong><span data-live-value="water_level">–</span> <small data-live-unit="water_level">cm</small></strong></div>
+        <div class="live-strip-item"><span>Curah hujan</span><strong><span data-live-value="rainfall">–</span> <small data-live-unit="rainfall">mm/jam</small></strong></div>
+        <div class="live-strip-meta">
+          <span><i class="fa-solid fa-rotate me-1"></i><span data-live-updated>–</span></span>
+          <button class="sim-toggle" type="button" data-toggle-simulation aria-pressed="false"><i class="fa-solid fa-eye me-1"></i>Tampilkan simulasi</button>
+          <button class="live-refresh" type="button" data-live-refresh aria-label="Perbarui data monitoring"><i class="fa-solid fa-arrows-rotate"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main role="main">
+    <!-- RISK SNAPSHOT -->
+    <section class="section" id="ringkasan">
+      <div class="container-fluid site-container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-wave-square"></i> Ringkasan risiko</span>
+            <h2 class="section-title">Satu kecamatan, tiga tekanan air yang saling menguatkan.</h2>
+            <p class="section-subtitle">Rob pasang laut, luapan sungai, dan drainase yang tidak mampu menampung hujan bertemu di ruang permukiman padat Semarang Utara.</p>
+          </div>
+          <a href="analysis.html" class="btn btn-outline-primary section-action">Baca analisis lengkap <i class="fa-solid fa-arrow-right ms-1"></i></a>
+        </div>
+
+        <div class="condition-banner" data-condition-banner>
+          <span class="condition-icon"><i class="fa-solid fa-shield-heart" data-condition-icon></i></span>
+          <div class="condition-copy">
+            <span class="condition-kicker">Kondisi saat ini · indikatif</span>
+            <strong data-condition-headline>Memeriksa kondisi...</strong>
+            <p data-condition-detail>Menunggu data monitoring. Angka di bawah adalah eksposur statis terhadap zona rawan BPBD, bukan kejadian saat ini.</p>
+          </div>
+          <span class="condition-time" data-condition-updated>–</span>
+        </div>
+        <div class="data-health data-health--compact" data-data-health>
+          <span class="health-title"><i class="fa-solid fa-heart-pulse me-1"></i>Kesehatan data</span>
+          <span class="health-chip is-missing">Memeriksa...</span>
+        </div>
+
+        <div class="risk-grid">
+          <div class="risk-main reveal">
+            <div>
+              <span class="eyebrow section-eyebrow--light mb-3"><i class="fa-solid fa-triangle-exclamation"></i> Eksposur zona rawan · statis</span>
+              <h3>70 dari 100 hektar permukiman berada di zona rawan BPBD.</h3>
+              <p>Hasil overlay intersect antara kawasan permukiman dan area genangan rob BPBD Kota Semarang. Persentase dihitung dari luas permukiman (171,68 Ha), bukan seluruh luas kecamatan. Ini adalah eksposur statis terhadap zona rawan, bukan genangan saat ini. Sumber zona rawan: BPBD Kota Semarang/InaRISK · snapshot April 2026 · <a class="text-link-strong" href="methodology.html#glosarium">glosarium</a>.</p>
+            </div>
+            <div class="gauge-wrap">
+              <div class="gauge-ring" style="--value:70;" role="img" aria-label="70,08 persen permukiman di zona rawan">
+                <div class="gauge-inner">
+                  <strong><span data-count="70.08" data-decimals="2">70,08</span>%</strong>
+                  <span>zona rawan</span>
+                </div>
+              </div>
+              <div class="gauge-copy">
+                <div class="gauge-label">Luas di zona rawan</div>
+                <div class="gauge-value">120,31 Ha</div>
+                <div class="gauge-note">dari total 171,68 Ha permukiman</div>
+              </div>
+            </div>
+            <div class="risk-list">
+              <div class="risk-row"><span>Sangat tinggi</span><strong>18,18 Ha</strong></div>
+              <div class="risk-row"><span>Tinggi</span><strong>75,91 Ha</strong></div>
+              <div class="risk-row"><span>Sedang</span><strong>26,23 Ha</strong></div>
+              <div class="risk-row"><span>Di luar zona rawan</span><strong>51,36 Ha</strong></div>
+            </div>
+          </div>
+
+          <div class="row g-3 reveal reveal-delay-1">
+            <div class="col-md-6">
+              <div class="insight-card insight-card--coral h-100">
+                <div class="insight-kicker">Rasio zona rawan tertinggi</div>
+                <div class="insight-title">Panggung Kidul</div>
+                <p class="insight-text">18,89 Ha permukiman berada di zona rawan — <strong>97,37%</strong> dari total permukiman kelurahan. Rasio eksposur tertinggi di wilayah kajian.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="insight-card insight-card--amber h-100">
+                <div class="insight-kicker">Luas zona rawan terbesar</div>
+                <div class="insight-title">Panggung Lor</div>
+                <p class="insight-text">60,58 Ha berada di zona rawan (95,76%) — luas eksposur terbesar. Berada di koridor Kali Asin/Tanah Mas.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="insight-card h-100">
+                <div class="insight-kicker">Sempadan sungai</div>
+                <div class="insight-title">47,76% permukiman di koridor 200 m</div>
+                <p class="insight-text">81,99 Ha permukiman bertumpuk dengan sempadan sungai aktif — BKB, Kali Semarang, Kali Baru, dan Kali Asin.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="insight-card insight-card--green h-100">
+                <div class="insight-kicker">Validasi lapangan</div>
+                <div class="insight-title">Validasi lapangan perlu dicatat</div>
+                <p class="insight-text">25 titik GPS; 5 titik &gt;40 cm, 2 di antaranya di dalam poligon genangan dan 3 di luar. Rata-rata genangan 30,2 cm; RMSE GCP 0,84 m.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 PERTANYAAN SPASIAL -->
+    <section class="section-tight" id="pertanyaan-spasial">
+      <div class="container-fluid site-container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-clipboard-question"></i> Pertanyaan spasial</span>
+            <h2 class="section-title">Empat pertanyaan, empat jawaban berbasis ruang.</h2>
+            <p class="section-subtitle">Setiap angka di halaman ini berasal dari operasi geoprocessing yang dapat direproduksi di QGIS dan GeoPackage.</p>
+          </div>
+          <a href="analysis.html" class="btn btn-outline-primary section-action">Detail metodologi <i class="fa-solid fa-arrow-right ms-1"></i></a>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6 reveal">
+            <article class="question-card" data-q="01">
+              <span class="question-kicker"><i class="fa-solid fa-house-crack"></i> Q1 · Eksposur zona rawan</span>
+              <h3 class="question-title">Berapa luas permukiman yang berada di zona rawan genangan rob BPBD?</h3>
+              <p class="question-text">Overlay intersect permukiman dengan zona rawan genangan BPBD menghasilkan <strong>120,31 Ha</strong> atau <strong>70,08%</strong> dari total 171,68 Ha kawasan hunian. Ini eksposur statis, bukan genangan saat ini.</p>
+              <div class="mini-tags">
+                <span class="badge badge-danger-soft">Sangat tinggi 18,18 Ha</span>
+                <span class="badge badge-warning-soft">Tinggi 75,91 Ha</span>
+                <span class="badge bg-light text-dark border">Sedang 26,23 Ha</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-6 reveal reveal-delay-1">
+            <article class="question-card" data-q="02">
+              <span class="question-kicker"><i class="fa-solid fa-ranking-star"></i> Q2 · Prioritas wilayah</span>
+              <h3 class="question-title">Kelurahan mana yang memiliki risiko rob tertinggi?</h3>
+              <p class="question-text"><strong>Panggung Lor</strong> mencatat luas eksposur terbesar (60,58 Ha; 95,76%), diikuti <strong>Bandarharjo</strong> 21,28 Ha (69,81%) dan <strong>Panggung Kidul</strong> 18,89 Ha (97,37%).</p>
+              <div class="mini-tags">
+                <span class="badge bg-danger">Prioritas 1 · Panggung Kidul</span>
+                <span class="badge bg-danger">Prioritas 1 · Panggung Lor</span>
+                <span class="badge bg-warning text-dark">Prioritas 3 · Bandarharjo</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-6 reveal">
+            <article class="question-card" data-q="03">
+              <span class="question-kicker"><i class="fa-solid fa-water"></i> Q3 · Sempadan sungai</span>
+              <h3 class="question-title">Seberapa luas sempadan sungai yang bersinggungan dengan permukiman?</h3>
+              <p class="question-text">Koridor 200 m mencapai <strong>656,19 Ha</strong> (54,93% daratan). Sebanyak <strong>81,99 Ha</strong> permukiman berada di dalam koridor sempadan sungai aktif.</p>
+              <div class="mini-tags">
+                <span class="badge bg-danger">Radius 100 m · 341,91 Ha</span>
+                <span class="badge bg-warning text-dark">Radius 200 m · 314,28 Ha</span>
+                <span class="badge badge-success-soft">Luar sempadan · 45,07%</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-6 reveal reveal-delay-1">
+            <article class="question-card" data-q="04">
+              <span class="question-kicker"><i class="fa-solid fa-satellite-dish"></i> Q4 · Validasi</span>
+              <h3 class="question-title">Bagaimana korelasi survei GPS dengan model spasial SIG?</h3>
+              <p class="question-text">Dari <strong>25 titik GPS</strong>, 5 titik memiliki genangan &gt;40 cm; 2 di antaranya berada di dalam poligon genangan dan 3 di luar. Rata-rata genangan terukur <strong>30,2 cm</strong>, surut 4–8 jam.</p>
+              <div class="mini-tags">
+                <span class="badge badge-soft-teal">5 titik &gt;40 cm · 2 di dalam poligon</span>
+                <span class="badge bg-secondary">RMSE GCP 0,84 m</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PETA & LAPISAN DATA -->
+    <section class="section" id="peta-data">
+      <div class="container-fluid site-container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-layer-group"></i> Peta &amp; lapisan data</span>
+            <h2 class="section-title">Lihat kota sebagai susunan layer yang bisa dibaca.</h2>
+            <p class="section-subtitle">Batas administrasi, jaringan air, genangan, sempadan, permukiman, dan titik survei disusun dalam satu kanvas spasial.</p>
+          </div>
+          <a href="map.html" class="btn btn-primary section-action"><i class="fa-solid fa-expand me-1"></i> Buka peta penuh</a>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-8 reveal">
+            <div class="surface-card map-preview-card h-100">
+              <div class="custom-card-header">
+                <div>
+                  <div class="fw-bold" style="font-size:.92rem;"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>Pratinjau interaktif Semarang Utara</div>
+                  <p class="text-muted small mb-0">Batas kelurahan, permukiman di zona rawan, jaringan air, dan 25 titik survei.</p>
+                </div>
+                <a href="map.html" class="btn btn-sm btn-outline-primary">Fullscreen <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i></a>
+              </div>
+              <div class="map-frame">
+                <div class="map-frame-badge"><i class="fa-solid fa-circle text-success" style="font-size:.45rem;"></i> Live preview</div>
+                <div id="mini-map"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 reveal reveal-delay-1">
+            <div class="surface-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <span class="icon-tile icon-tile--amber"><i class="fa-solid fa-database"></i></span>
+                <div>
+                  <div class="fw-bold" style="font-size:.92rem;">Struktur data geospasial</div>
+                  <div class="text-muted small">7 layer · EPSG:4326</div>
+                </div>
+              </div>
+              <div class="layer-list">
+                <div class="layer-row"><span class="layer-name"><span class="layer-dot" style="background:#0c2444;"></span>Batas kelurahan</span><span class="layer-count">9 poligon</span></div>
+                <div class="layer-row"><span class="layer-name"><span class="layer-dot" style="background:#0288d1;"></span>Sungai &amp; drainase</span><span class="layer-count">12 garis</span></div>
+                <div class="layer-row"><span class="layer-name"><span class="layer-dot" style="background:#e53935;"></span>Genangan rob BPBD</span><span class="layer-count">5 poligon</span></div>
+                <div class="layer-row"><span class="layer-name"><span class="layer-dot" style="background:#0e7490;"></span>Buffer sempadan</span><span class="layer-count">2 poligon</span></div>
+                <div class="layer-row"><span class="layer-name"><span class="layer-dot" style="background:#ffa000;"></span>Permukiman</span><span class="layer-count">15 poligon</span></div>
+                <div class="layer-row"><span class="layer-name"><span class="layer-dot" style="background:#d32f2f;"></span>Permukiman di zona rawan</span><span class="layer-count">10 klaster</span></div>
+                <div class="layer-row"><span class="layer-name"><span class="layer-dot" style="background:#16a34a;"></span>Titik survei GPS</span><span class="layer-count">25 titik</span></div>
+              </div>
+              <div class="mt-auto pt-3 border-top">
+                <a href="methodology.html#downloadCenter" class="btn btn-outline-primary btn-sm w-100">
+                  <i class="fa-solid fa-download me-1"></i> Unduh GeoPackage
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKFLOW -->
+    <section class="section-tight">
+      <div class="container-fluid site-container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-diagram-project"></i> Alur kerja</span>
+            <h2 class="section-title">Dari data mentah ke keputusan spasial.</h2>
+            <p class="section-subtitle">Tiga tahap inti yang menghubungkan lapangan, laboratorium GIS, dan antarmuka WebGIS.</p>
+          </div>
+        </div>
+        <div class="workflow-grid">
+          <article class="workflow-step reveal">
+            <div class="step-number">01 / AKUISISI</div>
+            <h3>Kumpulkan &amp; bersihkan data</h3>
+            <p>Batas administrasi, jaringan sungai, genangan BPBD, permukiman, dan 25 titik GPS divalidasi di QGIS.</p>
+          </article>
+          <article class="workflow-step reveal reveal-delay-1">
+            <div class="step-number">02 / ANALISIS</div>
+            <h3>Buffer, overlay, dan hitung</h3>
+            <p>Geoprocessing sempadan 100–200 m, overlay intersect, serta statistik eksposur zona rawan per kelurahan.</p>
+          </article>
+          <article class="workflow-step reveal reveal-delay-2">
+            <div class="step-number">03 / DELIVERY</div>
+            <h3>Sajikan dalam WebGIS</h3>
+            <p>Layer GeoJSON, peta tematik, dashboard, dan peta interaktif Leaflet untuk eksplorasi mandiri.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM SUMMARY -->
+    <section class="section-tight" id="tim-pengembang">
+      <div class="container-fluid site-container">
+        <div class="team-summary-section reveal">
+          <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 pb-3 mb-4 border-bottom">
+            <div>
+              <span class="badge team-section-kicker text-uppercase rounded-pill mb-2"><i class="fa-solid fa-users-gear me-1"></i> Kolaborasi mahasiswa</span>
+              <h2 class="section-title mb-1" style="font-size:clamp(1.5rem,2.4vw,2rem);">Tim pengembang</h2>
+              <p class="text-secondary fw-semibold mb-0">Kelompok 3 — Pemetaan dan Analisis Risiko Banjir &amp; Rob Semarang Utara</p>
+            </div>
+            <a href="methodology.html#team" class="btn btn-primary">Lihat tim &amp; pembagian tugas <i class="fa-solid fa-arrow-right ms-1"></i></a>
+          </div>
+          <p class="text-muted small mb-4" style="max-width:860px;">Project ini dikembangkan melalui kolaborasi empat anggota tim yang bertanggung jawab pada pengolahan data spasial, analisis GIS, pengembangan WebGIS, survei lapangan, dan dokumentasi.</p>
+          <div class="row g-3">
+            <div class="col-xl-3 col-md-6">
+              <a class="team-mini-card team-mini-card-1" href="methodology.html#team">
+                <div class="team-mini-top"><div class="team-avatar team-avatar-1 team-avatar-sm" aria-hidden="true">HF</div><span class="team-number-pill">01</span></div>
+                <div class="team-mini-name">Haydar Fahri Alaudin</div>
+                <div class="team-mini-role"><i class="fa-solid fa-map-location-dot me-1"></i>GIS Analyst</div>
+                <div class="team-mini-focus">Spatial Data Processing</div>
+              </a>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <a class="team-mini-card team-mini-card-2" href="methodology.html#team">
+                <div class="team-mini-top"><div class="team-avatar team-avatar-2 team-avatar-sm" aria-hidden="true">FA</div><span class="team-number-pill">02</span></div>
+                <div class="team-mini-name">Faishal Anwar Hasyim</div>
+                <div class="team-mini-role"><i class="fa-solid fa-laptop-code me-1"></i>WebGIS Developer</div>
+                <div class="team-mini-focus">System Integrator</div>
+              </a>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <a class="team-mini-card team-mini-card-3" href="methodology.html#team">
+                <div class="team-mini-top"><div class="team-avatar team-avatar-3 team-avatar-sm" aria-hidden="true">MY</div><span class="team-number-pill">03</span></div>
+                <div class="team-mini-name">Mohammad Yusuf Prayoga</div>
+                <div class="team-mini-role"><i class="fa-solid fa-database me-1"></i>Spatial Analyst</div>
+                <div class="team-mini-focus">Database Engineer</div>
+              </a>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <a class="team-mini-card team-mini-card-4" href="methodology.html#team">
+                <div class="team-mini-top"><div class="team-avatar team-avatar-4 team-avatar-sm" aria-hidden="true">AN</div><span class="team-number-pill">04</span></div>
+                <div class="team-mini-name">Alif Naufal Adani</div>
+                <div class="team-mini-role"><i class="fa-solid fa-compass-drafting me-1"></i>Cartographer</div>
+                <div class="team-mini-focus">Survey &amp; Documentation</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section-tight pb-5">
+      <div class="container-fluid site-container">
+        <div class="cta-band reveal">
+          <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-4">
+            <div>
+              <h2>Siap membaca kota dari layer spasial?</h2>
+              <p>Buka peta interaktif, telusuri 7 layer tematik, dan bandingkan hasil analisis per kelurahan.</p>
+            </div>
+            <div class="cta-band-actions">
+              <a href="map.html" class="btn btn-warning btn-lg"><i class="fa-solid fa-map-location-dot me-2"></i>Buka Peta</a>
+              <a href="methodology.html#downloadCenter" class="btn btn-outline-light btn-lg" style="border-color:rgba(255,255,255,.24);color:#fff;"><i class="fa-solid fa-download me-2"></i>Unduh Data</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-fluid site-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand-lockup" href="index.html">
+            <span class="brand-mark"><i class="fa-solid fa-water"></i></span>
+            <span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span>
+          </a>
+          <p>Platform pemetaan dan analisis risiko banjir rob Kecamatan Semarang Utara. Dikembangkan untuk Tugas Besar Sistem Informasi Geografis, Program Studi Teknik Informatika.</p>
+          <div class="footer-badges"><span>QGIS</span><span>GeoPackage</span><span>Leaflet</span><span>Chart.js</span></div>
+        </div>
+        <div>
+          <h3 class="footer-title">Navigasi</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li>
+            <li><a href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta WebGIS</a></li>
+            <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+            <li><a href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li>
+            <li><a href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title">Sumber data</h3>
+          <ul class="footer-links">
+            <li><a href="methodology.html#downloadCenter"><i class="fa-solid fa-database"></i> GeoPackage</a></li>
+            <li><a href="downloads/Peta_1.pdf" download><i class="fa-solid fa-map"></i> Peta eksisting</a></li>
+            <li><a href="downloads/Peta_2.pdf" download><i class="fa-solid fa-layer-group"></i> Peta analisis</a></li>
+            <li><a href="downloads/Laporan_Akhir.pdf" download><i class="fa-solid fa-file-pdf"></i> Laporan akhir</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title">Proyek</h3>
+          <p class="small mb-2" style="color:rgba(255,255,255,.56);">Kelompok 3 — Pemetaan dan Analisis Risiko Banjir &amp; Rob Semarang Utara.</p>
+          <p class="small mb-2" style="color:rgba(255,255,255,.56);">Dosen pengampu: Ghufron, M.Kom.</p>
+          <p class="small mb-0" style="color:rgba(255,255,255,.42);">WGS 84 / UTM Zone 49S (EPSG:32749)</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Semarang Flood &amp; Rob GIS. Dibuat untuk pembelajaran dan mitigasi.</span>
+        <span><a href="index.html">Beranda</a> · <a href="map.html">Peta</a> · <a href="methodology.html">Metodologi</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Kembali ke atas"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
+  <script src="js/app.js?v=4"></script>
+  <script src="js/live-monitor.js?v=6"></script>
+  <script>
+    (function () {
+      const miniMap = L.map('mini-map', {
+        zoomControl: true,
+        scrollWheelZoom: false,
+        center: [-6.958, 110.422],
+        zoom: 13,
+        minZoom: 11,
+        maxZoom: 18
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+      }).addTo(miniMap);
+
+      miniMap.createPane('kelurahanPane'); miniMap.getPane('kelurahanPane').style.zIndex = 400;
+      miniMap.createPane('permukimanPane'); miniMap.getPane('permukimanPane').style.zIndex = 430;
+      miniMap.createPane('sungaiPane'); miniMap.getPane('sungaiPane').style.zIndex = 500;
+      miniMap.createPane('surveiPane'); miniMap.getPane('surveiPane').style.zIndex = 650;
+
+      fetch('data/batas_kelurahan.geojson', { cache: 'no-store' }).then(r => r.json()).then(data => {
+        const layer = L.geoJSON(data, {
+          pane: 'kelurahanPane',
+          style: { color: '#0c2444', weight: 1.6, dashArray: '5, 5', fillColor: '#0c2444', fillOpacity: 0.04 },
+          onEachFeature: (f, l) => l.bindPopup(`<div class="popup-title">${f.properties.nama_kel || 'Kelurahan'}</div><div class="popup-row"><span>Luas</span><b>${f.properties.luas_ha || '-'} Ha</b></div><div class="popup-row"><span>Populasi</span><b>${f.properties.populasi ? f.properties.populasi.toLocaleString('id-ID') : '-'}</b></div>`)
+        }).addTo(miniMap);
+        if (layer.getBounds().isValid()) miniMap.fitBounds(layer.getBounds(), { padding: [18, 18] });
+      }).catch(() => {});
+
+      fetch('data/sungai.geojson', { cache: 'no-store' }).then(r => r.json()).then(data => {
+        L.geoJSON(data, {
+          pane: 'sungaiPane',
+          style: f => ({ color: (f.properties.tipe || '').toLowerCase().includes('drainase') ? '#22d3ee' : '#0288d1', weight: (f.properties.tipe || '').toLowerCase().includes('drainase') ? 2 : 3, opacity: 0.9 })
+        }).addTo(miniMap);
+      }).catch(() => {});
+
+      fetch('data/permukiman.geojson', { cache: 'no-store' }).then(r => r.json()).then(data => {
+        L.geoJSON(data, {
+          pane: 'permukimanPane',
+          style: { color: '#f59e0b', weight: 1, fillColor: '#fbbf24', fillOpacity: 0.16 },
+          onEachFeature: (f, l) => l.bindPopup(`<div class="popup-title">${f.properties.nama_kaw || 'Kawasan permukiman'}</div><div class="popup-row"><span>Kelurahan</span><b>${f.properties.kelurahan || '-'}</b></div><div class="popup-row"><span>Luas</span><b>${f.properties.luas_ha || '-'} Ha</b></div>`)
+        }).addTo(miniMap);
+      }).catch(() => {});
+
+      fetch('data/permukiman_terdampak.geojson', { cache: 'no-store' }).then(r => r.json()).then(data => {
+        L.geoJSON(data, {
+          pane: 'permukimanPane',
+          style: f => {
+            const high = (f.properties.tingkat_risiko || '').includes('Sangat Tinggi');
+            return { color: high ? '#b91c1c' : '#f59e0b', weight: 1.2, fillColor: high ? '#ef4444' : '#f59e0b', fillOpacity: 0.42 };
+          },
+          onEachFeature: (f, l) => l.bindPopup(`<div class="popup-title">${f.properties.nama_kaw || 'Permukiman di zona rawan'}</div><div class="popup-row"><span>Kelurahan</span><b>${f.properties.kelurahan || '-'}</b></div><div class="popup-row"><span>Zona rawan</span><b>${f.properties.luas_terpapar_ha || '-'} Ha</b></div>`)
+        }).addTo(miniMap);
+      }).catch(() => {});
+
+      fetch('data/titik_survei.geojson', { cache: 'no-store' }).then(r => r.json()).then(data => {
+        L.geoJSON(data, {
+          pane: 'surveiPane',
+          pointToLayer: (f, latlng) => {
+            const d = f.properties.tinggi_genangan_cm || 0;
+            const color = d > 40 ? '#ef4444' : (d > 0 ? '#f59e0b' : '#16a34a');
+            return L.circleMarker(latlng, { radius: 5, fillColor: color, color: '#fff', weight: 2, fillOpacity: 0.95 });
+          },
+          onEachFeature: (f, l) => l.bindPopup(`<div class="popup-title">${f.properties.kode_survei || 'Titik survei'}</div><div class="popup-row"><span>Lokasi</span><b>${f.properties.nama_lokasi || '-'}</b></div><div class="popup-row"><span>Genangan</span><b>${f.properties.tinggi_genangan_cm || 0} cm</b></div>`)
+        }).addTo(miniMap);
+      }).catch(() => {});
+
+      setTimeout(() => miniMap.invalidateSize(), 400);
+      window.addEventListener('resize', () => miniMap.invalidateSize());
+    })();
+  </script>
+</body>
+</html>

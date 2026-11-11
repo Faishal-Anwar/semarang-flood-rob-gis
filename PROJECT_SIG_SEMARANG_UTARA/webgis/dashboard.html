@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard statistik dan visualisasi analitik eksposur permukiman di zona rawan banjir rob di Kecamatan Semarang Utara.">
+  <title>Dashboard Statistik — Semarang Flood &amp; Rob GIS</title>
+
+  <link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+  <script src="assets/vendor/chartjs/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css?v=26">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg site-nav sticky-top" id="siteNav">
+    <div class="container-fluid site-container">
+      <a class="navbar-brand brand-lockup" href="index.html">
+        <span class="brand-mark"><i class="fa-solid fa-water"></i></span>
+        <span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span>
+      </a>
+      <div class="d-flex align-items-center gap-2 order-lg-3">
+        <button class="nav-icon-btn" type="button" id="quickNavBtn" aria-label="Pencarian cepat (Ctrl+K)" title="Pencarian cepat (Ctrl+K)"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <a href="map.html" class="btn btn-warning nav-cta d-none d-lg-inline-flex"><i class="fa-solid fa-map-location-dot me-1"></i> Buka Peta</a>
+        <button class="navbar-toggler nav-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavMenu" aria-controls="siteNavMenu" aria-expanded="false" aria-label="Buka navigasi"><span></span><span></span><span></span></button>
+      </div>
+      <div class="collapse navbar-collapse" id="siteNavMenu">
+        <ul class="navbar-nav site-nav-links ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta WebGIS</a></li>
+          <li class="nav-item"><a class="nav-link active" href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li>
+          <li class="nav-item"><a class="nav-link" href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li>
+        </ul>
+        <a href="map.html" class="btn btn-warning nav-cta d-lg-none mt-3 w-100">Buka Peta WebGIS</a>
+      </div>
+    </div>
+  </nav>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="page-hero">
+    <div class="container-fluid site-container">
+      <div class="page-hero-grid">
+        <div class="page-hero-copy">
+          <div class="breadcrumb-modern"><a href="index.html">Beranda</a><i class="fa-solid fa-chevron-right"></i><span>Dashboard</span></div>
+          <h1>Statistik yang membuat risiko terlihat.</h1>
+          <p>Eksposur zona rawan, komposisi bahaya, dan validasi 25 titik survei lapangan dirangkum dalam satu dashboard yang bisa dibaca cepat.</p>
+          <div class="page-hero-actions">
+            <a href="downloads/Laporan_Akhir.pdf" download class="btn btn-warning"><i class="fa-solid fa-file-pdf me-1"></i> Unduh laporan</a>
+            <button class="btn btn-outline-light" style="border-color:rgba(255,255,255,.26);color:#fff;" type="button" onclick="window.print()"><i class="fa-solid fa-print me-1"></i> Cetak</button>
+            <button class="btn btn-outline-light" style="border-color:rgba(255,255,255,.26);color:#fff;" type="button" onclick="exportTableCSV()"><i class="fa-solid fa-file-csv me-1"></i> Export CSV</button>
+          </div>
+          <div class="page-hero-stats">
+            <span class="hero-stat"><strong>9</strong> kelurahan</span>
+            <span class="hero-stat"><strong>25</strong> titik survei</span>
+            <span class="hero-stat"><strong>70,08%</strong> permukiman di zona rawan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-tight" role="main">
+    <div class="container-fluid site-container">
+      <div class="dashboard-layout">
+
+        <!-- NEAR-REALTIME MONITORING -->
+        <section class="live-monitor-panel reveal" aria-labelledby="live-monitor-title">
+          <div class="live-monitor-head">
+            <div class="d-flex align-items-center gap-2">
+              <span class="live-dot" data-live-dot aria-hidden="true"></span>
+              <div>
+                <div class="d-flex align-items-center gap-2 mb-1"><span class="live-mode-badge" data-live-mode>SIMULASI</span><span class="small text-muted" style="font-size:.66rem;">refresh 30 detik</span></div>
+                <h2 id="live-monitor-title">Monitoring near-realtime</h2>
+                <p><span data-live-source>Menghubungkan ke backend monitoring...</span> · observasi tersimpan: <span data-live-count>0</span></p>
+              </div>
+            </div>
+            <div class="live-meta">
+              <span><i class="fa-solid fa-clock me-1"></i>Diperbarui <span data-live-updated>–</span></span>
+              <button class="sim-toggle" type="button" data-toggle-simulation aria-pressed="false"><i class="fa-solid fa-eye me-1"></i>Tampilkan simulasi</button>
+              <button class="live-refresh" type="button" data-live-refresh aria-label="Perbarui data monitoring"><i class="fa-solid fa-arrows-rotate"></i></button>
+            </div>
+          </div>
+          <div class="condition-banner" data-condition-banner>
+            <span class="condition-icon"><i class="fa-solid fa-shield-heart" data-condition-icon></i></span>
+            <div class="condition-copy">
+              <span class="condition-kicker">Kondisi saat ini · indikatif</span>
+              <strong data-condition-headline>Memeriksa kondisi...</strong>
+              <p data-condition-detail>Menunggu data monitoring.</p>
+            </div>
+            <span class="condition-time" data-condition-updated>–</span>
+          </div>
+          <div class="data-health" data-data-health>
+            <span class="health-title"><i class="fa-solid fa-heart-pulse me-1"></i>Kesehatan data</span>
+            <span class="health-chip is-missing">Memeriksa...</span>
+          </div>
+          <div class="live-grid">
+            <article class="live-card" data-live-card="tide_level">
+              <div class="live-card-head"><span class="live-icon"><i class="fa-solid fa-water"></i></span><span class="live-badge" data-live-status="tide_level">Normal</span></div>
+              <div class="live-label">Muka air laut</div>
+              <div class="live-value"><span data-live-value="tide_level">–</span> <small data-live-unit="tide_level">m</small></div>
+              <div class="live-station" data-live-station="tide_level">Tide Gauge Tambak Lorok</div>
+              <svg class="live-spark" data-live-spark="tide_level" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </article>
+            <article class="live-card" data-live-card="water_level">
+              <div class="live-card-head"><span class="live-icon"><i class="fa-solid fa-water-ladder"></i></span><span class="live-badge" data-live-status="water_level">Normal</span></div>
+              <div class="live-label">Muka air sungai</div>
+              <div class="live-value"><span data-live-value="water_level">–</span> <small data-live-unit="water_level">cm</small></div>
+              <div class="live-station" data-live-station="water_level">Sensor Kali Baru</div>
+              <svg class="live-spark" data-live-spark="water_level" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </article>
+            <article class="live-card" data-live-card="rainfall">
+              <div class="live-card-head"><span class="live-icon"><i class="fa-solid fa-cloud-showers-heavy"></i></span><span class="live-badge" data-live-status="rainfall">Normal</span></div>
+              <div class="live-label">Curah hujan</div>
+              <div class="live-value"><span data-live-value="rainfall">–</span> <small data-live-unit="rainfall">mm/jam</small></div>
+              <div class="live-station" data-live-station="rainfall">Stasiun Semarang Utara</div>
+              <svg class="live-spark" data-live-spark="rainfall" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </article>
+          </div>
+          <p class="live-note"><i class="fa-solid fa-circle-info me-1"></i><span data-live-note>Menghubungkan ke backend monitoring...</span></p>
+          <div class="live-extra-strip">
+            <div><span>Debit sungai · GloFAS</span><strong><span data-live-extra="river_discharge">–</span> <small>m³/s</small></strong></div>
+            <div><span>Gelombang laut · Marine</span><strong><span data-live-extra="wave_height">–</span> <small>m</small></strong></div>
+            <div><span>Laporan warga · PetaBencana</span><strong><span data-live-extra="citizen_reports">–</span> <small>7 hari</small></strong></div>
+          </div>
+        </section>
+
+        <!-- KPI -->
+        <div class="kpi-grid">
+          <div class="stat-card reveal">
+            <div class="stat-top">
+              <span class="icon-tile"><i class="fa-solid fa-layer-group"></i></span>
+              <span class="stat-trend stat-trend--safe"><i class="fa-solid fa-city"></i> 9 wilayah</span>
+            </div>
+            <div class="stat-label">Luas wilayah total</div>
+            <div class="stat-value"><span data-count="1194.65" data-decimals="2">1.194,65</span> <small>Ha</small></div>
+            <div class="stat-foot"><i class="fa-solid fa-location-dot"></i> Kecamatan Semarang Utara</div>
+          </div>
+
+          <div class="stat-card stat-card--amber reveal reveal-delay-1">
+            <div class="stat-top">
+              <span class="icon-tile icon-tile--amber"><i class="fa-solid fa-house-chimney"></i></span>
+              <span class="stat-trend"><i class="fa-solid fa-cubes"></i> 15 klaster</span>
+            </div>
+            <div class="stat-label">Total permukiman</div>
+            <div class="stat-value"><span data-count="171.68" data-decimals="2">171,68</span> <small>Ha</small></div>
+            <div class="stat-foot"><i class="fa-solid fa-house"></i> Kawasan hunian terpetakan</div>
+          </div>
+
+          <div class="stat-card stat-card--coral reveal reveal-delay-2">
+            <div class="stat-top">
+              <span class="icon-tile icon-tile--coral"><i class="fa-solid fa-house-crack"></i></span>
+              <span class="stat-trend stat-trend--up"><i class="fa-solid fa-arrow-trend-up"></i> 70,08%</span>
+            </div>
+            <div class="stat-label">Permukiman di zona rawan</div>
+            <div class="stat-value"><span data-count="120.31" data-decimals="2">120,31</span> <small>Ha</small></div>
+            <div class="stat-foot"><i class="fa-solid fa-triangle-exclamation"></i> Eksposur statis BPBD · 120,31 dari 171,68 Ha</div>
+          </div>
+
+          <div class="stat-card stat-card--green reveal reveal-delay-3">
+            <div class="stat-top">
+              <span class="icon-tile icon-tile--green"><i class="fa-solid fa-location-crosshairs"></i></span>
+              <span class="stat-trend stat-trend--safe"><i class="fa-solid fa-check"></i> valid</span>
+            </div>
+            <div class="stat-label">Titik survei GPS</div>
+            <div class="stat-value"><span data-count="25">25</span> <small>titik</small></div>
+            <div class="stat-foot"><i class="fa-solid fa-water-ladder"></i> Rata-rata genangan 30,2 cm</div>
+          </div>
+        </div>
+
+        <!-- INSIGHTS -->
+        <div class="insight-strip reveal">
+          <div class="insight-card insight-card--coral">
+            <div class="insight-kicker">Temuan utama</div>
+            <div class="insight-title">Panggung Kidul memiliki rasio tertinggi</div>
+            <p class="insight-text">97,37% permukiman berada di zona rawan (18,89 Ha). Panggung Lor mencatat luas terbesar: 60,58 Ha (95,76%).</p>
+          </div>
+          <div class="insight-card insight-card--amber">
+            <div class="insight-kicker">Sempadan sungai</div>
+            <div class="insight-title">47,76% permukiman di koridor 200 m</div>
+            <p class="insight-text">81,99 Ha permukiman bertumpuk dengan sempadan sungai aktif — BKB, Kali Semarang, Kali Baru, dan Kali Asin.</p>
+          </div>
+          <div class="insight-card insight-card--green">
+            <div class="insight-kicker">Validasi</div>
+            <div class="insight-title">Validasi lapangan perlu dicatat</div>
+            <p class="insight-text">5 titik &gt;40 cm; 2 di dalam poligon genangan, 3 di luar. Rata-rata 30,2 cm; RMSE GCP 0,84 m.</p>
+          </div>
+        </div>
+
+        <!-- CHART ROW 1 -->
+        <div class="row g-4">
+          <div class="col-lg-8 reveal">
+            <div class="surface-card chart-card h-100">
+              <div class="chart-head">
+                <div>
+                  <h2 class="chart-title"><i class="fa-solid fa-chart-bar text-primary me-2"></i>Eksposur permukiman di zona rawan</h2>
+                  <p class="chart-sub">Rasio luas permukiman dalam zona rawan BPBD terhadap luas permukiman kelurahan</p>
+                </div>
+                <span class="badge badge-danger-soft">Q4</span>
+              </div>
+              <div class="chart-body" style="height:360px;"><canvas id="chartKelurahan"></canvas></div>
+              <div class="chart-foot"><span><i class="fa-solid fa-circle text-danger me-1" style="font-size:.45rem;"></i> &gt;80% sangat kritis</span><span>Hover untuk detail nilai</span></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 reveal reveal-delay-1">
+            <div class="surface-card chart-card h-100">
+              <div class="chart-head">
+                <div>
+                  <h2 class="chart-title"><i class="fa-solid fa-chart-pie text-warning me-2"></i>Komposisi zona rawan</h2>
+                  <p class="chart-sub">Luas permukiman per kelas zona rawan (Ha)</p>
+                </div>
+                <span class="badge bg-light text-dark border">Overlay</span>
+              </div>
+              <div class="chart-body" style="height:330px;position:relative;"><canvas id="chartHazard"></canvas></div>
+              <div class="chart-foot"><span>Total 171,68 Ha</span><span>4 kategori</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHART ROW 2 -->
+        <div class="row g-4">
+          <div class="col-lg-5 reveal">
+            <div class="surface-card chart-card h-100">
+              <div class="chart-head">
+                <div>
+                  <h2 class="chart-title"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>Sebaran spasial</h2>
+                  <p class="chart-sub">Batas kelurahan dan 25 titik survei GPS</p>
+                </div>
+                <a href="map.html" class="btn btn-sm btn-outline-primary">Perbesar <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i></a>
+              </div>
+              <div class="chart-body"><div id="mini-map" style="height:300px;border-radius:12px;"></div></div>
+            </div>
+          </div>
+
+          <div class="col-lg-7 reveal reveal-delay-1">
+            <div class="surface-card chart-card h-100">
+              <div class="chart-head">
+                <div>
+                  <h2 class="chart-title"><i class="fa-solid fa-water-ladder text-info me-2"></i>Ketinggian genangan 25 titik survei</h2>
+                  <p class="chart-sub">Merah &gt;40 cm · oranye 20–40 cm · hijau aman</p>
+                </div>
+                <span class="badge badge-soft-teal">Ground truth</span>
+              </div>
+              <div class="chart-body" style="height:320px;"><canvas id="chartSurvey"></canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="surface-card table-card reveal">
+          <div class="table-toolbar">
+            <div>
+              <h2 class="chart-title mb-1"><i class="fa-solid fa-ranking-star text-warning me-2"></i>Peringkat eksposur zona rawan per kelurahan</h2>
+              <p class="chart-sub mb-0">Klik header kolom untuk menyortir. Gunakan filter untuk menyaring data.</p>
+            </div>
+            <div class="table-toolbar-group">
+              <select id="filterKerentanan" class="form-select" aria-label="Filter kerentanan" onchange="filterTable()">
+                <option value="">Semua kerentanan</option>
+                <option value="Sangat Kritis">Sangat kritis (Prioritas 1)</option>
+                <option value="Kritis">Kritis (Prioritas 2)</option>
+                <option value="Waspada">Waspada (Prioritas 3)</option>
+                <option value="Terkendali">Terkendali / rendah</option>
+                <option value="Di Luar Zona Rawan">Di luar zona rawan (0%)</option>
+                <option value="belum tersedia">Data belum tersedia</option>
+              </select>
+              <input type="search" id="tableSearch" class="form-control" placeholder="Cari kelurahan..." aria-label="Cari kelurahan" onkeyup="filterTable()">
+              <button class="btn btn-outline-secondary btn-sm" type="button" onclick="resetTableFilters()"><i class="fa-solid fa-rotate me-1"></i> Reset</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle ranking-table" id="rankTable">
+              <thead>
+                <tr>
+                  <th onclick="sortTable(0)">Rank <i class="fa-solid fa-sort ms-1 small"></i></th>
+                  <th onclick="sortTable(1)">Kelurahan <i class="fa-solid fa-sort ms-1 small"></i></th>
+                  <th class="text-end" onclick="sortTable(2)">Luas (Ha) <i class="fa-solid fa-sort ms-1 small"></i></th>
+                  <th class="text-end" onclick="sortTable(3)">Permukiman (Ha) <i class="fa-solid fa-sort ms-1 small"></i></th>
+                  <th class="text-end" onclick="sortTable(4)">Zona rawan (Ha) <i class="fa-solid fa-sort ms-1 small"></i></th>
+                  <th class="text-center" onclick="sortTable(5)">Rasio <i class="fa-solid fa-sort ms-1 small"></i></th>
+                  <th class="text-end" onclick="sortTable(6)">Populasi <i class="fa-solid fa-sort ms-1 small"></i></th>
+                  <th>Status mitigasi</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="alert alert-light border mb-0 small text-muted reveal">
+          <i class="fa-solid fa-circle-info text-primary me-2"></i>
+          <b>Catatan audit:</b> Statistik telah dihitung ulang dari overlay geometri (120,31 Ha / 70,08%) dan disinkronkan dengan GeoPackage. Angka ini adalah <b>eksposur statis terhadap zona rawan BPBD</b>, bukan luas genangan atau kejadian banjir saat ini. Layer tematik adalah snapshot analisis (April 2026, sumber zona rawan: BPBD/InaRISK), bukan sensor realtime. Nilai populasi merupakan estimasi berbasis data kelurahan. <a class="text-link-strong" href="methodology.html#glosarium">Baca glosarium</a>.
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-fluid site-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand-lockup" href="index.html">
+            <span class="brand-mark"><i class="fa-solid fa-water"></i></span>
+            <span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span>
+          </a>
+          <p>Dashboard analitik eksposur permukiman di zona rawan dan validasi lapangan untuk mitigasi banjir rob Semarang Utara.</p>
+          <div class="footer-badges"><span>Chart.js</span><span>GeoPackage</span><span>Leaflet</span></div>
+        </div>
+        <div>
+          <h3 class="footer-title">Navigasi</h3>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li>
+            <li><a href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta WebGIS</a></li>
+            <li><a href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li>
+            <li><a href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title">Unduhan</h3>
+          <ul class="footer-links">
+            <li><a href="downloads/Laporan_Akhir.pdf" download><i class="fa-solid fa-file-pdf"></i> Laporan akhir</a></li>
+            <li><a href="downloads/Database_SIG.gpkg" download><i class="fa-solid fa-database"></i> GeoPackage</a></li>
+            <li><a href="downloads/Peta_2.pdf" download><i class="fa-solid fa-map"></i> Peta analisis</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title">Proyek</h3>
+          <p class="small mb-2" style="color:rgba(255,255,255,.56);">Kelompok 3 — Pemetaan dan Analisis Risiko Banjir &amp; Rob Semarang Utara.</p>
+          <p class="small mb-0" style="color:rgba(255,255,255,.42);">Dosen: Ghufron, M.Kom · WGS 84 / UTM 49S</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Semarang Flood &amp; Rob GIS.</span>
+        <span><a href="dashboard.html">Dashboard</a> · <a href="map.html">Peta</a> · <a href="methodology.html">Metodologi</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Kembali ke atas"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
+  <script src="js/app.js?v=4"></script>
+  <script src="js/live-monitor.js?v=6"></script>
+  <script>
+    let statsData = null;
+    let currentRankings = [];
+    let sortDirection = {};
+    let miniMap = null;
+
+    Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+    Chart.defaults.color = '#64748b';
+    Chart.defaults.borderColor = 'rgba(15,23,42,.07)';
+
+    fetch('data/statistik.json', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        statsData = data;
+        currentRankings = [...data.kelurahan_rankings];
+        renderTable(currentRankings);
+        renderChartKelurahan(data.kelurahan_rankings);
+        renderChartHazard(data.hazard_breakdown_ha);
+        initMiniMap();
+        renderChartSurvey();
+      });
+
+    function riskBadge(item) {
+      if (item.rasio_persen >= 80) return 'badge-danger-soft';
+      if (item.rasio_persen >= 60) return 'badge-warning-soft';
+      return 'badge-success-soft';
+    }
+
+    function renderTable(rankings) {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      rankings.forEach(item => {
+        const hasSettlement = (Number(item.luas_permukiman_ha) || 0) > 0;
+        const homeValue = hasSettlement ? `${item.luas_permukiman_ha.toFixed(2)} Ha` : '—';
+        const impactValue = hasSettlement ? `${item.luas_terpapar_ha.toFixed(2)} Ha` : '—';
+        const ratioValue = hasSettlement ? `<span class="badge ${riskBadge(item)}">${item.rasio_persen.toFixed(1)}%</span>` : '<span class="badge bg-light text-dark border">—</span>';
+        const row = `
+          <tr>
+            <td data-label="Rank"><span class="rank-badge ${item.rank <= 3 ? 'rank-badge--top' : ''}">${item.rank}</span></td>
+            <td data-label="Kelurahan" class="fw-bold" style="color:var(--ink-900);">${item.nama_kel}</td>
+            <td data-label="Luas" class="text-end">${item.luas_kelurahan_ha.toFixed(2)} Ha</td>
+            <td data-label="Permukiman" class="text-end">${homeValue}</td>
+            <td data-label="Zona rawan" class="text-end fw-bold" style="color:var(--coral-600);">${impactValue}</td>
+            <td data-label="Rasio" class="text-center">${ratioValue}</td>
+            <td data-label="Populasi" class="text-end">${item.populasi.toLocaleString('id-ID')}</td>
+            <td data-label="Status">
+              <div class="fw-semibold small" style="color:var(--ink-700);">${item.tingkat_kerentanan}</div>
+              <div class="text-muted" style="font-size:.7rem;"><i class="fa-solid fa-faucet-drip me-1"></i>${item.polder_pompa}</div>
+            </td>
+          </tr>`;
+        tbody.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
+    function filterTable() {
+      const q = document.getElementById('tableSearch').value.toLowerCase();
+      const statusFilter = document.getElementById('filterKerentanan').value.toLowerCase();
+      currentRankings = statsData.kelurahan_rankings.filter(r => {
+        const matchName = r.nama_kel.toLowerCase().includes(q);
+        const matchStatus = !statusFilter || r.tingkat_kerentanan.toLowerCase().includes(statusFilter);
+        return matchName && matchStatus;
+      });
+      renderTable(currentRankings);
+    }
+
+    function resetTableFilters() {
+      document.getElementById('tableSearch').value = '';
+      document.getElementById('filterKerentanan').value = '';
+      currentRankings = [...statsData.kelurahan_rankings];
+      renderTable(currentRankings);
+    }
+
+    function sortTable(colIndex) {
+      sortDirection[colIndex] = !sortDirection[colIndex];
+      const asc = sortDirection[colIndex];
+      currentRankings.sort((a, b) => {
+        let valA, valB;
+        if (colIndex === 0) { valA = a.rank; valB = b.rank; }
+        else if (colIndex === 1) { valA = a.nama_kel; valB = b.nama_kel; }
+        else if (colIndex === 2) { valA = a.luas_kelurahan_ha; valB = b.luas_kelurahan_ha; }
+        else if (colIndex === 3) { valA = a.luas_permukiman_ha; valB = b.luas_permukiman_ha; }
+        else if (colIndex === 4) { valA = a.luas_terpapar_ha; valB = b.luas_terpapar_ha; }
+        else if (colIndex === 5) { valA = a.rasio_persen; valB = b.rasio_persen; }
+        else if (colIndex === 6) { valA = a.populasi; valB = b.populasi; }
+        if (typeof valA === 'string') return asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        return asc ? valA - valB : valB - valA;
+      });
+      renderTable(currentRankings);
+    }
+
+    function exportTableCSV() {
+      if (!currentRankings.length) return;
+      const headers = ['Rank', 'Kelurahan', 'Luas (Ha)', 'Permukiman (Ha)', 'Zona rawan (Ha)', 'Rasio (%)', 'Populasi', 'Status'];
+      const rows = currentRankings.map(r => [r.rank, r.nama_kel, r.luas_kelurahan_ha, r.luas_permukiman_ha, r.luas_terpapar_ha, r.rasio_persen, r.populasi, r.tingkat_kerentanan]);
+      const csv = [headers, ...rows].map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'peringkat_eksposur_zona_rawan_semarang_utara.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      if (window.appToast) window.appToast('Data peringkat berhasil diekspor ke CSV.', 'fa-file-csv');
+    }
+
+    function renderChartKelurahan(rankings) {
+      const ctx = document.getElementById('chartKelurahan').getContext('2d');
+      const sorted = [...rankings].sort((a, b) => b.rasio_persen - a.rasio_persen);
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: sorted.map(r => r.nama_kel),
+          datasets: [{
+            label: 'Eksposur zona rawan (%)',
+            data: sorted.map(r => r.rasio_persen),
+            backgroundColor: sorted.map(r => r.rasio_persen > 80 ? '#ef4444' : r.rasio_persen > 60 ? '#f59e0b' : '#22c55e'),
+            borderRadius: 7,
+            barThickness: 18
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: c => ` Eksposur zona rawan: ${c.parsed.x.toFixed(1)}%` } }
+          },
+          scales: {
+            x: { beginAtZero: true, max: 100, grid: { color: 'rgba(15,23,42,.06)' }, ticks: { callback: v => v + '%', font: { size: 10 } } },
+            y: { grid: { display: false }, ticks: { font: { size: 11, weight: '600' } } }
+          }
+        }
+      });
+    }
+
+    function renderChartHazard(hazardData) {
+      const ctx = document.getElementById('chartHazard').getContext('2d');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(hazardData),
+          datasets: [{
+            data: Object.values(hazardData),
+            backgroundColor: ['#ef4444', '#f59e0b', '#fbbf24', '#22c55e'],
+            borderWidth: 0,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '66%',
+          plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 9, boxHeight: 9, padding: 12, font: { size: 10, weight: '600' } } },
+            tooltip: { callbacks: { label: c => ` ${c.label}: ${c.raw.toFixed(2)} Ha` } }
+          }
+        }
+      });
+    }
+
+    function renderChartSurvey() {
+      fetch('data/titik_survei.geojson', { cache: 'no-store' })
+        .then(res => res.json())
+        .then(data => {
+          const points = data.features;
+          const ctx = document.getElementById('chartSurvey').getContext('2d');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: points.map(f => f.properties.kode_survei || f.properties.id_titik),
+              datasets: [{
+                label: 'Tinggi genangan (cm)',
+                data: points.map(f => f.properties.tinggi_genangan_cm || 0),
+                backgroundColor: points.map(f => {
+                  const h = f.properties.tinggi_genangan_cm || 0;
+                  return h > 40 ? '#ef4444' : h > 0 ? '#f59e0b' : '#22c55e';
+                }),
+                borderRadius: 5
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(15,23,42,.06)' }, title: { display: true, text: 'cm', font: { size: 10 } } },
+                x: { grid: { display: false }, ticks: { font: { size: 8 }, maxRotation: 90, minRotation: 45 } }
+              }
+            }
+          });
+        });
+    }
+
+    function initMiniMap() {
+      miniMap = L.map('mini-map', { zoomControl: true, scrollWheelZoom: false }).setView([-6.965, 110.418], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+      }).addTo(miniMap);
+
+      fetch('data/batas_kelurahan.geojson', { cache: 'no-store' }).then(res => res.json()).then(data => {
+        const risk = Object.fromEntries((statsData.kelurahan_rankings || []).map(item => [item.nama_kel, item]));
+        L.geoJSON(data, {
+          style: f => {
+            const item = risk[f.properties.nama_kel] || {};
+            const ratio = Number(item.rasio_persen) || 0;
+            const hasSettlement = Number(item.luas_permukiman_ha) || 0;
+            const color = !hasSettlement ? '#64748b' : ratio >= 70 ? '#ef4444' : ratio >= 40 ? '#f59e0b' : ratio > 0 ? '#eab308' : '#22c55e';
+            return { color: '#0c2444', weight: 1.4, fillColor: color, fillOpacity: ratio >= 70 ? 0.22 : 0.12, dashArray: '3, 3' };
+          },
+          onEachFeature: (f, l) => l.bindPopup(`<b>${f.properties.nama_kel}</b><br>Luas: ${f.properties.luas_ha} Ha<br>Rasio zona rawan: ${risk[f.properties.nama_kel]?.rasio_persen ?? 0}%`)
+        }).addTo(miniMap);
+      });
+
+      fetch('data/titik_survei.geojson', { cache: 'no-store' }).then(res => res.json()).then(data => {
+        L.geoJSON(data, {
+          pointToLayer: (f, latlng) => {
+            const d = f.properties.tinggi_genangan_cm || 0;
+            return L.circleMarker(latlng, {
+              radius: 5,
+              fillColor: d > 40 ? '#ef4444' : d > 0 ? '#f59e0b' : '#22c55e',
+              color: '#fff', weight: 1.5, fillOpacity: 0.95
+            });
+          },
+          onEachFeature: (f, l) => l.bindPopup(`<b>${f.properties.kode_survei}</b>: ${f.properties.tinggi_genangan_cm} cm<br>${f.properties.kelurahan}`)
+        }).addTo(miniMap);
+      });
+    }
+  </script>
+</body>
+</html>

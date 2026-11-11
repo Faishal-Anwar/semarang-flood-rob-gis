@@ -1,0 +1,809 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.41814,
+              -6.949222
+            ],
+            [
+              110.414293,
+              -6.949217
+            ],
+            [
+              110.414297,
+              -6.946051
+            ],
+            [
+              110.418144,
+              -6.946056
+            ],
+            [
+              110.41814,
+              -6.949222
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 1,
+        "id_perm": 1,
+        "nama_kaw": "Permukiman Nelayan Lodan RW 01-04",
+        "kelurahan": "Bandarharjo",
+        "tipe_huni": "Perkampungan Nelayan & Padat",
+        "luas_total_ha": 15.75,
+        "luas_terpapar_m2": 148750.0,
+        "luas_terpapar_ha": 14.88,
+        "pct_terpapar": 94.45,
+        "jenis_bahaya": "Rob & Limpasan Sungai Estuari",
+        "tingkat_risiko": "Tinggi",
+        "rekomendasi": "Perkuat drainase/polder dan sistem peringatan dini",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.419267,
+              -6.953354
+            ],
+            [
+              110.419268,
+              -6.953359
+            ],
+            [
+              110.419585,
+              -6.954344
+            ],
+            [
+              110.419755,
+              -6.954877
+            ],
+            [
+              110.419265,
+              -6.954877
+            ],
+            [
+              110.419267,
+              -6.953354
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 2,
+        "id_perm": 2,
+        "nama_kaw": "Permukiman Padat Bandarharjo RW 05-08",
+        "kelurahan": "Bandarharjo",
+        "tipe_huni": "Permukiman Sangat Padat",
+        "luas_total_ha": 1.16,
+        "luas_terpapar_m2": 4563.0,
+        "luas_terpapar_ha": 0.46,
+        "pct_terpapar": 39.34,
+        "jenis_bahaya": "Rob & Limpasan Sungai Estuari",
+        "tingkat_risiko": "Tinggi",
+        "rekomendasi": "Perkuat drainase/polder dan sistem peringatan dini",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.420841,
+              -6.961889
+            ],
+            [
+              110.418595,
+              -6.961886
+            ],
+            [
+              110.418238,
+              -6.961612
+            ],
+            [
+              110.417796,
+              -6.961197
+            ],
+            [
+              110.417552,
+              -6.96092
+            ],
+            [
+              110.41735,
+              -6.96067
+            ],
+            [
+              110.417223,
+              -6.960301
+            ],
+            [
+              110.420842,
+              -6.960306
+            ],
+            [
+              110.420841,
+              -6.961889
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 3,
+        "id_perm": 3,
+        "nama_kaw": "Permukiman Layur Lor RW 09-12",
+        "kelurahan": "Bandarharjo",
+        "tipe_huni": "Permukiman Padat Teratur",
+        "luas_total_ha": 13.57,
+        "luas_terpapar_m2": 59437.0,
+        "luas_terpapar_ha": 5.94,
+        "pct_terpapar": 43.81,
+        "jenis_bahaya": "Banjir Limpasan Sungai (Fluvial)",
+        "tingkat_risiko": "Sedang",
+        "rekomendasi": "Normalisasi saluran dan pemantauan berkala",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                110.43602,
+                -6.947887
+              ],
+              [
+                110.435021,
+                -6.947885
+              ],
+              [
+                110.434796,
+                -6.94777
+              ],
+              [
+                110.434533,
+                -6.94757
+              ],
+              [
+                110.434289,
+                -6.947419
+              ],
+              [
+                110.434168,
+                -6.947288
+              ],
+              [
+                110.434061,
+                -6.946921
+              ],
+              [
+                110.434238,
+                -6.946857
+              ],
+              [
+                110.434584,
+                -6.94686
+              ],
+              [
+                110.434753,
+                -6.946881
+              ],
+              [
+                110.434932,
+                -6.947019
+              ],
+              [
+                110.435077,
+                -6.947019
+              ],
+              [
+                110.435131,
+                -6.946822
+              ],
+              [
+                110.435273,
+                -6.946638
+              ],
+              [
+                110.43501,
+                -6.946407
+              ],
+              [
+                110.435039,
+                -6.946347
+              ],
+              [
+                110.43516,
+                -6.946098
+              ],
+              [
+                110.435388,
+                -6.945904
+              ],
+              [
+                110.435557,
+                -6.945712
+              ],
+              [
+                110.435576,
+                -6.945536
+              ],
+              [
+                110.435547,
+                -6.945392
+              ],
+              [
+                110.435579,
+                -6.945227
+              ],
+              [
+                110.435622,
+                -6.944977
+              ],
+              [
+                110.435574,
+                -6.944913
+              ],
+              [
+                110.435514,
+                -6.944801
+              ],
+              [
+                110.435614,
+                -6.9447
+              ],
+              [
+                110.435654,
+                -6.94461
+              ],
+              [
+                110.43563,
+                -6.944492
+              ],
+              [
+                110.435533,
+                -6.94441
+              ],
+              [
+                110.43549,
+                -6.944389
+              ],
+              [
+                110.435506,
+                -6.944266
+              ],
+              [
+                110.435643,
+                -6.943893
+              ],
+              [
+                110.435673,
+                -6.943816
+              ],
+              [
+                110.436025,
+                -6.943816
+              ],
+              [
+                110.43602,
+                -6.947887
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                110.430594,
+                -6.94381
+              ],
+              [
+                110.432702,
+                -6.943812
+              ],
+              [
+                110.432747,
+                -6.943935
+              ],
+              [
+                110.433358,
+                -6.945693
+              ],
+              [
+                110.433637,
+                -6.946513
+              ],
+              [
+                110.433782,
+                -6.946838
+              ],
+              [
+                110.434012,
+                -6.94769
+              ],
+              [
+                110.43402,
+                -6.947884
+              ],
+              [
+                110.430589,
+                -6.94788
+              ],
+              [
+                110.430594,
+                -6.94381
+              ]
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 4,
+        "id_perm": 4,
+        "nama_kaw": "Perkampungan Nelayan Tambak Lorok RW 12-16",
+        "kelurahan": "Tanjung Mas",
+        "tipe_huni": "Perkampungan Nelayan Pesisir",
+        "luas_total_ha": 18.18,
+        "luas_terpapar_m2": 181765.0,
+        "luas_terpapar_ha": 18.18,
+        "pct_terpapar": 100.0,
+        "jenis_bahaya": "Rob Pasang Air Laut Ekstrem",
+        "tingkat_risiko": "Sangat Tinggi",
+        "rekomendasi": "Prioritas perlindungan, retrofit drainase, dan jalur evakuasi",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.401845,
+              -6.950242
+            ],
+            [
+              110.406824,
+              -6.950248
+            ],
+            [
+              110.406819,
+              -6.954047
+            ],
+            [
+              110.40184,
+              -6.954041
+            ],
+            [
+              110.401845,
+              -6.950242
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 5,
+        "id_perm": 7,
+        "nama_kaw": "Perumahan Tanah Mas Sektor Pasir Mas",
+        "kelurahan": "Panggung Lor",
+        "tipe_huni": "Perumahan Teratur Menengah",
+        "luas_total_ha": 23.1,
+        "luas_terpapar_m2": 231000.0,
+        "luas_terpapar_ha": 23.1,
+        "pct_terpapar": 100.0,
+        "jenis_bahaya": "Genangan Hujan & Rob Rembesan",
+        "tingkat_risiko": "Tinggi",
+        "rekomendasi": "Perkuat drainase/polder dan sistem peringatan dini",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.404417,
+              -6.956441
+            ],
+            [
+              110.409667,
+              -6.956448
+            ],
+            [
+              110.409662,
+              -6.960518
+            ],
+            [
+              110.404412,
+              -6.960512
+            ],
+            [
+              110.404417,
+              -6.956441
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 6,
+        "id_perm": 8,
+        "nama_kaw": "Perumahan Tanah Mas Sektor Tambak Mas",
+        "kelurahan": "Panggung Lor",
+        "tipe_huni": "Perumahan Teratur Menengah",
+        "luas_total_ha": 26.1,
+        "luas_terpapar_m2": 261000.0,
+        "luas_terpapar_ha": 26.1,
+        "pct_terpapar": 100.0,
+        "jenis_bahaya": "Genangan Hujan & Rob Rembesan",
+        "tingkat_risiko": "Tinggi",
+        "rekomendasi": "Perkuat drainase/polder dan sistem peringatan dini",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.402743,
+              -6.955987
+            ],
+            [
+              110.402739,
+              -6.959153
+            ],
+            [
+              110.399797,
+              -6.959149
+            ],
+            [
+              110.399801,
+              -6.955983
+            ],
+            [
+              110.402743,
+              -6.955987
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 7,
+        "id_perm": 9,
+        "nama_kaw": "Perumahan Puri Anjasmoro Utara",
+        "kelurahan": "Panggung Lor",
+        "tipe_huni": "Perumahan Teratur Menengah Atas",
+        "luas_total_ha": 14.06,
+        "luas_terpapar_m2": 113750.0,
+        "luas_terpapar_ha": 11.38,
+        "pct_terpapar": 80.91,
+        "jenis_bahaya": "Genangan Hujan & Rob Rembesan",
+        "tingkat_risiko": "Tinggi",
+        "rekomendasi": "Perkuat drainase/polder dan sistem peringatan dini",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.409746,
+              -6.966081
+            ],
+            [
+              110.409745,
+              -6.967095
+            ],
+            [
+              110.409716,
+              -6.967103
+            ],
+            [
+              110.409506,
+              -6.967171
+            ],
+            [
+              110.409382,
+              -6.967215
+            ],
+            [
+              110.409134,
+              -6.96729
+            ],
+            [
+              110.408915,
+              -6.96735
+            ],
+            [
+              110.408705,
+              -6.967411
+            ],
+            [
+              110.408431,
+              -6.96749
+            ],
+            [
+              110.408179,
+              -6.967567
+            ],
+            [
+              110.407985,
+              -6.967639
+            ],
+            [
+              110.407769,
+              -6.967709
+            ],
+            [
+              110.407589,
+              -6.967768
+            ],
+            [
+              110.407404,
+              -6.967832
+            ],
+            [
+              110.407414,
+              -6.967965
+            ],
+            [
+              110.407428,
+              -6.96813
+            ],
+            [
+              110.40744,
+              -6.968304
+            ],
+            [
+              110.407455,
+              -6.968584
+            ],
+            [
+              110.407334,
+              -6.968586
+            ],
+            [
+              110.407172,
+              -6.968584
+            ],
+            [
+              110.40698,
+              -6.968554
+            ],
+            [
+              110.406874,
+              -6.96857
+            ],
+            [
+              110.406846,
+              -6.968707
+            ],
+            [
+              110.406808,
+              -6.968745
+            ],
+            [
+              110.406698,
+              -6.968706
+            ],
+            [
+              110.406521,
+              -6.968662
+            ],
+            [
+              110.406414,
+              -6.968645
+            ],
+            [
+              110.406273,
+              -6.968645
+            ],
+            [
+              110.406241,
+              -6.968481
+            ],
+            [
+              110.406181,
+              -6.968342
+            ],
+            [
+              110.406088,
+              -6.968172
+            ],
+            [
+              110.406017,
+              -6.968011
+            ],
+            [
+              110.405928,
+              -6.967813
+            ],
+            [
+              110.405896,
+              -6.967734
+            ],
+            [
+              110.405898,
+              -6.966076
+            ],
+            [
+              110.409746,
+              -6.966081
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 8,
+        "id_perm": 10,
+        "nama_kaw": "Permukiman Hasanudin RW 01-04",
+        "kelurahan": "Panggung Kidul",
+        "tipe_huni": "Permukiman Padat Teratur",
+        "luas_total_ha": 8.71,
+        "luas_terpapar_m2": 84397.0,
+        "luas_terpapar_ha": 8.44,
+        "pct_terpapar": 96.88,
+        "jenis_bahaya": "Genangan Genangan Air Hujan / Cekungan Drainase",
+        "tingkat_risiko": "Sedang",
+        "rekomendasi": "Normalisasi saluran dan pemantauan berkala",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.400691,
+              -6.967969
+            ],
+            [
+              110.400694,
+              -6.965809
+            ],
+            [
+              110.400817,
+              -6.965804
+            ],
+            [
+              110.40156,
+              -6.965756
+            ],
+            [
+              110.402145,
+              -6.96572
+            ],
+            [
+              110.402753,
+              -6.965671
+            ],
+            [
+              110.403344,
+              -6.965622
+            ],
+            [
+              110.403718,
+              -6.965579
+            ],
+            [
+              110.403977,
+              -6.965509
+            ],
+            [
+              110.404406,
+              -6.965391
+            ],
+            [
+              110.404402,
+              -6.967974
+            ],
+            [
+              110.400691,
+              -6.967969
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 9,
+        "id_perm": 11,
+        "nama_kaw": "Permukiman Brotojoyo & Kakap RW 05-08",
+        "kelurahan": "Panggung Kidul",
+        "tipe_huni": "Permukiman Padat",
+        "luas_total_ha": 10.69,
+        "luas_terpapar_m2": 104482.0,
+        "luas_terpapar_ha": 10.45,
+        "pct_terpapar": 97.77,
+        "jenis_bahaya": "Genangan Genangan Air Hujan / Cekungan Drainase",
+        "tingkat_risiko": "Sedang",
+        "rekomendasi": "Normalisasi saluran dan pemantauan berkala",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              110.417985,
+              -6.965187
+            ],
+            [
+              110.417985,
+              -6.965454
+            ],
+            [
+              110.417833,
+              -6.965502
+            ],
+            [
+              110.417549,
+              -6.965612
+            ],
+            [
+              110.41712,
+              -6.965779
+            ],
+            [
+              110.416313,
+              -6.966026
+            ],
+            [
+              110.416083,
+              -6.966079
+            ],
+            [
+              110.416084,
+              -6.965185
+            ],
+            [
+              110.417985,
+              -6.965187
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id_terdampak": 10,
+        "id_perm": 15,
+        "nama_kaw": "Permukiman Kampung Melayu RW 01-04",
+        "kelurahan": "Kuningan",
+        "tipe_huni": "Permukiman Bersejarah Padat",
+        "luas_total_ha": 5.56,
+        "luas_terpapar_m2": 13999.0,
+        "luas_terpapar_ha": 1.4,
+        "pct_terpapar": 25.16,
+        "jenis_bahaya": "Banjir Limpasan Sungai (Fluvial)",
+        "tingkat_risiko": "Sedang",
+        "rekomendasi": "Normalisasi saluran dan pemantauan berkala",
+        "sumber": "Overlay Intersect Permukiman x Area Genangan BPBD (recomputed)"
+      }
+    }
+  ]
+}

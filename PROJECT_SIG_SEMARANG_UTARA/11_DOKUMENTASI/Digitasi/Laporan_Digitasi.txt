@@ -1,0 +1,14 @@
+LAPORAN DOKUMENTASI DIGITASI ON-SCREEN
+Perangkat Lunak: QGIS 3.x
+Toleransi Snapping: 10 Piksel / 5.0 Meter
+Mode Snapping: Vertex, Segment, dan Endpoint (Topological Editing Diaktifkan)
+
+LAYER HASIL DIGITASI:
+1. Layer Titik (Point): Titik_Survei_Lapangan (25 fitur titik survei dan genangan banjir/rob)
+2. Layer Garis (LineString): Sungai_dan_Drainase (12 segmen saluran primer, sekunder, dan sungai utama)
+3. Layer Poligon (MultiPolygon): Batas_Administrasi_Kelurahan (9 kelurahan), Permukiman (15 klaster permukiman), Area_Genangan_Banjir_Rob (5 zona bahaya)
+
+KUALITAS GEOMETRI:
+- Kerapatan Vertex: Proporsional mengikuti kelengkungan sungai dan kontur jalan/lahan.
+- Snapping: Seluruh percabangan sungai dan saluran terkoneksi sempurna pada simpul bersama (nodal topology).
+- Bebas Gap & Overlap pada layer administrasi.

@@ -1,0 +1,247 @@
+{
+  "project_info": {
+    "title": "SEMARANG FLOOD & ROB GIS MONITORING",
+    "subtitle": "Pemetaan dan Analisis Risiko Banjir dan Rob Semarang Utara",
+    "study_area": "Kecamatan Semarang Utara, Kota Semarang, Jawa Tengah",
+    "target_crs": "WGS 84 / UTM Zone 49S (EPSG:32749)",
+    "web_crs": "WGS 84 (EPSG:4326)",
+    "academic_year": "Genap 2025/2026",
+    "lecturer": "Ghufron, M.Kom",
+    "analysis_version": "2.1-recomputed",
+    "analysis_method": "Overlay intersect geometri pada EPSG:32749"
+  },
+  "kpi_summary": {
+    "total_kecamatan_area_ha": 1194.65,
+    "total_settlement_area_ha": 171.68,
+    "total_hazard_flood_area_ha": 640.54,
+    "total_impacted_settlement_ha": 120.31,
+    "impact_percentage": 70.08,
+    "total_kelurahan_count": 9,
+    "total_survey_points": 25,
+    "survey_points_rob": 10,
+    "survey_points_fluvial": 12,
+    "survey_points_safe": 3,
+    "river_buffer_200m_total_ha": 656.2,
+    "settlement_in_buffer_200m_ha": 81.99,
+    "rmse_georeferencing_meters": 0.84,
+    "settlement_in_buffer_200m_pct": 47.76,
+    "average_survey_height_cm": 30.2
+  },
+  "kelurahan_rankings": [
+    {
+      "rank": 1,
+      "id_kel": "KEL-04",
+      "nama_kel": "Panggung Kidul",
+      "luas_kelurahan_ha": 48.44,
+      "luas_permukiman_ha": 19.4,
+      "luas_terpapar_ha": 18.89,
+      "rasio_persen": 97.37,
+      "populasi": 10450,
+      "kepadatan_jiwa_ha": 215.73,
+      "tingkat_kerentanan": "Sangat Kritis (Prioritas 1)",
+      "polder_pompa": "Pompa Saluran Induk",
+      "pusat_koordinat": [
+        110.411,
+        -6.971
+      ],
+      "status_kerentanan": "Sangat Kritis",
+      "jumlah_titik_survei": 1
+    },
+    {
+      "rank": 2,
+      "id_kel": "KEL-03",
+      "nama_kel": "Panggung Lor",
+      "luas_kelurahan_ha": 247.46,
+      "luas_permukiman_ha": 63.26,
+      "luas_terpapar_ha": 60.58,
+      "rasio_persen": 95.76,
+      "populasi": 15600,
+      "kepadatan_jiwa_ha": 63.04,
+      "tingkat_kerentanan": "Sangat Kritis (Prioritas 1)",
+      "polder_pompa": "Sistem Polder Tanah Mas",
+      "pusat_koordinat": [
+        110.408,
+        -6.963
+      ],
+      "status_kerentanan": "Sangat Kritis",
+      "jumlah_titik_survei": 3
+    },
+    {
+      "rank": 3,
+      "id_kel": "KEL-02",
+      "nama_kel": "Bandarharjo",
+      "luas_kelurahan_ha": 226.34,
+      "luas_permukiman_ha": 30.48,
+      "luas_terpapar_ha": 21.28,
+      "rasio_persen": 69.81,
+      "populasi": 23410,
+      "kepadatan_jiwa_ha": 103.43,
+      "tingkat_kerentanan": "Waspada (Prioritas 3)",
+      "polder_pompa": "Rumah Pompa Kali Baru",
+      "pusat_koordinat": [
+        110.4215,
+        -6.961
+      ],
+      "status_kerentanan": "Waspada",
+      "jumlah_titik_survei": 1
+    },
+    {
+      "rank": 4,
+      "id_kel": "KEL-01",
+      "nama_kel": "Tanjung Mas",
+      "luas_kelurahan_ha": 378.8,
+      "luas_permukiman_ha": 34.82,
+      "luas_terpapar_ha": 18.18,
+      "rasio_persen": 52.2,
+      "populasi": 31250,
+      "kepadatan_jiwa_ha": 82.5,
+      "tingkat_kerentanan": "Waspada (Prioritas 3)",
+      "polder_pompa": "Polder Pelabuhan & Tambak Lorok",
+      "pusat_koordinat": [
+        110.4285,
+        -6.9535
+      ],
+      "status_kerentanan": "Waspada",
+      "jumlah_titik_survei": 4
+    },
+    {
+      "rank": 5,
+      "id_kel": "KEL-06",
+      "nama_kel": "Kuningan",
+      "luas_kelurahan_ha": 85.35,
+      "luas_permukiman_ha": 5.56,
+      "luas_terpapar_ha": 1.4,
+      "rasio_persen": 25.16,
+      "populasi": 12900,
+      "kepadatan_jiwa_ha": 151.14,
+      "tingkat_kerentanan": "Terkendali / Rendah",
+      "polder_pompa": "Pompa Kali Semarang Hilir",
+      "pusat_koordinat": [
+        110.417,
+        -6.972
+      ],
+      "status_kerentanan": "Terkendali",
+      "jumlah_titik_survei": 0
+    },
+    {
+      "rank": 6,
+      "id_kel": "KEL-05",
+      "nama_kel": "Bulu Lor",
+      "luas_kelurahan_ha": 65.89,
+      "luas_permukiman_ha": 15.57,
+      "luas_terpapar_ha": 0.0,
+      "rasio_persen": 0.0,
+      "populasi": 14850,
+      "kepadatan_jiwa_ha": 225.38,
+      "tingkat_kerentanan": "Di Luar Zona Rawan",
+      "polder_pompa": "Pompa Saluran Bulu",
+      "pusat_koordinat": [
+        110.4055,
+        -6.9755
+      ],
+      "status_kerentanan": "Di Luar Zona Rawan",
+      "jumlah_titik_survei": 1
+    },
+    {
+      "rank": 7,
+      "id_kel": "KEL-08",
+      "nama_kel": "Plombokan",
+      "luas_kelurahan_ha": 54.32,
+      "luas_permukiman_ha": 2.59,
+      "luas_terpapar_ha": 0.0,
+      "rasio_persen": 0.0,
+      "populasi": 9800,
+      "kepadatan_jiwa_ha": 180.48,
+      "tingkat_kerentanan": "Di Luar Zona Rawan",
+      "polder_pompa": "Saluran Terhubung BKB",
+      "pusat_koordinat": [
+        110.4095,
+        -6.9775
+      ],
+      "status_kerentanan": "Di Luar Zona Rawan",
+      "jumlah_titik_survei": 2
+    },
+    {
+      "rank": 8,
+      "id_kel": "KEL-07",
+      "nama_kel": "Dadapsari",
+      "luas_kelurahan_ha": 39.74,
+      "luas_permukiman_ha": 0.0,
+      "luas_terpapar_ha": 0.0,
+      "rasio_persen": 0.0,
+      "populasi": 11200,
+      "kepadatan_jiwa_ha": 281.83,
+      "tingkat_kerentanan": "Data permukiman belum tersedia",
+      "polder_pompa": "Saluran Primer Kali Semarang",
+      "pusat_koordinat": [
+        110.4225,
+        -6.974
+      ],
+      "status_kerentanan": "Data Belum Tersedia",
+      "jumlah_titik_survei": 1
+    },
+    {
+      "rank": 9,
+      "id_kel": "KEL-09",
+      "nama_kel": "Purwosari",
+      "luas_kelurahan_ha": 48.33,
+      "luas_permukiman_ha": 0.0,
+      "luas_terpapar_ha": 0.0,
+      "rasio_persen": 0.0,
+      "populasi": 8350,
+      "kepadatan_jiwa_ha": 172.77,
+      "tingkat_kerentanan": "Data permukiman belum tersedia",
+      "polder_pompa": "Pompa Drainase Stasiun Poncol",
+      "pusat_koordinat": [
+        110.4145,
+        -6.9765
+      ],
+      "status_kerentanan": "Data Belum Tersedia",
+      "jumlah_titik_survei": 1
+    }
+  ],
+  "hazard_breakdown_ha": {
+    "Sangat Tinggi (Bencana Ganda: Rob & Kali)": 18.18,
+    "Tinggi (Rob Pasang Laut Pesisir)": 75.91,
+    "Sedang (Limpasan Saluran Drainase)": 26.23,
+    "Di Luar Zona Rawan (BPBD)": 51.36
+  },
+  "buffer_analysis": {
+    "zone_100m_ha": 341.91,
+    "zone_200m_ha": 314.28,
+    "total_buffer_ha": 656.2,
+    "pct_of_subdistrict": 54.93,
+    "settlement_inside_buffer_ha": 81.99,
+    "pct_of_settlement": 47.76
+  },
+  "survey_validation": {
+    "average_inundation_cm": 30.2,
+    "points_above_40cm": 5,
+    "points_above_40cm_inside_flood_polygon": 2,
+    "points_above_40cm_outside_flood_polygon": 3,
+    "note": "Sebagian titik >40 cm berada di luar poligon genangan BPBD; batas model perlu validasi lapangan."
+  },
+  "analysis_metadata": {
+    "recomputed_at": "2026-11-05T00:33:52.560229Z",
+    "source_files": [
+      "batas_kelurahan.geojson",
+      "permukiman.geojson",
+      "area_genangan.geojson",
+      "buffer_sungai.geojson",
+      "titik_survei.geojson"
+    ],
+    "method": "Intersect geometri permukiman dengan area genangan, buffer, dan batas kelurahan; luas dihitung pada EPSG:32749.",
+    "note": "Nilai menggantikan statistik lama yang tidak konsisten dengan geometri. Data tematik adalah snapshot analisis, bukan sensor realtime."
+  },
+  "metadata": {
+    "analysis_snapshot": "2026-04",
+    "version": "2026.11-audit",
+    "hazard_source": "BPBD Kota Semarang / InaRISK",
+    "hazard_layer": "Poligon zona rawan rob/banjir (5 poligon)",
+    "hazard_note": "Poligon hazard statis; bukan luas genangan atau kejadian aktual.",
+    "crs_analysis": "EPSG:32749 (UTM 49S)",
+    "crs_web": "EPSG:4326 (WGS 84)",
+    "method": "Overlay intersect permukiman x zona rawan; denominator luas permukiman 171,68 Ha",
+    "denominator_ha": 171.68
+  }
+}

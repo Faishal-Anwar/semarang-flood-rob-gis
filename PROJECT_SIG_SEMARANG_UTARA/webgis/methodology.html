@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Metodologi, landasan ilmiah, tim pengembang, pembagian tugas, dan pusat unduhan proyek SIG Semarang Utara.">
+  <title>Metodologi &amp; Tim — Semarang Flood &amp; Rob GIS</title>
+
+  <link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css?v=26">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg site-nav sticky-top" id="siteNav">
+    <div class="container-fluid site-container">
+      <a class="navbar-brand brand-lockup" href="index.html">
+        <span class="brand-mark"><i class="fa-solid fa-water"></i></span>
+        <span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span>
+      </a>
+      <div class="d-flex align-items-center gap-2 order-lg-3">
+        <button class="nav-icon-btn" type="button" id="quickNavBtn" aria-label="Pencarian cepat (Ctrl+K)" title="Pencarian cepat (Ctrl+K)"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <a href="map.html" class="btn btn-warning nav-cta d-none d-lg-inline-flex"><i class="fa-solid fa-map-location-dot me-1"></i> Buka Peta</a>
+        <button class="navbar-toggler nav-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavMenu" aria-controls="siteNavMenu" aria-expanded="false" aria-label="Buka navigasi"><span></span><span></span><span></span></button>
+      </div>
+      <div class="collapse navbar-collapse" id="siteNavMenu">
+        <ul class="navbar-nav site-nav-links ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta WebGIS</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li>
+          <li class="nav-item"><a class="nav-link active" href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li>
+        </ul>
+        <a href="map.html" class="btn btn-warning nav-cta d-lg-none mt-3 w-100">Buka Peta WebGIS</a>
+      </div>
+    </div>
+  </nav>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="page-hero">
+    <div class="container-fluid site-container">
+      <div class="page-hero-grid">
+        <div class="page-hero-copy">
+          <div class="breadcrumb-modern"><a href="index.html">Beranda</a><i class="fa-solid fa-chevron-right"></i><span>Metodologi</span></div>
+          <h1>Metode yang dapat ditelusuri, hasil yang dapat dipertanggungjawabkan.</h1>
+          <p>Kerangka kerja SIG, komponen sistem, integrasi nilai, ketelitian geometrik, tim pengembang, dan seluruh produk proyek dalam satu halaman.</p>
+          <div class="page-hero-actions">
+            <a href="#downloadCenter" class="btn btn-warning"><i class="fa-solid fa-download me-1"></i> Pusat unduhan</a>
+            <a href="#team" class="btn btn-outline-light" style="border-color:rgba(255,255,255,.26);color:#fff;"><i class="fa-solid fa-users me-1"></i> Tim &amp; pembagian tugas</a>
+          </div>
+          <div class="page-hero-stats">
+            <span class="hero-stat"><strong>5 komponen</strong> sistem SIG</span>
+            <span class="hero-stat"><strong>4 subsistem</strong> pengelolaan</span>
+            <span class="hero-stat"><strong>0,84 m</strong> RMSE GCP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-tight" role="main">
+    <div class="container-fluid site-container">
+
+      <!-- DOWNLOAD CENTER -->
+      <section id="downloadCenter" class="mb-5">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-folder-open"></i> Pusat unduhan</span>
+            <h2 class="section-title">Semua produk proyek, satu tempat.</h2>
+            <p class="section-subtitle">Dokumen, peta resolusi tinggi, basis data spasial, dan presentasi siap diunduh untuk evaluasi.</p>
+          </div>
+          <span class="badge badge-success-soft section-action"><i class="fa-solid fa-circle-check me-1"></i> Siap evaluasi</span>
+        </div>
+
+        <div class="download-grid">
+          <article class="download-card reveal">
+            <div class="download-head">
+              <span class="download-icon" style="background:#fef2f2;color:#dc2626;"><i class="fa-solid fa-file-pdf"></i></span>
+              <div><h3 class="download-title">Proposal Proyek SIG</h3><p class="download-desc">Rencana kerja, metodologi survei, pertanyaan spasial, dan jadwal logbook.</p><div class="download-meta"><span class="file-chip">PDF</span><span class="file-chip">Bab 1–3</span></div></div>
+            </div>
+            <div class="download-actions"><a href="downloads/Proposal_SIG.pdf" download class="btn btn-outline-danger btn-sm" data-download-toast="Proposal PDF sedang diunduh."><i class="fa-solid fa-download me-1"></i> Unduh</a></div>
+          </article>
+
+          <article class="download-card reveal reveal-delay-1">
+            <div class="download-head">
+              <span class="download-icon" style="background:#eff6ff;color:#2563eb;"><i class="fa-solid fa-book"></i></span>
+              <div><h3 class="download-title">Laporan Akhir</h3><p class="download-desc">Laporan komprehensif Bab I–V, pembahasan geoprocessing, matriks 9 kelurahan, dan tafsir ekologis.</p><div class="download-meta"><span class="file-chip">PDF</span><span class="file-chip">Lengkap</span></div></div>
+            </div>
+            <div class="download-actions"><a href="downloads/Laporan_Akhir.pdf" download class="btn btn-primary btn-sm" data-download-toast="Laporan akhir sedang diunduh."><i class="fa-solid fa-download me-1"></i> Unduh</a></div>
+          </article>
+
+          <article class="download-card reveal reveal-delay-2">
+            <div class="download-head">
+              <span class="download-icon" style="background:#fffbeb;color:#b45309;"><i class="fa-solid fa-file-powerpoint"></i></span>
+              <div><h3 class="download-title">Presentasi Sidang</h3><p class="download-desc">Materi paparan: latar belakang, peta QGIS, dashboard statistik, dan rekomendasi aksi.</p><div class="download-meta"><span class="file-chip">PPTX</span><span class="file-chip">15 slide</span></div></div>
+            </div>
+            <div class="download-actions"><a href="downloads/Presentasi_SIG.pptx" download class="btn btn-outline-warning btn-sm" data-download-toast="Presentasi PPTX sedang diunduh."><i class="fa-solid fa-download me-1"></i> Unduh</a></div>
+          </article>
+
+          <article class="download-card reveal">
+            <div class="download-head">
+              <span class="download-icon" style="background:#ecfeff;color:#0e7490;"><i class="fa-solid fa-map-marked-alt"></i></span>
+              <div><h3 class="download-title">Peta 1 — Eksisting</h3><p class="download-desc">Jaringan sungai, permukiman, dan sebaran 25 titik survei GPS.</p><div class="download-meta"><span class="file-chip">PDF</span><span class="file-chip">JPG</span><span class="file-chip">300 DPI</span></div></div>
+            </div>
+            <div class="download-actions"><a href="downloads/Peta_1.pdf" download class="btn btn-outline-info btn-sm" data-download-toast="Peta eksisting PDF diunduh."><i class="fa-solid fa-download me-1"></i> PDF</a><a href="downloads/Peta_1.jpg" download class="btn btn-outline-secondary btn-sm" data-download-toast="Peta eksisting JPG diunduh."><i class="fa-solid fa-image me-1"></i> JPG</a></div>
+          </article>
+
+          <article class="download-card reveal reveal-delay-1">
+            <div class="download-head">
+              <span class="download-icon" style="background:#fef2f2;color:#dc2626;"><i class="fa-solid fa-layer-group"></i></span>
+              <div><h3 class="download-title">Peta 2 — Analisis</h3><p class="download-desc">Buffer sempadan 100/200 m dan overlay permukiman di zona rawan rob.</p><div class="download-meta"><span class="file-chip">PDF</span><span class="file-chip">JPG</span><span class="file-chip">300 DPI</span></div></div>
+            </div>
+            <div class="download-actions"><a href="downloads/Peta_2.pdf" download class="btn btn-outline-danger btn-sm" data-download-toast="Peta analisis PDF diunduh."><i class="fa-solid fa-download me-1"></i> PDF</a><a href="downloads/Peta_2.jpg" download class="btn btn-outline-secondary btn-sm" data-download-toast="Peta analisis JPG diunduh."><i class="fa-solid fa-image me-1"></i> JPG</a></div>
+          </article>
+
+          <article class="download-card reveal reveal-delay-2">
+            <div class="download-head">
+              <span class="download-icon" style="background:#f0fdf4;color:#15803d;"><i class="fa-solid fa-database"></i></span>
+              <div><h3 class="download-title">Basis data &amp; logbook</h3><p class="download-desc">GeoPackage SQLite OGC dan logbook aktivitas tim selama pengerjaan proyek.</p><div class="download-meta"><span class="file-chip">GPKG</span><span class="file-chip">XLSX</span></div></div>
+            </div>
+            <div class="download-actions"><a href="downloads/Database_SIG.gpkg" download class="btn btn-outline-success btn-sm" data-download-toast="GeoPackage sedang diunduh."><i class="fa-solid fa-database me-1"></i> GPKG</a><a href="downloads/Logbook.xlsx" download class="btn btn-outline-secondary btn-sm" data-download-toast="Logbook sedang diunduh."><i class="fa-solid fa-table me-1"></i> Logbook</a></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- API MONITORING -->
+      <section class="section-tight" id="apiMonitoring">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-satellite-dish"></i> Integrasi &amp; monitoring</span>
+            <h2 class="section-title">Bukan hanya peta statis — ada jalur data untuk observasi nyata.</h2>
+            <p class="section-subtitle">Backend FastAPI menyediakan endpoint monitoring. Kirim observasi lapangan/sensor, lalu dashboard dan peta memperbaruinya pada polling berikutnya.</p>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="observasi.html" class="btn btn-primary section-action"><i class="fa-solid fa-clipboard-list me-1"></i> Input observasi lapangan</a>
+            <a href="http://localhost:8000/api" class="btn btn-outline-primary section-action" target="_blank" rel="noopener"><i class="fa-solid fa-code me-1"></i> Buka API root</a>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-7 reveal">
+            <div class="surface-card p-4 h-100">
+              <h3 class="chart-title mb-1"><i class="fa-solid fa-route text-primary me-2"></i>Endpoint monitoring</h3>
+              <p class="chart-sub mb-3">Tersedia saat backend berjalan di port 8000. Semua respons JSON.</p>
+              <div class="table-responsive mb-3">
+                <table class="table table-hover align-middle api-endpoint-table">
+                  <thead><tr><th>Method</th><th>Endpoint</th><th>Fungsi</th></tr></thead>
+                  <tbody>
+                    <tr><td data-label="Method"><span class="badge badge-success-soft">GET</span></td><td data-label="Endpoint"><code>/api/monitoring/status</code></td><td data-label="Fungsi">Status, nilai terbaru, mode, timestamp, <code>data_health</code>, dan <code>current_condition</code></td></tr>
+                    <tr><td data-label="Method"><span class="badge badge-success-soft">GET</span></td><td data-label="Endpoint"><code>/api/monitoring/history</code></td><td data-label="Fungsi">Tren 24 jam untuk sparkline</td></tr>
+                    <tr><td data-label="Method"><span class="badge badge-success-soft">GET</span></td><td data-label="Endpoint"><code>/api/monitoring/stations</code></td><td data-label="Fungsi">Daftar stasiun dan ambang batas</td></tr>
+                    <tr><td data-label="Method"><span class="badge badge-success-soft">GET</span></td><td data-label="Endpoint"><code>/api/monitoring/thresholds</code></td><td data-label="Fungsi">Ambang, dasar kalibrasi, sumber, dan status kalibrasi</td></tr>
+                    <tr><td data-label="Method"><span class="badge badge-info-soft">POST</span></td><td data-label="Endpoint"><code>/api/monitoring/observations</code></td><td data-label="Fungsi">Menyimpan observasi lapangan/sensor</td></tr>
+                    <tr><td data-label="Method"><span class="badge badge-success-soft">GET</span></td><td data-label="Endpoint"><code>/api/monitoring/reports</code></td><td data-label="Fungsi">Laporan warga PetaBencana.id (7 hari)</td></tr>
+                    <tr><td data-label="Method"><span class="badge badge-success-soft">GET</span></td><td data-label="Endpoint"><code>/api/health</code></td><td data-label="Fungsi">Health check backend</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="api-code"><span class="text-warning">curl</span> -X POST http://localhost:8000/api/monitoring/observations \<br>
+                &nbsp;&nbsp;-H <span class="text-info">"Content-Type: application/json"</span> \<br>
+                &nbsp;&nbsp;-d <span class="text-info">'{"station_id":"Tide Gauge Tambak Lorok","parameter":"tide_level","value":1.82,"unit":"m","source":"field"}'</span>
+              </div>
+              <p class="small text-muted mt-3 mb-0"><i class="fa-solid fa-lock me-1"></i>Jika environment variable <code>MONITORING_API_KEY</code> diisi, sertakan header <code>X-API-Key</code>.</p>
+              <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-globe me-1"></i>Sumber eksternal: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo Forecast, Marine, dan Flood/GloFAS</a> — model cuaca/pasang/debit global, bukan sensor lokal; serta <a href="https://petabencana.id/" target="_blank" rel="noopener">PetaBencana.id</a> untuk laporan urun-daya warga. Muka air sungai tetap memerlukan sensor atau observasi lapangan.</p>
+            </div>
+          </div>
+          <div class="col-lg-5 reveal reveal-delay-1">
+            <div class="live-monitor-panel mb-3">
+              <div class="live-monitor-head">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="live-dot" data-live-dot aria-hidden="true"></span>
+                  <div>
+                    <div class="mb-1"><span class="live-mode-badge" data-live-mode>SIMULASI</span></div>
+                    <h3 class="chart-title mb-1">Status monitoring</h3>
+                    <p class="chart-sub mb-0"><span data-live-source>Menghubungkan...</span></p>
+                  </div>
+                </div>
+                <div class="d-flex gap-1 align-items-center">
+                  <button class="sim-toggle" type="button" data-toggle-simulation aria-pressed="false"><i class="fa-solid fa-eye me-1"></i>Simulasi</button>
+                  <button class="live-refresh" type="button" data-live-refresh aria-label="Perbarui data monitoring"><i class="fa-solid fa-arrows-rotate"></i></button>
+                </div>
+              </div>
+              <div class="condition-banner condition-banner--compact" data-condition-banner>
+                <span class="condition-icon"><i class="fa-solid fa-shield-heart" data-condition-icon></i></span>
+                <div class="condition-copy">
+                  <span class="condition-kicker">Kondisi saat ini</span>
+                  <strong data-condition-headline>Memeriksa kondisi...</strong>
+                  <p data-condition-detail>Menunggu data monitoring.</p>
+                </div>
+              </div>
+              <div class="data-health data-health--compact" data-data-health>
+                <span class="health-title"><i class="fa-solid fa-heart-pulse me-1"></i>Kesehatan data</span>
+                <span class="health-chip is-missing">Memeriksa...</span>
+              </div>
+              <div class="map-live-row"><span>Muka air laut</span><strong><span data-live-value="tide_level">–</span> <small data-live-unit="tide_level">m</small></strong></div>
+              <div class="map-live-row"><span>Muka air sungai</span><strong><span data-live-value="water_level">–</span> <small data-live-unit="water_level">cm</small></strong></div>
+              <div class="map-live-row"><span>Curah hujan</span><strong><span data-live-value="rainfall">–</span> <small data-live-unit="rainfall">mm/jam</small></strong></div>
+              <p class="live-note mb-0"><i class="fa-solid fa-clock me-1"></i>Diperbarui <span data-live-updated>–</span> · observasi: <span data-live-count>0</span></p>
+              <p class="live-note mb-0" data-live-note>Menghubungkan ke backend monitoring...</p>
+            </div>
+            <div class="alert alert-light border mb-0 small text-muted">
+              <b>Cara menjalankan backend:</b><br>
+              <code>cd backend</code><br>
+              <code>uvicorn app:app --host 0.0.0.0 --port 8000</code><br>
+              Buka <code>http://localhost:8000</code> agar WebGIS dan API berjalan dari origin yang sama. Tanpa backend, antarmuka otomatis memakai simulasi lokal yang diberi label jelas.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- THRESHOLD & CALIBRATION -->
+      <section class="section-tight" id="ambang" aria-labelledby="ambang-title">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-sliders"></i> Ambang &amp; kalibrasi</span>
+            <h2 class="section-title" id="ambang-title">Ambang indikatif, bukan peringatan resmi.</h2>
+            <p class="section-subtitle">Hujan mengikuti kategori BMKG; pasang masih indikatif; TMA sungai belum memiliki ambang operasional karena belum ada sensor lokal.</p>
+          </div>
+        </div>
+        <div class="surface-card p-4 reveal mb-3" data-threshold-table>
+          <p class="small text-muted mb-0">Memuat data ambang dari API monitoring...</p>
+        </div>
+        <div class="surface-card p-4 reveal reveal-delay-1">
+          <h3 class="chart-title mb-2"><i class="fa-solid fa-database text-primary me-2"></i>Sumber &amp; metadata layer statis</h3>
+          <div class="table-responsive">
+            <table class="table table-sm align-middle mb-0">
+              <tbody>
+                <tr><th style="width:38%;">Sumber zona rawan</th><td>BPBD Kota Semarang / InaRISK</td></tr>
+                <tr><th>Snapshot analisis</th><td>April 2026</td></tr>
+                <tr><th>Layer</th><td>Poligon zona rawan rob/banjir (5 poligon)</td></tr>
+                <tr><th>Metode</th><td>Overlay intersect permukiman × zona rawan; denominator luas permukiman 171,68 Ha</td></tr>
+                <tr><th>Proyeksi</th><td>EPSG:32749 (analisis) · EPSG:4326 (WebGIS)</td></tr>
+                <tr><th>Catatan</th><td>Hazard statis, bukan luas genangan atau kejadian aktual.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- KOMPONEN & SUBSISTEM -->
+      <section class="section-tight">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-cubes"></i> Kerangka sistem</span>
+            <h2 class="section-title">Lima komponen, empat subsistem.</h2>
+            <p class="section-subtitle">Fondasi konseptual SIG yang dipakai untuk membangun dan menjalankan proyek ini.</p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-6 reveal">
+            <div class="surface-card p-4 h-100">
+              <h3 class="chart-title mb-1"><i class="fa-solid fa-cubes text-primary me-2"></i>5 komponen utama SIG</h3>
+              <p class="chart-sub mb-3">Perangkat keras, perangkat lunak, data, manusia, dan metode.</p>
+              <div class="accordion accordion-modern" id="accordionKomponen">
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">1. Perangkat keras</button></h2><div id="c1" class="accordion-collapse collapse show" data-bs-parent="#accordionKomponen"><div class="accordion-body">Workstation laptop Intel Core i7, RAM 16 GB, SSD 512 GB, monitor Full HD, dan smartphone GPS multi-GNSS dengan akurasi ±2,5 m.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">2. Perangkat lunak</button></h2><div id="c2" class="accordion-collapse collapse" data-bs-parent="#accordionKomponen"><div class="accordion-body">QGIS Desktop 3.28 LTR, SQLite/SpatiaLite untuk GeoPackage, Python 3.10 (FastAPI, GDAL, Fiona, Shapely), Leaflet 1.9.4, dan Chart.js 4.4.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">3. Data geospasial</button></h2><div id="c3" class="accordion-collapse collapse" data-bs-parent="#accordionKomponen"><div class="accordion-body">Batas kelurahan, jaringan sungai, penggunaan lahan permukiman, peta bahaya genangan BPBD, citra satelit, dan 25 titik survei GPS.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">4. Sumber daya manusia</button></h2><div id="c4" class="accordion-collapse collapse" data-bs-parent="#accordionKomponen"><div class="accordion-body">Tim Kelompok 3 Teknik Informatika: GIS analyst, database engineer, WebGIS developer, cartographer, surveyor, dan dokumentator.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">5. Metode analisis</button></h2><div id="c5" class="accordion-collapse collapse" data-bs-parent="#accordionKomponen"><div class="accordion-body">Proximity buffering (Permen PUPR 28/2015), boolean overlay intersect, spatial join query, dan evaluasi ketelitian geometrik RMSE GCP.</div></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 reveal reveal-delay-1">
+            <div class="surface-card p-4 h-100">
+              <h3 class="chart-title mb-1"><i class="fa-solid fa-arrows-split-up-and-left text-primary me-2"></i>4 subsistem SIG</h3>
+              <p class="chart-sub mb-3">Alur data dari masukan hingga keluaran visual.</p>
+              <div class="subsystem-list">
+                <div class="subsystem-card"><h4><span class="badge bg-primary me-2">1</span>Data input</h4><p>Akuisisi data vektor, rektifikasi 4 GCP dengan RMSE 0,84 m, dan input 25 koordinat survei GPS.</p></div>
+                <div class="subsystem-card"><h4><span class="badge bg-secondary me-2">2</span>Data storage &amp; management</h4><p>OGC GeoPackage <code>Database_SIG.gpkg</code> dengan sistem proyeksi UTM Zone 49S (EPSG:32749).</p></div>
+                <div class="subsystem-card"><h4><span class="badge bg-warning text-dark me-2">3</span>Data manipulation &amp; analysis</h4><p>Buffer drainase 100/200 m, overlay intersect permukiman–genangan, dan perhitungan luas otomatis.</p></div>
+                <div class="subsystem-card"><h4><span class="badge bg-success me-2">4</span>Data output &amp; visualization</h4><p>Peta kartografis 300 DPI, peta interaktif Leaflet, API FastAPI, dan dashboard analitik.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NILAI & GCP -->
+      <section class="section-tight">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-book-quran"></i> Landasan nilai &amp; ketelitian</span>
+            <h2 class="section-title">Data yang baik, dikelola dengan amanah.</h2>
+            <p class="section-subtitle">Teknologi spasial bukan hanya soal akurasi, tetapi juga tanggung jawab terhadap ruang dan manusia di dalamnya.</p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-7 reveal">
+            <div class="surface-card p-4 h-100">
+              <div class="quote-grid">
+                <div class="quote-card">
+                  <h3 class="quote-title">1. Larangan berbuat kerusakan (QS. Al-A'raf: 56)</h3>
+                  <div class="arabic-text" dir="rtl">وَلَا تُفْسِدُوا فِي الْأَرْضِ بَعْدَ إِصْلَاحِهَا</div>
+                  <p class="quote-translation">“Dan janganlah kamu berbuat kerusakan di bumi setelah (diciptakan) dengan baik.”</p>
+                  <p class="quote-context">Kontekstual: menjaga sempadan sungai dan mangrove dari alih fungsi permukiman liar.</p>
+                </div>
+                <div class="quote-card">
+                  <h3 class="quote-title">2. Kerusakan akibat perbuatan manusia (QS. Ar-Rum: 41)</h3>
+                  <div class="arabic-text" dir="rtl">ظَهَرَ الْفَسَادُ فِي الْبَرِّ وَالْبَحْرِ بِمَا كَسَبَتْ أَيْدِي النَّاسِ</div>
+                  <p class="quote-translation">“Telah tampak kerusakan di darat dan di laut disebabkan perbuatan tangan manusia.”</p>
+                  <p class="quote-context">Kontekstual: penurunan tanah pesisir dipicu eksploitasi air tanah dan beban struktur berat.</p>
+                </div>
+                <div class="quote-card">
+                  <h3 class="quote-title">3. Amanah penataan ruang (QS. An-Nisa: 58)</h3>
+                  <p class="quote-translation">Penataan ruang dan anggaran mitigasi wajib dikelola adil, transparan, dan berbasis data ilmiah.</p>
+                  <p class="quote-context">Kontekstual: keputusan prioritas intervensi harus dapat diaudit dan dipertanggungjawabkan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5 reveal reveal-delay-1">
+            <div class="surface-card p-4 h-100">
+              <h3 class="chart-title mb-1"><i class="fa-solid fa-bullseye text-danger me-2"></i>Ketelitian geometrik GCP</h3>
+              <p class="chart-sub mb-3">Transformasi polinomial orde 1 pada 4 titik kontrol tanah.</p>
+              <div class="gcp-score">
+                <strong>0,84</strong>
+                <span>meter RMSE<br><span class="badge badge-success-soft">memenuhi toleransi</span></span>
+              </div>
+              <div class="table-responsive mb-3">
+                <table class="table table-sm align-middle">
+                  <thead><tr><th>Titik</th><th>Lokasi</th><th class="text-end">dx</th><th class="text-end">dy</th></tr></thead>
+                  <tbody>
+                    <tr><td class="fw-bold">GCP 1</td><td>Muara BKB Barat</td><td class="text-end">+0,42 m</td><td class="text-end">-0,31 m</td></tr>
+                    <tr><td class="fw-bold">GCP 2</td><td>Dermaga Samudera TPKS</td><td class="text-end">-0,55 m</td><td class="text-end">+0,48 m</td></tr>
+                    <tr><td class="fw-bold">GCP 3</td><td>Perlintasan Stasiun Tawang</td><td class="text-end">+0,38 m</td><td class="text-end">+0,25 m</td></tr>
+                    <tr><td class="fw-bold">GCP 4</td><td>Simpang Flyover Kalibanteng</td><td class="text-end">-0,25 m</td><td class="text-end">-0,42 m</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="alert alert-success mb-0"><i class="fa-solid fa-check-circle me-1"></i> RMSE 0,84 m memenuhi toleransi peta skala 1:25.000 (&lt;2,5 m).</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section class="section-tight" id="glosarium" aria-labelledby="glosarium-title">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-book-open"></i> Glosarium data</span>
+            <h2 class="section-title" id="glosarium-title">Cara membaca angka tanpa salah tafsir.</h2>
+            <p class="section-subtitle">Istilah kunci yang membedakan risiko statis, kondisi aktual, dan keterbatasan model.</p>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6 col-xl-4 reveal"><div class="surface-card p-3 h-100"><h3 class="h6 fw-bold">Eksposur statis</h3><p class="small text-muted mb-0">Porsi permukiman yang berada di dalam poligon zona rawan. Bukan luas genangan atau kejadian hari ini.</p></div></div>
+          <div class="col-md-6 col-xl-4 reveal reveal-delay-1"><div class="surface-card p-3 h-100"><h3 class="h6 fw-bold">Zona rawan</h3><p class="small text-muted mb-0">Poligon bahaya BPBD/InaRISK yang menunjukkan area berpotensi tergenang, bukan lokasi yang sedang tergenang.</p></div></div>
+          <div class="col-md-6 col-xl-4 reveal reveal-delay-2"><div class="surface-card p-3 h-100"><h3 class="h6 fw-bold">Kejadian aktual</h3><p class="small text-muted mb-0">Genangan yang sedang berlangsung. Sumbernya harus laporan lapangan, sensor, atau citra terkini — belum tersedia penuh di proyek ini.</p></div></div>
+          <div class="col-md-6 col-xl-4 reveal"><div class="surface-card p-3 h-100"><h3 class="h6 fw-bold">Near-realtime</h3><p class="small text-muted mb-0">Pembaruan berkala tiap 30 detik dari model eksternal dan laporan warga; bukan berarti semua parameter berasal dari sensor lokal.</p></div></div>
+          <div class="col-md-6 col-xl-4 reveal reveal-delay-1"><div class="surface-card p-3 h-100"><h3 class="h6 fw-bold">Simulasi</h3><p class="small text-muted mb-0">Nilai pengganti saat sensor/data tidak tersedia. Disembunyikan secara default dan tidak dipakai untuk status kondisi saat ini.</p></div></div>
+          <div class="col-md-6 col-xl-4 reveal reveal-delay-2"><div class="surface-card p-3 h-100"><h3 class="h6 fw-bold">Kualitas data</h3><p class="small text-muted mb-0">Tinggi = observasi lapangan; sedang = model eksternal; rendah = simulasi/stale. Label ini tampil pada kartu monitoring.</p></div></div>
+        </div>
+      </section>
+
+      <!-- TEAM -->
+      <section class="team-section mb-5" id="team" aria-labelledby="team-title">
+        <header class="team-section-header text-center reveal">
+          <span class="badge team-section-kicker text-uppercase rounded-pill mb-3"><i class="fa-solid fa-users-gear me-1"></i> Kolaborasi tim mahasiswa</span>
+          <h2 class="section-title mb-2" id="team-title">Tim pengembang</h2>
+          <p class="team-subtitle mb-2">Kelompok 3 — Pemetaan dan Analisis Risiko Banjir &amp; Rob Semarang Utara</p>
+          <p class="team-intro text-muted mb-0">Project ini dikembangkan melalui kolaborasi empat anggota tim yang bertanggung jawab pada pengolahan data spasial, analisis GIS, pengembangan WebGIS, survei lapangan, dan dokumentasi.</p>
+          <div class="team-meta mt-3" aria-label="Ringkasan tim">
+            <span><i class="fa-solid fa-user-group text-primary me-1"></i><strong>4</strong> Anggota</span><span class="team-meta-divider" aria-hidden="true"></span>
+            <span><i class="fa-solid fa-list-check text-success me-1"></i><strong>10</strong> Tahapan project</span><span class="team-meta-divider" aria-hidden="true"></span>
+            <span><i class="fa-solid fa-layer-group text-warning me-1"></i><strong>4</strong> Peran utama</span>
+          </div>
+        </header>
+
+        <div class="row g-4 mt-1 mb-5">
+          <div class="col-xl-3 col-md-6 d-flex reveal">
+            <article class="team-card team-card-1 w-100" aria-labelledby="member-1-name">
+              <div class="team-card-header"><div class="team-avatar team-avatar-1" aria-hidden="true">HF<span class="team-avatar-icon"><i class="fa-solid fa-map-location-dot"></i></span></div><span class="team-number-pill">01</span></div>
+              <div class="team-card-body">
+                <h3 class="h5 fw-bold mb-1" id="member-1-name">Haydar Fahri Alaudin</h3>
+                <div class="mb-2"><span class="badge team-role-badge team-role-gis"><i class="fa-solid fa-map-location-dot me-1"></i>GIS Analyst &amp; Spatial Data Processing</span></div>
+                <p class="text-muted small mb-3">Menangani akuisisi dan penyiapan data spasial, mulai dari identifikasi sumber data, pengolahan batas administrasi, digitasi, hingga validasi layer GIS.</p>
+                <h4 class="h6 fw-bold small mb-2 border-bottom pb-1"><i class="fa-solid fa-list-check text-primary me-1"></i> Tanggung jawab utama</h4>
+                <ul class="team-task-list">
+                  <li>Mengumpulkan dan mengidentifikasi sumber data spasial.</li>
+                  <li>Mengolah data batas administrasi wilayah.</li>
+                  <li>Mengolah data sungai dan drainase.</li>
+                  <li>Melakukan digitasi dan editing data spasial.</li>
+                  <li>Melakukan georeferencing jika diperlukan.</li>
+                  <li>Menyiapkan layer GIS untuk analisis.</li>
+                  <li>Membantu validasi data spasial.</li>
+                  <li>Mendokumentasikan proses pengolahan data GIS.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-xl-3 col-md-6 d-flex reveal reveal-delay-1">
+            <article class="team-card team-card-2 w-100" aria-labelledby="member-2-name">
+              <div class="team-card-header"><div class="team-avatar team-avatar-2" aria-hidden="true">FA<span class="team-avatar-icon"><i class="fa-solid fa-laptop-code"></i></span></div><span class="team-number-pill">02</span></div>
+              <div class="team-card-body">
+                <h3 class="h5 fw-bold mb-1" id="member-2-name">Faishal Anwar Hasyim</h3>
+                <div class="mb-2"><span class="badge team-role-badge team-role-webgis"><i class="fa-solid fa-laptop-code me-1"></i>WebGIS Developer &amp; System Integrator</span></div>
+                <p class="text-muted small mb-3">Merancang dan membangun antarmuka WebGIS, mengintegrasikan Leaflet dengan GeoJSON, serta memastikan hasil analisis QGIS tampil akurat dan responsif.</p>
+                <h4 class="h6 fw-bold small mb-2 border-bottom pb-1"><i class="fa-solid fa-list-check text-primary me-1"></i> Tanggung jawab utama</h4>
+                <ul class="team-task-list">
+                  <li>Mengembangkan website WebGIS.</li>
+                  <li>Mengembangkan frontend HTML, CSS, dan JavaScript.</li>
+                  <li>Mengintegrasikan Leaflet dengan data GeoJSON.</li>
+                  <li>Mengembangkan peta interaktif.</li>
+                  <li>Mengembangkan layer control dan popup.</li>
+                  <li>Mengembangkan dashboard statistik.</li>
+                  <li>Mengintegrasikan hasil analisis QGIS ke WebGIS.</li>
+                  <li>Melakukan debugging dan testing website.</li>
+                  <li>Mengoptimalkan UI/UX website.</li>
+                  <li>Menyiapkan dokumentasi teknis aplikasi.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-xl-3 col-md-6 d-flex reveal reveal-delay-2">
+            <article class="team-card team-card-3 w-100" aria-labelledby="member-3-name">
+              <div class="team-card-header"><div class="team-avatar team-avatar-3" aria-hidden="true">MY<span class="team-avatar-icon"><i class="fa-solid fa-database"></i></span></div><span class="team-number-pill">03</span></div>
+              <div class="team-card-body">
+                <h3 class="h5 fw-bold mb-1" id="member-3-name">Mohammad Yusuf Prayoga</h3>
+                <div class="mb-2"><span class="badge team-role-badge team-role-db"><i class="fa-solid fa-database me-1"></i>Spatial Analysis &amp; Database Engineer</span></div>
+                <p class="text-muted small mb-3">Mengelola basis data spasial dan menjalankan analisis inti, termasuk buffer sempadan sungai, overlay genangan–permukiman, dan statistik eksposur zona rawan.</p>
+                <h4 class="h6 fw-bold small mb-2 border-bottom pb-1"><i class="fa-solid fa-list-check text-primary me-1"></i> Tanggung jawab utama</h4>
+                <ul class="team-task-list">
+                  <li>Mengembangkan database spasial.</li>
+                  <li>Mengelola GeoPackage.</li>
+                  <li>Menyiapkan struktur tabel dan atribut.</li>
+                  <li>Melakukan analisis buffer sempadan sungai.</li>
+                  <li>Melakukan overlay kawasan genangan dengan permukiman.</li>
+                  <li>Melakukan analisis eksposur permukiman di zona rawan.</li>
+                  <li>Menghitung statistik luas permukiman dalam zona rawan.</li>
+                  <li>Melakukan pemeriksaan topologi.</li>
+                  <li>Menyiapkan hasil analisis untuk peta tematik.</li>
+                  <li>Mendokumentasikan metodologi analisis.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-xl-3 col-md-6 d-flex reveal reveal-delay-3">
+            <article class="team-card team-card-4 w-100" aria-labelledby="member-4-name">
+              <div class="team-card-header"><div class="team-avatar team-avatar-4" aria-hidden="true">AN<span class="team-avatar-icon"><i class="fa-solid fa-compass-drafting"></i></span></div><span class="team-number-pill">04</span></div>
+              <div class="team-card-body">
+                <h3 class="h5 fw-bold mb-1" id="member-4-name">Alif Naufal Adani</h3>
+                <div class="mb-2"><span class="badge team-role-badge" style="background:#fffbeb;color:#92400e;border:1px solid #fde68a;"><i class="fa-solid fa-compass-drafting me-1"></i>Cartographer, Survey &amp; Documentation</span></div>
+                <p class="text-muted small mb-3">Mengoordinasikan survei lapangan, menyusun kartografi peta tematik, serta mendokumentasikan hasil project dalam laporan, presentasi, dan logbook.</p>
+                <h4 class="h6 fw-bold small mb-2 border-bottom pb-1"><i class="fa-solid fa-list-check text-primary me-1"></i> Tanggung jawab utama</h4>
+                <ul class="team-task-list">
+                  <li>Mengkoordinasikan pengumpulan data survei lapangan.</li>
+                  <li>Mengelola dokumentasi 25 titik GPS ground truth sesuai pelaksanaan aktual.</li>
+                  <li>Menyiapkan dokumentasi foto survei.</li>
+                  <li>Membantu validasi data lapangan.</li>
+                  <li>Menyusun layout peta tematik QGIS.</li>
+                  <li>Mengembangkan desain kartografi.</li>
+                  <li>Menyiapkan laporan akhir project.</li>
+                  <li>Menyiapkan presentasi.</li>
+                  <li>Menyusun logbook kontribusi anggota.</li>
+                  <li>Membantu evaluasi dan dokumentasi hasil project.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="team-task-section pt-4 border-top">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+            <div>
+              <h3 class="chart-title mb-1"><i class="fa-solid fa-timeline text-warning me-2"></i>Pembagian tugas project</h3>
+              <p class="chart-sub mb-0">Matriks peran dan tanggung jawab pada 10 tahapan siklus hidup proyek SIG &amp; WebGIS.</p>
+            </div>
+            <span class="badge team-stage-badge align-self-start align-self-md-center"><i class="fa-solid fa-circle-check me-1"></i> 10 tahapan</span>
+          </div>
+
+          <div class="table-responsive team-table-wrapper">
+            <table class="table table-hover align-middle task-matrix-table mb-0">
+              <caption class="visually-hidden">Pembagian tugas project Kelompok 3 berdasarkan 10 tahapan pelaksanaan.</caption>
+              <thead><tr><th class="text-center" style="width:48px;">No</th><th style="min-width:170px;">Tahapan</th><th style="min-width:240px;">Ruang lingkup</th><th style="min-width:200px;">Penanggung jawab</th><th style="min-width:160px;">Pendukung</th><th class="text-center" style="min-width:130px;">Output</th></tr></thead>
+              <tbody>
+                <tr><td class="text-center fw-bold" data-label="No">1</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-cloud-arrow-down text-primary me-2"></i>Pengumpulan data</td><td data-label="Ruang lingkup">Identifikasi dan akuisisi data spasial vektor, zonasi rob, serta data demografi kelurahan.</td><td data-label="PIC"><span class="badge bg-primary">Haydar Fahri Alaudin</span></td><td data-label="Pendukung">Alif Naufal Adani</td><td class="text-center" data-label="Output"><span class="badge bg-secondary">Dataset primer</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">2</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-draw-polygon text-info me-2"></i>Pengolahan data GIS</td><td data-label="Ruang lingkup">Georeferencing, digitasi batas wilayah, editing data spasial, dan normalisasi topologi.</td><td data-label="PIC"><span class="badge bg-primary">Haydar Fahri Alaudin</span></td><td data-label="Pendukung">Mohammad Yusuf Prayoga</td><td class="text-center" data-label="Output"><span class="badge bg-secondary">Layer bersih</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">3</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-database text-success me-2"></i>Database spasial</td><td data-label="Ruang lingkup">Desain OGC GeoPackage, standardisasi atribut, indexing spasial, dan konversi CRS.</td><td data-label="PIC"><span class="badge bg-success">Mohammad Yusuf Prayoga</span></td><td data-label="Pendukung">Faishal Anwar Hasyim</td><td class="text-center" data-label="Output"><span class="badge bg-success">Database_SIG.gpkg</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">4</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-bullseye text-danger me-2"></i>Analisis spasial</td><td data-label="Ruang lingkup">Buffer sempadan sungai dan overlay zona genangan rob dengan permukiman.</td><td data-label="PIC"><span class="badge bg-success">Mohammad Yusuf Prayoga</span></td><td data-label="Pendukung">Haydar Fahri Alaudin</td><td class="text-center" data-label="Output"><span class="badge badge-danger-soft">Layer eksposur zona rawan</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">5</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-map text-warning me-2"></i>Peta tematik</td><td data-label="Ruang lingkup">Layout kartografis QGIS, simbologi, legenda, inset, skala, dan peta siap cetak.</td><td data-label="PIC"><span class="badge bg-warning text-dark">Alif Naufal Adani</span></td><td data-label="Pendukung">Haydar Fahri Alaudin</td><td class="text-center" data-label="Output"><span class="badge bg-primary">Peta PDF</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">6</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-globe text-primary me-2"></i>Pengembangan WebGIS</td><td data-label="Ruang lingkup">Leaflet.js, pemuatan layer spasial, layer control, popup, dan filter data.</td><td data-label="PIC"><span class="badge team-role-webgis">Faishal Anwar Hasyim</span></td><td data-label="Pendukung">Mohammad Yusuf Prayoga</td><td class="text-center" data-label="Output"><span class="badge bg-primary">map.html</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">7</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-chart-column text-primary me-2"></i>Dashboard statistik</td><td data-label="Ruang lingkup">Visualisasi Chart.js, matriks eksposur zona rawan per kelurahan, dan KPI card.</td><td data-label="PIC"><span class="badge team-role-webgis">Faishal Anwar Hasyim</span></td><td data-label="Pendukung">Mohammad Yusuf Prayoga</td><td class="text-center" data-label="Output"><span class="badge badge-info-soft">dashboard.html</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">8</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-location-crosshairs text-danger me-2"></i>Survei lapangan</td><td data-label="Ruang lingkup">Koordinasi uji petik, validasi tinggi genangan, dan dokumentasi foto survei.</td><td data-label="PIC"><span class="badge bg-warning text-dark">Alif Naufal Adani</span></td><td data-label="Pendukung">Seluruh anggota</td><td class="text-center" data-label="Output"><span class="badge bg-secondary">Titik GPS</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">9</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-file-lines text-secondary me-2"></i>Penyusunan laporan</td><td data-label="Ruang lingkup">Naskah laporan akhir, dokumentasi metodologi, interpretasi hasil, dan logbook.</td><td data-label="PIC"><span class="badge bg-warning text-dark">Alif Naufal Adani</span></td><td data-label="Pendukung">Faishal Anwar Hasyim</td><td class="text-center" data-label="Output"><span class="badge bg-dark">Laporan PDF</span></td></tr>
+                <tr><td class="text-center fw-bold" data-label="No">10</td><td class="fw-bold" data-label="Tahapan"><i class="fa-solid fa-person-chalkboard text-success me-2"></i>Presentasi &amp; evaluasi</td><td data-label="Ruang lingkup">Slide presentasi, demo WebGIS, simulasi, dan perbaikan pasca-review.</td><td data-label="PIC"><span class="badge bg-dark">Seluruh anggota</span></td><td data-label="Pendukung">Kolaborasi Kelompok 3</td><td class="text-center" data-label="Output"><span class="badge bg-success">Slide &amp; demo</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert team-note mt-3 mb-0 small text-muted">
+            <i class="fa-solid fa-circle-info text-primary me-2"></i>
+            <b>Catatan:</b> Pembagian tugas ini merupakan pembagian awal dan dapat disesuaikan dengan kontribusi aktual setiap anggota. Pelaksanaan survei dan deliverable mengikuti kondisi aktual di lapangan.
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-fluid site-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand-lockup" href="index.html"><span class="brand-mark"><i class="fa-solid fa-water"></i></span><span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span></a>
+          <p>Dokumentasi metodologi, produk proyek, dan tim pengembang Sistem Informasi Geografis Semarang Utara.</p>
+          <div class="footer-badges"><span>SIG</span><span>QGIS</span><span>WebGIS</span><span>Akademik</span></div>
+        </div>
+        <div><h3 class="footer-title">Navigasi</h3><ul class="footer-links"><li><a href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li><li><a href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta</a></li><li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li><li><a href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li></ul></div>
+        <div><h3 class="footer-title">Unduhan</h3><ul class="footer-links"><li><a href="#downloadCenter"><i class="fa-solid fa-folder-open"></i> Pusat unduhan</a></li><li><a href="downloads/Laporan_Akhir.pdf" download><i class="fa-solid fa-file-pdf"></i> Laporan akhir</a></li><li><a href="downloads/Database_SIG.gpkg" download><i class="fa-solid fa-database"></i> GeoPackage</a></li></ul></div>
+        <div><h3 class="footer-title">Proyek</h3><p class="small mb-2" style="color:rgba(255,255,255,.56);">Kelompok 3 — Pemetaan dan Analisis Risiko Banjir &amp; Rob Semarang Utara.</p><p class="small mb-0" style="color:rgba(255,255,255,.42);">Dosen: Ghufron, M.Kom · Teknik Informatika</p></div>
+      </div>
+      <div class="footer-bottom"><span>© <span data-year>2026</span> Semarang Flood &amp; Rob GIS.</span><span><a href="#downloadCenter">Unduhan</a> · <a href="#team">Tim</a> · <a href="index.html">Beranda</a></span></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Kembali ke atas"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js?v=4"></script>
+  <script src="js/live-monitor.js?v=6"></script>
+</body>
+</html>

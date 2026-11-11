@@ -1,0 +1,35 @@
+{
+  "version": "2026.11",
+  "reviewed_at": "2026-11-05",
+  "method": "Ambang hujan mengikuti kategori intensitas BMKG. Ambang pasang bersifat indikatif dan perlu validasi BMKG/BPBD. Ambang muka air sungai belum ditetapkan karena tidak ada sensor TMA lokal.",
+  "parameters": {
+    "rainfall": {
+      "warning": 10.0,
+      "critical": 20.0,
+      "unit": "mm/jam",
+      "basis": "Kategori hujan lebat 10-20 mm/jam dan sangat lebat >20 mm/jam (BMKG).",
+      "source": "BMKG",
+      "confidence": "high",
+      "calibrated": true
+    },
+    "tide_level": {
+      "warning": 0.95,
+      "critical": 1.07,
+      "unit": "m",
+      "basis": "Persentil 95/99 tinggi muka laut model Open-Meteo Marine 30 hari (p95=0.95 m, p99=1.07 m). Bukan ambang rob resmi.",
+      "source": "Open-Meteo Marine 30 hari (p95/p99)",
+      "confidence": "medium",
+      "calibrated": true,
+      "calibration_type": "model_percentile"
+    },
+    "water_level": {
+      "warning": null,
+      "critical": null,
+      "unit": "cm",
+      "basis": "Tidak ada sensor TMA lokal; ambang operasional belum dapat ditetapkan.",
+      "source": "Belum tersedia",
+      "confidence": "none",
+      "calibrated": false
+    }
+  }
+}

@@ -1,0 +1,14 @@
+LAPORAN TEKNIS GEOREFERENCING PETA DASAR SEMARANG UTARA
+Mata Kuliah: Sistem Informasi Geografis (SIG)
+Metode Transformasi: Polinomial Orde 1 (Affine Transformation)
+Sistem Koordinat Target: WGS 84 / UTM Zone 49S (EPSG:32749)
+Jumlah Titik Kontrol (GCP): 6 Titik (Ketentuan minimal 4 titik terpenuhi)
+
+HASIL PERHITUNGAN RMSE:
+- Rata-rata Residu dx: 0.588 meter
+- Rata-rata Residu dy: 0.625 meter
+- ROOT MEAN SQUARE ERROR (RMSE) TOTAL: 0.872 meter
+
+KESIMPULAN:
+Nilai RMSE sebesar 0.87 meter memenuhi standar ketelitian pemetaan skala teknis (1:25.000 toleransi RMSE < 2.5 meter).
+Peta dasar analog / citra telah terkoreksi secara geometrik dan siap digunakan sebagai acuan digitasi on-screen.

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dokumentasi analisis spasial buffer sempadan sungai, overlay genangan, dan eksposur zona rawan permukiman Semarang Utara.">
+  <title>Analisis Spasial — Semarang Flood &amp; Rob GIS</title>
+
+  <link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css?v=26">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg site-nav sticky-top" id="siteNav">
+    <div class="container-fluid site-container">
+      <a class="navbar-brand brand-lockup" href="index.html">
+        <span class="brand-mark"><i class="fa-solid fa-water"></i></span>
+        <span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span>
+      </a>
+      <div class="d-flex align-items-center gap-2 order-lg-3">
+        <button class="nav-icon-btn" type="button" id="quickNavBtn" aria-label="Pencarian cepat (Ctrl+K)" title="Pencarian cepat (Ctrl+K)"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <a href="map.html" class="btn btn-warning nav-cta d-none d-lg-inline-flex"><i class="fa-solid fa-map-location-dot me-1"></i> Buka Peta</a>
+        <button class="navbar-toggler nav-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavMenu" aria-controls="siteNavMenu" aria-expanded="false" aria-label="Buka navigasi"><span></span><span></span><span></span></button>
+      </div>
+      <div class="collapse navbar-collapse" id="siteNavMenu">
+        <ul class="navbar-nav site-nav-links ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta WebGIS</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active" href="analysis.html"><i class="fa-solid fa-layer-group"></i> Analisis</a></li>
+          <li class="nav-item"><a class="nav-link" href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li>
+        </ul>
+        <a href="map.html" class="btn btn-warning nav-cta d-lg-none mt-3 w-100">Buka Peta WebGIS</a>
+      </div>
+    </div>
+  </nav>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="page-hero">
+    <div class="container-fluid site-container">
+      <div class="page-hero-grid">
+        <div class="page-hero-copy">
+          <div class="breadcrumb-modern"><a href="index.html">Beranda</a><i class="fa-solid fa-chevron-right"></i><span>Analisis</span></div>
+          <h1>Dari buffer ke keputusan: membaca eksposur zona rawan secara berlapis.</h1>
+          <p>Empat tahap analisis spasial yang menghubungkan sempadan sungai, genangan rob, permukiman, dan rekomendasi mitigasi.</p>
+          <div class="page-hero-actions">
+            <a href="downloads/Peta_2.pdf" download class="btn btn-warning"><i class="fa-solid fa-map me-1"></i> Unduh peta analisis</a>
+            <a href="dashboard.html" class="btn btn-outline-light" style="border-color:rgba(255,255,255,.26);color:#fff;"><i class="fa-solid fa-chart-pie me-1"></i> Lihat dashboard</a>
+          </div>
+          <div class="page-hero-stats">
+            <span class="hero-stat"><strong>656,19 Ha</strong> sempadan 200 m</span>
+            <span class="hero-stat"><strong>120,31 Ha</strong> permukiman di zona rawan</span>
+            <span class="hero-stat"><strong>70,08%</strong> rasio eksposur zona rawan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-tight" role="main">
+    <div class="container-fluid site-container">
+
+      <!-- PIPELINE TABS -->
+      <div class="alert alert-light border mb-3 small text-muted">
+        <i class="fa-solid fa-circle-info text-primary me-2"></i>
+        <b>Catatan penting:</b> angka <b>120,31 Ha / 70,08%</b> adalah <b>eksposur statis</b> permukiman terhadap poligon zona rawan BPBD/InaRISK, <b>bukan luas genangan atau kejadian banjir saat ini</b>. Sumber zona rawan: BPBD Kota Semarang/InaRISK · snapshot April 2026 · EPSG:32749. Kondisi terkini ditampilkan pada panel monitoring near-realtime di Dashboard/Peta. <a class="text-link-strong" href="methodology.html#glosarium">Glosarium</a>.
+      </div>
+
+      <ul class="nav pipeline-tabs" id="analysisTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab-buffer-btn" data-bs-toggle="tab" data-bs-target="#tab-buffer" type="button" role="tab" aria-controls="tab-buffer" aria-selected="true">
+            <span class="step-index">01</span>
+            <span class="step-copy"><strong>Buffer sempadan</strong><small>Radius 100–200 m</small></span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-overlay-btn" data-bs-toggle="tab" data-bs-target="#tab-overlay" type="button" role="tab" aria-controls="tab-overlay" aria-selected="false">
+            <span class="step-index">02</span>
+            <span class="step-copy"><strong>Overlay intersect</strong><small>Genangan × permukiman</small></span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-matriks-btn" data-bs-toggle="tab" data-bs-target="#tab-matriks" type="button" role="tab" aria-controls="tab-matriks" aria-selected="false">
+            <span class="step-index">03</span>
+            <span class="step-copy"><strong>Matriks 9 kelurahan</strong><small>Rasio &amp; populasi</small></span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-rekomendasi-btn" data-bs-toggle="tab" data-bs-target="#tab-rekomendasi" type="button" role="tab" aria-controls="tab-rekomendasi" aria-selected="false">
+            <span class="step-index">04</span>
+            <span class="step-copy"><strong>Rekomendasi</strong><small>Mitigasi &amp; simulasi</small></span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="analysisTabsContent">
+
+        <!-- TAB 1 -->
+        <div class="tab-pane fade show active" id="tab-buffer" role="tabpanel">
+          <div class="row g-4">
+            <div class="col-lg-7 reveal">
+              <div class="surface-card p-4 h-100">
+                <span class="section-eyebrow mb-3"><i class="fa-solid fa-ruler-horizontal"></i> Proximity analysis</span>
+                <h2 class="section-title" style="font-size:1.7rem;">Sempadan sungai bukan garis di peta — ia adalah zona risiko.</h2>
+                <p class="text-muted small">Buffer dilakukan terhadap 12 segmen saluran sungai dan drainase utama di Semarang Utara berdasarkan Permen PUPR No. 28/PRT/M/2015 tentang Penetapan Garis Sempadan Sungai.</p>
+
+                <div class="row g-3 my-2">
+                  <div class="col-md-6">
+                    <div class="comparison-card h-100" style="background:#fef2f2;border-color:#fecaca;">
+                      <div class="d-flex justify-content-between align-items-center mb-2"><span class="badge badge-danger-soft">Radius 100 m</span><strong class="text-danger">341,91 Ha</strong></div>
+                      <h3>Zona sempadan kritis</h3>
+                      <p>Zona terlarang untuk bangunan permanen baru; rentan terhadap limpasan tanggul dan rembesan air pasang.</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="comparison-card h-100" style="background:#fffbeb;border-color:#fde68a;">
+                      <div class="d-flex justify-content-between align-items-center mb-2"><span class="badge badge-warning-soft">Radius 200 m</span><strong class="text-warning">314,28 Ha</strong></div>
+                      <h3>Zona waspada</h3>
+                      <p>Zona penyangga hidrologis yang memerlukan penataan drainase mikro terhubung ke stasiun pompa polder.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="insight-card insight-card--amber mt-3">
+                  <div class="insight-kicker">Temuan kunci</div>
+                  <div class="insight-title">54,93% daratan berada dalam koridor sempadan 200 m</div>
+                  <p class="insight-text">Total koridor gabungan mencapai 656,19 Ha. Sebanyak 81,99 Ha (47,76%) permukiman berada langsung di dalam koridor sempadan 200 m — bukti spasial bahwa kedekatan dengan badan sungai meningkatkan eksposur zona rawan.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5 reveal reveal-delay-1">
+              <div class="surface-card p-4 h-100">
+                <h3 class="chart-title mb-1"><i class="fa-solid fa-chart-simple text-primary me-2"></i>Proporsi sempadan</h3>
+                <p class="chart-sub mb-4">Terhadap luas daratan kecamatan</p>
+
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-1"><span class="small fw-semibold">Buffer 100 m — kritis</span><strong class="text-danger">28,62%</strong></div>
+                  <div class="progress" style="height:9px;"><div class="progress-bar" style="width:28.62%;background:#ef4444;"></div></div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between mb-1"><span class="small fw-semibold">Buffer 200 m — waspada</span><strong class="text-warning">26,31%</strong></div>
+                  <div class="progress" style="height:9px;"><div class="progress-bar" style="width:26.31%;background:#f59e0b;"></div></div>
+                </div>
+                <div class="mb-4">
+                  <div class="d-flex justify-content-between mb-1"><span class="small fw-semibold">Luar sempadan</span><strong class="text-success">45,07%</strong></div>
+                  <div class="progress" style="height:9px;"><div class="progress-bar" style="width:45.07%;background:#22c55e;"></div></div>
+                </div>
+
+                <div class="analysis-metric" style="background:var(--surface-2);box-shadow:none;">
+                  <div class="metric-label">Interpretasi</div>
+                  <p class="small text-muted mb-0">Lebih dari separuh wilayah kajian berada dalam pengaruh langsung sempadan sungai. Intervensi tata ruang di koridor ini menyentuh hampir separuh permukiman di zona rawan.</p>
+                </div>
+
+                <a href="map.html" class="btn btn-primary w-100 mt-3"><i class="fa-solid fa-map-location-dot me-1"></i> Lihat buffer di peta</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2 -->
+        <div class="tab-pane fade" id="tab-overlay" role="tabpanel">
+          <div class="row g-4">
+            <div class="col-lg-7 reveal">
+              <div class="surface-card p-4 h-100">
+                <span class="section-eyebrow mb-3"><i class="fa-solid fa-intersect"></i> Boolean overlay</span>
+                <h2 class="section-title" style="font-size:1.7rem;">Ketika dua layer bertemu, risiko menjadi terukur.</h2>
+                <p class="text-muted small">Operator spasial <b>Intersect</b> mempertemukan poligon Kawasan Permukiman dengan Area Genangan Rob BPBD. Hasilnya adalah poligon permukiman di zona rawan yang mewarisi atribut genangan.</p>
+
+                <div class="formula-box my-4">Permukiman_Zona_Rawan = Permukiman ∩ Area_Genangan_Rob</div>
+
+                <h3 class="chart-title mb-2">Segmentasi eksposur zona rawan</h3>
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle">
+                    <thead>
+                      <tr><th>Kategori</th><th>Karakteristik</th><th class="text-end">Luas (Ha)</th><th class="text-end">Proporsi</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td><span class="badge badge-danger-soft">Sangat tinggi</span></td><td>Rob pasang + limpasan sungai (&gt;40 cm)</td><td class="text-end fw-bold text-danger">18,18</td><td class="text-end fw-bold">10,59%</td></tr>
+                      <tr><td><span class="badge badge-warning-soft">Tinggi</span></td><td>Rob pasang pesisir (20–40 cm)</td><td class="text-end fw-bold text-warning">75,91</td><td class="text-end fw-bold">44,22%</td></tr>
+                      <tr><td><span class="badge badge-info-soft">Sedang</span></td><td>Limpasan drainase saat hujan (&lt;20 cm)</td><td class="text-end fw-bold text-info">26,23</td><td class="text-end fw-bold">15,28%</td></tr>
+                      <tr><td><span class="badge badge-success-soft">Di luar zona rawan</span></td><td>Berada di luar poligon zona rawan BPBD/InaRISK</td><td class="text-end fw-bold text-success">51,36</td><td class="text-end fw-bold">29,91%</td></tr>
+                      <tr class="table-primary fw-bold"><td colspan="2">Total kawasan permukiman</td><td class="text-end">171,68</td><td class="text-end">100,00%</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5 reveal reveal-delay-1">
+              <div class="surface-card p-4 h-100 d-flex flex-column">
+                <div class="analysis-metric mb-3" style="background:#fef2f2;border-color:#fecaca;">
+                  <div class="metric-label">Eksposur kuantitatif</div>
+                  <div class="metric-value" style="color:#dc2626;">70,08%</div>
+                  <p class="small text-muted mb-0"><strong>120,31 Ha</strong> permukiman berada di zona rawan. Hanya 29,91% (51,36 Ha) yang berada di luar zona rawan.</p>
+                </div>
+
+                <div class="insight-card insight-card--green mb-3">
+                  <div class="insight-kicker">Validasi lapangan</div>
+                  <div class="insight-title">25 titik GPS ground truth</div>
+                  <p class="insight-text">Di titik survei Tambak Lorok dan Bandarharjo, tinggi genangan terukur 45–65 cm. Dari 5 titik &gt;40 cm, 2 berada di dalam poligon genangan dan 3 di luar — batas model perlu validasi.</p>
+                </div>
+
+                <div class="insight-card insight-card--amber">
+                  <div class="insight-kicker">Implikasi</div>
+                  <div class="insight-title">Risiko terkonsentrasi di klaster pesisir &amp; koridor sungai</div>
+                  <p class="insight-text">Tiga kelurahan menyumbang lebih dari 80% luas permukiman di zona rawan. Prioritas intervensi dapat difokuskan di sana.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3 -->
+        <div class="tab-pane fade" id="tab-matriks" role="tabpanel">
+          <div class="surface-card p-4 reveal">
+            <div class="d-flex flex-column flex-lg-row justify-content-between gap-2 mb-3">
+              <div>
+                <h2 class="chart-title"><i class="fa-solid fa-table text-warning me-2"></i>Matriks eksposur zona rawan per kelurahan</h2>
+                <p class="chart-sub mb-0">Luas wilayah, permukiman, di zona rawan, di luar zona rawan, rasio, populasi, kepadatan, dan status penanganan.</p>
+              </div>
+              <a href="dashboard.html" class="btn btn-sm btn-outline-primary align-self-start"><i class="fa-solid fa-chart-pie me-1"></i> Buka dashboard</a>
+            </div>
+            <div class="d-md-none small text-muted mb-2"><i class="fa-solid fa-arrows-left-right me-1"></i>Geser tabel ke samping untuk melihat semua kolom.</div>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle analysis-table">
+                <thead>
+                  <tr><th>Kode</th><th>Kelurahan</th><th class="text-end">Luas (Ha)</th><th class="text-end">Permukiman (Ha)</th><th class="text-end">Zona rawan (Ha)</th><th class="text-end">Luar zona (Ha)</th><th class="text-center">Rasio zona rawan</th><th class="text-end">Populasi</th><th class="text-end">Kepadatan</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                                  <tr><td class="text-center">KEL-04</td><td class="fw-bold">Panggung Kidul</td><td class="text-end">48,44</td><td class="text-end">19,40</td><td class="text-end fw-bold text-danger">18,89</td><td class="text-end">0,51</td><td class="text-center"><span class="badge badge-danger-soft">97,37%</span></td><td class="text-end">10.450</td><td class="text-end">215,73</td><td><span class="badge badge-danger-soft">Prioritas 1</span></td></tr>
+                <tr><td class="text-center">KEL-03</td><td class="fw-bold">Panggung Lor</td><td class="text-end">247,46</td><td class="text-end">63,26</td><td class="text-end fw-bold text-danger">60,58</td><td class="text-end">2,68</td><td class="text-center"><span class="badge badge-danger-soft">95,76%</span></td><td class="text-end">15.600</td><td class="text-end">63,04</td><td><span class="badge badge-danger-soft">Prioritas 1</span></td></tr>
+                <tr><td class="text-center">KEL-02</td><td class="fw-bold">Bandarharjo</td><td class="text-end">226,34</td><td class="text-end">30,48</td><td class="text-end fw-bold text-warning">21,28</td><td class="text-end">9,20</td><td class="text-center"><span class="badge badge-warning-soft">69,81%</span></td><td class="text-end">23.410</td><td class="text-end">103,43</td><td><span class="badge badge-warning-soft">Prioritas 3</span></td></tr>
+                <tr><td class="text-center">KEL-01</td><td class="fw-bold">Tanjung Mas</td><td class="text-end">378,80</td><td class="text-end">34,82</td><td class="text-end fw-bold text-warning">18,18</td><td class="text-end">16,64</td><td class="text-center"><span class="badge badge-warning-soft">52,20%</span></td><td class="text-end">31.250</td><td class="text-end">82,50</td><td><span class="badge badge-warning-soft">Prioritas 3</span></td></tr>
+                <tr><td class="text-center">KEL-06</td><td class="fw-bold">Kuningan</td><td class="text-end">85,35</td><td class="text-end">5,56</td><td class="text-end fw-bold">1,40</td><td class="text-end">4,16</td><td class="text-center"><span class="badge badge-success-soft">25,16%</span></td><td class="text-end">12.900</td><td class="text-end">151,14</td><td><span class="badge badge-success-soft">Terkendali</span></td></tr>
+                <tr><td class="text-center">KEL-05</td><td class="fw-bold">Bulu Lor</td><td class="text-end">65,89</td><td class="text-end">15,57</td><td class="text-end fw-bold">0,00</td><td class="text-end">15,57</td><td class="text-center"><span class="badge badge-success-soft">0,00%</span></td><td class="text-end">14.850</td><td class="text-end">225,38</td><td><span class="badge badge-success-soft">Di luar zona rawan</span></td></tr>
+                <tr><td class="text-center">KEL-08</td><td class="fw-bold">Plombokan</td><td class="text-end">54,32</td><td class="text-end">2,59</td><td class="text-end fw-bold">0,00</td><td class="text-end">2,59</td><td class="text-center"><span class="badge badge-success-soft">0,00%</span></td><td class="text-end">9.800</td><td class="text-end">180,48</td><td><span class="badge badge-success-soft">Di luar zona rawan</span></td></tr>
+                <tr><td class="text-center">KEL-07</td><td class="fw-bold">Dadapsari</td><td class="text-end">39,74</td><td class="text-end">0,00</td><td class="text-end">0,00</td><td class="text-end">0,00</td><td class="text-center"><span class="badge bg-light text-dark border">—</span></td><td class="text-end">11.200</td><td class="text-end">281,83</td><td><span class="badge bg-light text-dark border">Data belum tersedia</span></td></tr>
+                <tr><td class="text-center">KEL-09</td><td class="fw-bold">Purwosari</td><td class="text-end">48,33</td><td class="text-end">0,00</td><td class="text-end">0,00</td><td class="text-end">0,00</td><td class="text-center"><span class="badge bg-light text-dark border">—</span></td><td class="text-end">8.350</td><td class="text-end">172,77</td><td><span class="badge bg-light text-dark border">Data belum tersedia</span></td></tr>
+                <tr class="table-primary fw-bold"><td colspan="2" class="text-center">TOTAL KECAMATAN</td><td class="text-end">1.194,65</td><td class="text-end">171,68</td><td class="text-end text-danger">120,31</td><td class="text-end">51,36</td><td class="text-center">70,08%</td><td class="text-end">137.810</td><td class="text-end">115,36</td><td>Rata-rata</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="alert alert-light border mt-3 mb-0 small text-muted">
+              <i class="fa-solid fa-circle-info text-primary me-2"></i><b>Catatan audit:</b> Nilai dihitung ulang dari overlay geometri pada EPSG:32749. Dadapsari dan Purwosari belum memiliki poligon permukiman terdigitasi, sehingga ditandai “data belum tersedia” — bukan berarti wilayah tersebut aman.
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4 -->
+        <div class="tab-pane fade" id="tab-rekomendasi" role="tabpanel">
+          <div class="row g-4">
+            <div class="col-lg-6 reveal">
+              <div class="surface-card p-4 h-100">
+                <span class="section-eyebrow mb-3"><i class="fa-solid fa-wrench"></i> Mitigasi struktural</span>
+                <h2 class="section-title" style="font-size:1.55rem;">Intervensi fisik untuk menahan air.</h2>
+                <div class="d-grid gap-3 mt-3">
+                  <div class="recommendation-card"><span class="recommendation-num">01</span><h4>Tanggul laut Tambak Lorok</h4><p>Tanggul pengaman pantai 1,5 km dengan elevasi +3,20 m LWS untuk memblokade intrusi pasang harian.</p></div>
+                  <div class="recommendation-card"><span class="recommendation-num">02</span><h4>Revitalisasi polder &amp; pompa</h4><p>Peningkatan kapasitas Pompa Kali Baru dari 3 m³/s menjadi 6 m³/s dengan genset otomatis.</p></div>
+                  <div class="recommendation-card"><span class="recommendation-num">03</span><h4>Pengerukan Kali Semarang &amp; Kali Asin</h4><p>Normalisasi penampang basah untuk mengembalikan kapasitas tampung debit banjir kiriman dari hulu.</p></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 reveal reveal-delay-1">
+              <div class="surface-card p-4 mb-4">
+                <span class="section-eyebrow mb-3"><i class="fa-solid fa-seedling"></i> Mitigasi non-struktural</span>
+                <h2 class="section-title" style="font-size:1.55rem;">Intervensi tata ruang dan perilaku.</h2>
+                <div class="d-grid gap-3 mt-3">
+                  <div class="recommendation-card"><span class="recommendation-num">01</span><h4>Moratorium sempadan 100 m</h4><p>Pelarangan alih fungsi lahan sempadan kritis dan penegakan regulasi tata ruang.</p></div>
+                  <div class="recommendation-card"><span class="recommendation-num">02</span><h4>Restorasi mangrove</h4><p>Penanaman <i>Rhizophora mucronata</i> di pesisir Tanjung Mas sebagai peredam energi gelombang.</p></div>
+                  <div class="recommendation-card"><span class="recommendation-num">03</span><h4>Kendali air tanah dalam</h4><p>Pembatasan sumur artesis komersial untuk meredam laju amblesan tanah 8–10 cm/tahun.</p></div>
+                </div>
+              </div>
+
+              <div class="scenario-card">
+                <h3><i class="fa-solid fa-sliders text-warning me-2"></i>Simulasi reduksi risiko</h3>
+                <p>Geser untuk melihat estimasi area dan populasi yang terlindungi bila intervensi mencakup persentase tertentu dari kawasan zona rawan. Simulasi ilustratif, bukan prediksi.</p>
+                <input type="range" class="form-range scenario-range" id="scenarioRange" min="0" max="100" value="35" step="5" aria-label="Persentase cakupan intervensi">
+                <div class="d-flex justify-content-between small" style="color:rgba(255,255,255,.54);"><span>0%</span><span id="scenarioPct" style="color:var(--amber-400);font-weight:800;">35% cakupan</span><span>100%</span></div>
+                <div class="scenario-output">
+                  <div class="scenario-output-item"><strong id="scenarioArea">42,11 Ha</strong><span>Area terlindungi</span></div>
+                  <div class="scenario-output-item"><strong id="scenarioPopulation">33.802</strong><span>Populasi terlindungi</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-fluid site-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand-lockup" href="index.html"><span class="brand-mark"><i class="fa-solid fa-water"></i></span><span class="brand-copy"><strong>SEMARANG</strong><small>Flood &amp; Rob GIS</small></span></a>
+          <p>Analisis spasial risiko banjir rob Semarang Utara: buffer, overlay, matriks, dan rekomendasi mitigasi.</p>
+          <div class="footer-badges"><span>QGIS</span><span>Buffer</span><span>Overlay</span><span>GeoPackage</span></div>
+        </div>
+        <div><h3 class="footer-title">Navigasi</h3><ul class="footer-links"><li><a href="index.html"><i class="fa-solid fa-house"></i> Beranda</a></li><li><a href="map.html"><i class="fa-solid fa-map-location-dot"></i> Peta</a></li><li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li><li><a href="methodology.html"><i class="fa-solid fa-circle-info"></i> Metodologi</a></li></ul></div>
+        <div><h3 class="footer-title">Data</h3><ul class="footer-links"><li><a href="downloads/Peta_2.pdf" download><i class="fa-solid fa-map"></i> Peta analisis</a></li><li><a href="downloads/Database_SIG.gpkg" download><i class="fa-solid fa-database"></i> GeoPackage</a></li><li><a href="downloads/Laporan_Akhir.pdf" download><i class="fa-solid fa-file-pdf"></i> Laporan</a></li></ul></div>
+        <div><h3 class="footer-title">Proyek</h3><p class="small mb-2" style="color:rgba(255,255,255,.56);">Kelompok 3 — Pemetaan dan Analisis Risiko Banjir &amp; Rob Semarang Utara.</p><p class="small mb-0" style="color:rgba(255,255,255,.42);">WGS 84 / UTM 49S · EPSG:32749</p></div>
+      </div>
+      <div class="footer-bottom"><span>© <span data-year>2026</span> Semarang Flood &amp; Rob GIS.</span><span><a href="analysis.html">Analisis</a> · <a href="map.html">Peta</a> · <a href="methodology.html">Metodologi</a></span></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Kembali ke atas"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js?v=4"></script>
+  <script>
+    (function () {
+      const range = document.getElementById('scenarioRange');
+      if (!range) return;
+      const area = document.getElementById('scenarioArea');
+      const population = document.getElementById('scenarioPopulation');
+      const pct = document.getElementById('scenarioPct');
+      const update = () => {
+        const value = Number(range.value);
+        const protectedArea = 120.31 * value / 100;
+        const protectedPopulation = 96577 * value / 100;
+        pct.textContent = value + '% cakupan';
+        area.textContent = protectedArea.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Ha';
+        population.textContent = Math.round(protectedPopulation).toLocaleString('id-ID');
+      };
+      range.addEventListener('input', update);
+      update();
+    })();
+  </script>
+</body>
+</html>
