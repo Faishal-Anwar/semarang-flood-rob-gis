@@ -2386,3 +2386,9 @@ body.reveal-ready .reveal.is-visible { opacity: 1; transform: none; }
   word-break: break-word;
   overflow-x: auto;
 }
+
+/* Fifth team member */
+.team-card-5::before { background: linear-gradient(90deg, #f472b6, #be185d); }
+.team-avatar-5 { background: linear-gradient(145deg, #f472b6, #be185d); }
+.team-role-doc { background: #fdf2f8; color: #9d174d; border: 1px solid #fbcfe8; }
+.team-mini-card-5::before { background: linear-gradient(90deg, #f472b6, #be185d); }
