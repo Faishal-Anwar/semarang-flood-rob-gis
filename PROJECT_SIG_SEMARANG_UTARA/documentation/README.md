@@ -92,6 +92,8 @@ PROJECT_SIG_SEMARANG_UTARA/
 
 ## 3. CARA MENJALANKAN WEBGIS & REST API
 
+> Ingin publikasi online cepat? Ikuti panduan **[DEPLOY.md](../../DEPLOY.md)** — satu Web Service Render untuk WebGIS + API + monitoring.
+
 ### Menjalankan Backend FastAPI:
 ```bash
 cd backend

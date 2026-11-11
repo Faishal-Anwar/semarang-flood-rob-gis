@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: semarang-flood-rob-gis
+    runtime: python
+    plan: free
+    rootDir: PROJECT_SIG_SEMARANG_UTARA
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "30"
